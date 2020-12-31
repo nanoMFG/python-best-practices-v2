@@ -1,0 +1,245 @@
+title: Python Best Practices
+tagline: Learn the best practices for coding in Python
+description: This course covers the best Python coding practices every developer should know.
+
+template:
+  name: python-best-practices-course
+  repo: python-best-practices-v1-template
+  description: Description
+
+before:
+  - type: createIssue
+    title: Set up a Python Project
+    body: 01_setup-python-project.md
+  
+# Steps for the course
+# A list of steps that take the learner through the course
+# Create one step for each action that a learner will complete
+
+steps:
+# Step 1: Set up a Python Project
+  - title: Set up your Project 
+    description: NA
+    event: push 
+    link: '{{ repoUrl }}/issues/1' 
+    actions:
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'README.md'
+    - type: gate 
+      # Checks whether 'README' text is in README.md
+      left: '/\README/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 01_bad-README.md
+          issue: 1
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'LICENSE'
+    - type: gate
+      # Checks for exact license header
+      left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 01_bad-LICENSE.md
+          issue: 1
+    - type: respond
+      with: 01_make-setup.md
+      issue: 1
+# Step 2: Create setup.py
+  - title: Create a Setup.py
+    description: NA
+    event: push
+    link: '{{ repoUrl }}/issues/1' 
+    actions: 
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'setup.py'
+    - type: gate 
+      # Checks whether first 3 lines in https://github.com/pypa/sampleproject/blob/master/setup.py exist
+      left: '/from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 01_bad-setup.md
+          issue: 1
+    - type: createIssue
+      title: Follow style guidelines
+      body: 02_follow-style-guidelines.md
+      action_id: second_issue
+    - type: respond
+      with: 01_successful-push.md
+      issue: 1 # Respond to issue 1
+      data:
+        url: '%actions.second_issue.data.html_url%'
+
+# Step 3: Format existing code in formatter.py
+  - title: Format existing code in formatting.py
+    description: NA
+    event: push
+    link: '{{ repoUrl }}/issues/2' 
+    actions: 
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'formatting.py'
+    - type: gate 
+      # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
+      left: '/x\s=\s5/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 02_bad-formatter.md
+          issue: 2
+    - type: respond
+      with: 02_add-google-style-comment.md
+      issue: 2
+# Step 4: Add google-style comment blocks in formatting.py
+  - title: Add google-style comment blocks in formatting.py
+    description: NA
+    event: push
+    link: '{{ repoUrl }}/issues/2' 
+    actions: 
+    # Need to write a regex to check for comment blocks. Ideally we should write multiple gates for multiple comment types the user can add
+    # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html for google comment examples
+    # Currently, only one simple regex check is executed
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'formatting.py'
+    - type: gate 
+      # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
+      left: '/x\s=\s5/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 02_bad-google-comment.md
+          issue: 2
+    - type: createIssue
+      title: Pip install and requirements.txt
+      body: 03_pip-and-venv.md
+      action_id: third_issue
+    - type: respond
+      with: 02_successful-push.md
+      issue: 2
+      data:
+        url: '%actions.third_issue.data.html_url%'
+
+# Step 5: Create dependencies in setup.py and use pip tools to create a requirements.txt
+  - title: Create dependencies in setup.py and use pip tools to create a requirements.txt
+    description: NA
+    event: push
+    link: '{{ repoUrl }}/issues/3' 
+    actions: 
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'setup.py'
+    - type: gate 
+      # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'a = 5')
+      left: '/a\s=\s5/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 03_bad-setup.md
+          issue: 3
+    - type: getFileContents
+      action_id: fileContents
+      filename: 'requirements.txt'
+    - type: gate 
+      # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'numpy')
+      left: '/numpy/g'     
+      operator: test
+      right: '%actions.fileContents%'
+      else:
+        - type: respond
+          with: 03_bad-requirements.md
+          issue: 3
+    - type: respond
+      with: 03_activate-venv.md
+      issue: 3
+
+# Step 6: Install/create/activate virtual environment and Pip install packages using requirements.txt
+  - title: Install/create/activate virtual environment and Pip install packages using requirements.txt
+    description: NA
+    event: issue_comment.created
+    link: '{{ repoUrl }}/issues/3' 
+    actions: 
+    - type: gate 
+      # We need to write a regex that checks whether the comment contains the output we desire (currently checks if comment contains 'Output')
+      left: '/Output/g'     
+      operator: test
+      right: '%payload.comment.body%'
+      else:
+        - type: respond
+          with: 03_bad-comment.md
+          issue: 3
+    - type: createIssue
+      title: Pytest
+      body: 04_pytest.md
+      action_id: fourth_issue
+    - type: respond
+      with: 03_successful-push.md
+      issue: 3
+      data:
+        url: '%actions.fourth_issue.data.html_url%'
+# Step 7: Run existing tests in the repository
+  - title: Run an existing test
+    description: NA
+    event: issue_comment.created
+    link: '{{ repoUrl }}/issues/4' 
+    actions: 
+    - type: gate 
+      # We need to write a regex that checks whether the comment contains the output we desire (currently checks if comment contains 'ERROR')
+      left: '/ERROR/g'     
+      operator: test
+      right: '%payload.comment.body%'
+      else:
+        - type: respond
+          with: 04_bad-comment.md
+          issue: 3
+    - type: respond
+      with: 04_successful-push.md
+      issue: 4
+
+# Step 6: INTERNAL COMMENT FOR STEP 6
+# - title: 
+#  description: 
+#  event: 
+#  actions: 
+#  - type:  #
+
+# Step 7: INTERNAL COMMENT FOR STEP 7
+# - title: 
+#  description: 
+#  event: 
+#  actions: 
+#  - type: 
+
+# Step 8: INTERNAL COMMENT FOR STEP 8
+# - title: 
+#  description: 
+#  event: 
+#  actions: 
+#  - type: 
+
+# Step 9: INTERNAL COMMENT FOR STEP 9
+# - title: 
+#  description: 
+#  event: 
+#  actions: 
+#  - type: 
+
+# Step 10: INTERNAL COMMENT FOR STEP 10
+# - title: 
+#  description: 
+#  event: 
+#  actions: 
+#  - type: 
+
+# Add additional steps below
