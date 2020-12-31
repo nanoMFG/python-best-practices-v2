@@ -148,9 +148,6 @@ steps:
         - type: respond
           with: 03_bad-setup.md
           issue: 3
-    - type: respond
-      with: good-job.md
-      issue: 3  
     - type: getFileContents
       action_id: requirementsContents
       filename: 'requirements.txt'
