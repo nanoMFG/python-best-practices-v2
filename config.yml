@@ -24,25 +24,25 @@ steps:
     link: '{{ repoUrl }}/issues/1' 
     actions:
     - type: getFileContents
-      action_id: fileContents
+      action_id: readMeContents
       filename: 'README.md'
     - type: gate 
       # Checks whether 'README' text is in README.md
       left: '/\README/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.readMeContents%'
       else:
         - type: respond
           with: 01_bad-README.md
           issue: 1
     - type: getFileContents
-      action_id: fileContents
+      action_id: licenseContents
       filename: 'LICENSE'
     - type: gate
       # Checks for exact license header
       left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.licenseContents%'
       else:
         - type: respond
           with: 01_bad-LICENSE.md
@@ -57,13 +57,13 @@ steps:
     link: '{{ repoUrl }}/issues/1' 
     actions: 
     - type: getFileContents
-      action_id: fileContents
+      action_id: setup1Contents
       filename: 'setup.py'
     - type: gate 
       # Checks whether first 3 lines in https://github.com/pypa/sampleproject/blob/master/setup.py exist
       left: '/from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.setup1Contents%'
       else:
         - type: respond
           with: 01_bad-setup.md
@@ -85,13 +85,13 @@ steps:
     link: '{{ repoUrl }}/issues/2' 
     actions: 
     - type: getFileContents
-      action_id: fileContents
+      action_id: formattingContents
       filename: 'formatting.py'
     - type: gate 
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
       left: '/x\s=\s5/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.formattingContents%'
       else:
         - type: respond
           with: 02_bad-formatter.md
@@ -109,13 +109,13 @@ steps:
     # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html for google comment examples
     # Currently, only one simple regex check is executed
     - type: getFileContents
-      action_id: fileContents
+      action_id: formatting2Contents
       filename: 'formatting.py'
     - type: gate 
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
       left: '/x\s=\s5/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.formatting2Contents%'
       else:
         - type: respond
           with: 02_bad-google-comment.md
@@ -137,25 +137,28 @@ steps:
     link: '{{ repoUrl }}/issues/3' 
     actions: 
     - type: getFileContents
-      action_id: fileContents
+      action_id: setup2Contents
       filename: 'setup.py'
     - type: gate 
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'a = 5')
       left: '/a\s=\s5/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.setup2Contents%'
       else:
         - type: respond
           with: 03_bad-setup.md
           issue: 3
+    - type: respond
+      with: good-job.md
+      issue: 3  
     - type: getFileContents
-      action_id: fileContents
+      action_id: requirementsContents
       filename: 'requirements.txt'
     - type: gate 
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'numpy')
       left: '/numpy/g'     
       operator: test
-      right: '%actions.fileContents%'
+      right: '%actions.requirementsContents%'
       else:
         - type: respond
           with: 03_bad-requirements.md
