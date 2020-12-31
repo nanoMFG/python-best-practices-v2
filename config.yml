@@ -1,10 +1,10 @@
-title: Python Best Practices
+title: Python Best Practices Version 2
 tagline: Learn the best practices for coding in Python
 description: This course covers the best Python coding practices every developer should know.
 
 template:
   name: python-best-practices-course
-  repo: python-best-practices-v1-template
+  repo: python-best-practices-v2-template
   description: Description
 
 before:
