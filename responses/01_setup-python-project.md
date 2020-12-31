@@ -29,3 +29,5 @@ Here, you mention the modules and dependencies of the project- the things it wil
 In your repository, firstly create a License and a README. Then, create a new module directory and move the existing Python code to the directory. After you are finished, commit your changes to move on to the next step.
 
 ***NOTE: IF YOU COMMIT AN INVALID README/LISENCE FILE, WE WILL COMMENT ON THIS ISSUE AND PREVENT YOU FROM MOVING ON.
+
+For testing purposes, write in your README file and actually make a LICENSE file with nanoMFG instead of your github username
