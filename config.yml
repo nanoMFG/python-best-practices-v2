@@ -207,7 +207,40 @@ steps:
       with: 04_successful-push.md
       issue: 4
 
-# Step 6: INTERNAL COMMENT FOR STEP 6
+# Step 8: Fix failing test in the repository
+  - title: Fix a failing test
+    description: Commit the fix to the test in a new branch, create a pull request to merge to fix pytest branch
+    event: 
+      - pull_request
+      - check_suite.completed
+    link: '{{ repoUrl }}/issues/4' 
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Fix Pytest
+        else:
+          - type: respond
+            with: 04_bad-pull-request.md
+            issue: 1
+      - type: respond
+        with: 04_successful-pr.md
+        issue: 1
+      - type: gate
+        left: "%payload.check_suite.conclusion%"
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: 04_bad-check-run.md
+            issue: 1
+      - type: respond
+        with: 04_successful-push.md
+        issue: 1
+
+
+# Step 9: Create a new test
+# same structure as Step 8 with some additional checks maybe checking how many pytests ran.
 # - title: 
 #  description: 
 #  event: 
