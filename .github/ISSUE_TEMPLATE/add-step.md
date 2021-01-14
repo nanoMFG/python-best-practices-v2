@@ -18,4 +18,4 @@ Step|App Actions| User Actions| Related Event
 -----|-----|-----|-----
 | |  |
 
-- [ ] update [course outline](https://github.com/nanoMFG/python-best-practices-v2/blob/course-outline/outline.md) with new status
+- [ ] update course outline in [ZenHub Epic](https://app.zenhub.com/workspaces/community-infrastructure-5fbbbe32efc020002396923d/issues/nanomfg/community/31) with new status
