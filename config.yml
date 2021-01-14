@@ -49,34 +49,28 @@ steps:
           issue: 1
     - type: createIssue
       title: Format your project
-      body: 02_format_project.md
-# Step 2: Create setup.py
+      body: 02_format-project.md
+# Step 2: Run black autoformatter
   - title: Run an auto-formatter
-    description: NA
+    description: Install and run the Black auto-formatter
     event: push
     link: '{{ repoUrl }}/issues/2'
     actions:
     - type: getFileContents
-      action_id: setup1Contents
-      filename: 'setup.py'
+      action_id: mnistContents
+      filename: 'mnist_example/mnist_convnet.py'
     - type: gate
-      # Checks whether first 3 lines in https://github.com/pypa/sampleproject/blob/master/setup.py exist
-      left: '/from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g'
-      operator: test
-      right: '%actions.setup1Contents%'
+      # Need to figure out how to compare user's file to solution branch/other location
+      left: '%actions.mnistContents'
+      operator: ===
+      right: 'solution'
       else:
         - type: respond
-          with: 01_bad-setup.md
-          issue: 1
-    - type: createIssue
-      title: Follow style guidelines
-      body: 02_follow-style-guidelines.md
-      action_id: second_issue
+          with: 02_bad-formatter.md
+          issue: 2
     - type: respond
-      with: 01_successful-push.md
-      issue: 1 # Respond to issue 1
-      data:
-        url: '%actions.second_issue.data.html_url%'
+      with: 02_success-formatter.md
+      issue: 2
 
 # Step 3: Format existing code in formatter.py
   - title: Format existing code in formatting.py
