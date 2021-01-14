@@ -10,9 +10,10 @@ assignees: ''
 ## Summary
 
 ##Details
+Use a topic branch to apply updates with a branch name like : `step-<stepnum>` then plan on a PR and merge, next week.  
 - [ ] Establish template files.
 - [ ] Update response file
-- [ ] Update config.yml:  
+- [ ] Update config.yml using step info in outline:  
 
 Step|App Actions| User Actions| Related Event
 -----|-----|-----|-----
