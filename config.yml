@@ -11,24 +11,24 @@ before:
   - type: createIssue
     title: Set up a Python Project
     body: 01_setup-python-project.md
-  
+
 # Steps for the course
 # A list of steps that take the learner through the course
 # Create one step for each action that a learner will complete
 
 steps:
 # Step 1: Set up a Python Project
-  - title: Set up your Project 
+  - title: Set up your Project
     description: NA
-    event: push 
-    link: '{{ repoUrl }}/issues/1' 
+    event: push
+    link: '{{ repoUrl }}/issues/1'
     actions:
     - type: getFileContents
       action_id: readMeContents
       filename: 'README.md'
-    - type: gate 
+    - type: gate
       # Checks whether 'README' text is in README.md
-      left: '/\README/g'     
+      left: '/\README/g'
       operator: test
       right: '%actions.readMeContents%'
       else:
@@ -40,28 +40,28 @@ steps:
       filename: 'LICENSE'
     - type: gate
       # Checks for exact license header
-      left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'     
+      left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'
       operator: test
       right: '%actions.licenseContents%'
       else:
         - type: respond
           with: 01_bad-LICENSE.md
           issue: 1
-    - type: respond
-      with: 01_make-setup.md
-      issue: 1
+    - type: createIssue
+      title: Format your project
+      body: 02_format_project.md
 # Step 2: Create setup.py
-  - title: Create a Setup.py
+  - title: Run an auto-formatter
     description: NA
     event: push
-    link: '{{ repoUrl }}/issues/1' 
-    actions: 
+    link: '{{ repoUrl }}/issues/2'
+    actions:
     - type: getFileContents
       action_id: setup1Contents
       filename: 'setup.py'
-    - type: gate 
+    - type: gate
       # Checks whether first 3 lines in https://github.com/pypa/sampleproject/blob/master/setup.py exist
-      left: '/from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g'     
+      left: '/from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g'
       operator: test
       right: '%actions.setup1Contents%'
       else:
@@ -82,14 +82,14 @@ steps:
   - title: Format existing code in formatting.py
     description: NA
     event: push
-    link: '{{ repoUrl }}/issues/2' 
-    actions: 
+    link: '{{ repoUrl }}/issues/2'
+    actions:
     - type: getFileContents
       action_id: formattingContents
       filename: 'formatting.py'
-    - type: gate 
+    - type: gate
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
-      left: '/x\s=\s5/g'     
+      left: '/x\s=\s5/g'
       operator: test
       right: '%actions.formattingContents%'
       else:
@@ -103,17 +103,17 @@ steps:
   - title: Add google-style comment blocks in formatting.py
     description: NA
     event: push
-    link: '{{ repoUrl }}/issues/2' 
-    actions: 
+    link: '{{ repoUrl }}/issues/2'
+    actions:
     # Need to write a regex to check for comment blocks. Ideally we should write multiple gates for multiple comment types the user can add
     # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html for google comment examples
     # Currently, only one simple regex check is executed
     - type: getFileContents
       action_id: formatting2Contents
       filename: 'formatting.py'
-    - type: gate 
+    - type: gate
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
-      left: '/x\s=\s5/g'     
+      left: '/x\s=\s5/g'
       operator: test
       right: '%actions.formatting2Contents%'
       else:
@@ -134,14 +134,14 @@ steps:
   - title: Create dependencies in setup.py and use pip tools to create a requirements.txt
     description: NA
     event: push
-    link: '{{ repoUrl }}/issues/3' 
-    actions: 
+    link: '{{ repoUrl }}/issues/3'
+    actions:
     - type: getFileContents
       action_id: setup2Contents
       filename: 'setup.py'
-    - type: gate 
+    - type: gate
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'a = 5')
-      left: '/a\s=\s5/g'     
+      left: '/a\s=\s5/g'
       operator: test
       right: '%actions.setup2Contents%'
       else:
@@ -151,9 +151,9 @@ steps:
     - type: getFileContents
       action_id: requirementsContents
       filename: 'requirements.txt'
-    - type: gate 
+    - type: gate
       # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'numpy')
-      left: '/numpy/g'     
+      left: '/numpy/g'
       operator: test
       right: '%actions.requirementsContents%'
       else:
@@ -168,11 +168,11 @@ steps:
   - title: Install/create/activate virtual environment and Pip install packages using requirements.txt
     description: NA
     event: issue_comment.created
-    link: '{{ repoUrl }}/issues/3' 
-    actions: 
-    - type: gate 
+    link: '{{ repoUrl }}/issues/3'
+    actions:
+    - type: gate
       # We need to write a regex that checks whether the comment contains the output we desire (currently checks if comment contains 'Output')
-      left: '/Output/g'     
+      left: '/Output/g'
       operator: test
       right: '%payload.comment.body%'
       else:
@@ -192,11 +192,11 @@ steps:
   - title: Run an existing test
     description: NA
     event: issue_comment.created
-    link: '{{ repoUrl }}/issues/4' 
-    actions: 
-    - type: gate 
+    link: '{{ repoUrl }}/issues/4'
+    actions:
+    - type: gate
       # We need to write a regex that checks whether the comment contains the output we desire (currently checks if comment contains 'ERROR')
-      left: '/ERROR/g'     
+      left: '/ERROR/g'
       operator: test
       right: '%payload.comment.body%'
       else:
@@ -210,10 +210,10 @@ steps:
 # Step 8: Fix failing test in the repository
   - title: Fix a failing test
     description: Commit the fix to the test in a new branch, create a pull request to merge to fix pytest branch
-    event: 
+    event:
       - pull_request
       - check_suite.completed
-    link: '{{ repoUrl }}/issues/4' 
+    link: '{{ repoUrl }}/issues/4'
     actions:
       - type: gate
         left: "%payload.pull_request.title%"
@@ -241,38 +241,38 @@ steps:
 
 # Step 9: Create a new test
 # same structure as Step 8 with some additional checks maybe checking how many pytests ran.
-# - title: 
-#  description: 
-#  event: 
-#  actions: 
+# - title:
+#  description:
+#  event:
+#  actions:
 #  - type:  #
 
 # Step 7: INTERNAL COMMENT FOR STEP 7
-# - title: 
-#  description: 
-#  event: 
-#  actions: 
-#  - type: 
+# - title:
+#  description:
+#  event:
+#  actions:
+#  - type:
 
 # Step 8: INTERNAL COMMENT FOR STEP 8
-# - title: 
-#  description: 
-#  event: 
-#  actions: 
-#  - type: 
+# - title:
+#  description:
+#  event:
+#  actions:
+#  - type:
 
 # Step 9: INTERNAL COMMENT FOR STEP 9
-# - title: 
-#  description: 
-#  event: 
-#  actions: 
-#  - type: 
+# - title:
+#  description:
+#  event:
+#  actions:
+#  - type:
 
 # Step 10: INTERNAL COMMENT FOR STEP 10
-# - title: 
-#  description: 
-#  event: 
-#  actions: 
-#  - type: 
+# - title:
+#  description:
+#  event:
+#  actions:
+#  - type:
 
 # Add additional steps below
