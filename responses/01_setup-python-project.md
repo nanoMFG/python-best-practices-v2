@@ -43,7 +43,9 @@ myreponame
 
 We'll start with the basics and explain the purpose of each element as we go.  At the end we'll have a working python application with an internal package.
 
-So let's get started!
+So let's get started!  
+
+Check the comment below for the first step.
 <!--
 ### Prerequisites
 
