@@ -15,6 +15,8 @@ before:
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
   - type: updateBranchProtection
+    store:
+      repository_url: '{{ payload.repository.html_url }}'
   # The following tags are optional:
   # By default this action applies protection to the default branch on the repo
   # branch: main
@@ -32,6 +34,7 @@ steps:
 #   - PR (created by learner)
 #
 #
+
   - title: Add a README.md file. 
     description: Use a template and setup a nice README.md to build on as your project takes shape.
     event: 
@@ -48,8 +51,9 @@ steps:
         recursive: true
         sha: "%payload.pull_request.head.sha%"
         store:
-          firstPullNumber: "%payload.pull_request.number%"
-          firstPullUrl: "%payload.pull_request.html_url%"
+          first_pull_number: "%payload.pull_request.number%"
+          first_pull_url: "%payload.pull_request.html_url%"
+          first_pull_head_ref: "%payload.pull_request.head.ref%"
 
       # check for a file in a tree
       - type: gate
@@ -75,6 +79,55 @@ steps:
         #######################################################
       - type: respond
         with: 01_added-README.md
+
+  #############################################################
+  # Step 1-2
+  #############################################################
+  - title: Add a LICENSE file. 
+    description: Use GitHub to add a LICENSE file from a template.
+    event: pull_request.synchronize
+    link: '{{store.first_pull_url}}' 
+    actions:
+      - type: respond
+        with: good-job.md
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+        store:
+          first_pull_number: "%payload.pull_request.number%"
+          first_pull_url: "%payload.pull_request.html_url%"
+
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:LICENSE"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: LICENSE
+            tree: "%actions.isInTree.data.tree%"
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: "LICENSE"
+              editLink: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%"
+              fileName: LICENSE
+        #######################################################
+        # End filepath verification
+        #######################################################
+      - type: respond
+        with: 01_added-LICENSE.md
+        data:
+          quicklink: "{{ store.repositoryUrl }}/new/{{ payload.pull_request.head.ref }}?filename=.gitignore"
 
     #- type: getFileContents
     #  action_id: readMeContents
