@@ -14,6 +14,13 @@ before:
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
+  - type: updateBranchProtection
+  # The following tags are optional:
+  # By default this action applies protection to the default branch on the repo
+  # branch: main
+  # Might want to use these tags
+  # required_status_checks: 
+  # required_pull_request_reviews:
   
 # Steps for the course
 # A list of steps that take the learner through the course
