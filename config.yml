@@ -53,6 +53,7 @@ steps:
         store:
           first_pull_number: "%payload.pull_request.number%"
           first_pull_url: "%payload.pull_request.html_url%"
+          first_pull_head_ref: "%payload.pull_request.head.ref%"
 
       # check for a file in a tree
       - type: gate
@@ -83,13 +84,14 @@ steps:
   # Step 1-2
   #############################################################
   - title: Add a LICENSE file. 
-    description: Use a template and setup a nice README.md to build on as your project takes shape.
-    event: 
-      - pull_request.synchronize
+    description: Use GitHub to add a LICENSE file from a template.
+    event: pull_request.synchronize
     link: '{{store.first_pull_url}}' 
     actions:
+      - type: respond
+        with: good-job.md
     ###########################################################
-    # Validate the filepath for the README.md file
+    # Validate the filepath for the expected file
     ###########################################################
       # get tree
       - type: getTree
@@ -125,7 +127,8 @@ steps:
       - type: respond
         with: 01_added-LICENSE.md
         data:
-          quicklink: "{{ store.repositoryUrl }}/new/main?filename=.gitignore"
+          quicklink: "{{ store.repositoryUrl }}/new/{{ payload.pull_request.head.ref }}?filename=.gitignore"
+
     #- type: getFileContents
     #  action_id: readMeContents
     #  filename: 'README.md'
