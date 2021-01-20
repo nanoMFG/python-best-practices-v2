@@ -32,12 +32,16 @@ steps:
 #   - PR (created by learner)
 #
 #
-  - title: Set up your Project 
-    description: NA
-    event: pull_request.opened
+  - title: Add a README.md file. 
+    description: Use a template and setup a nice README.md to build on as your project takes shape.
+    event: 
+      - pull_request.opened
+      - pull_request.edited
     link: '{{store.first_issue_url}}' 
     actions:
+    ###########################################################
     # Validate the filepath for the README.md file
+    ###########################################################
       # get tree
       - type: getTree
         action_id: isInTree
@@ -66,8 +70,11 @@ steps:
               needFile: "README.md"
               editLink: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%"
               fileName: README.md
+        #######################################################
         # End filepath verification
         #######################################################
+      - type: respond
+        with: 01_added-README.md
 
     #- type: getFileContents
     #  action_id: readMeContents
