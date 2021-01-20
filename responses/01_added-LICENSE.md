@@ -12,4 +12,4 @@ use the link below, or use the GitHub interface to add a `.gitignore` file to th
 to the LICENSE file, GitHub wil recognize this speacial file name and open up a selection interface
 from which you can select: Python.  
 
-(add a .gitignore)[{{quicklink}}]
+:bulb: (add a .gitignore)[{{quicklink}}]

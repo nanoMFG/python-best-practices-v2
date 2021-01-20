@@ -83,6 +83,8 @@ steps:
         #######################################################
       - type: respond
         with: 01_added-README.md
+        data:
+          quicklink: "{{ store.repositoryUrl }}/new/{{ payload.pull_request.head.ref }}?filename=LICENSE"
 
   #############################################################
   # Step 1-2
@@ -106,9 +108,6 @@ steps:
         action_id: isInTree
         recursive: true
         sha: "%payload.pull_request.head.sha%"
-        store:
-          first_pull_number: "%payload.pull_request.number%"
-          first_pull_url: "%payload.pull_request.html_url%"
 
       # check for a file in a tree
       - type: gate
