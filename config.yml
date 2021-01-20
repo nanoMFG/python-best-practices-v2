@@ -11,6 +11,9 @@ before:
   - type: createIssue
     title: Set up a Python Project
     body: 01_setup-python-project.md
+    store: 
+      first_issue_num: '{{result.data.number}}'
+      first_issue_url: '{{result.data.html_url}}'
   - type: updateBranchProtection
   # The following tags are optional:
   # By default this action applies protection to the default branch on the repo
@@ -25,38 +28,75 @@ before:
 
 steps:
 # Step 1: Set up a Python Project
+# Artifacts:
+#   - PR (created by learner)
+#
+#
   - title: Set up your Project 
     description: NA
-    event: push 
-    link: '{{ repoUrl }}/issues/1' 
+    event: pull_request.opened
+    link: '{{store.first_issue_url}}' 
     actions:
-    - type: getFileContents
-      action_id: readMeContents
-      filename: 'README.md'
-    - type: gate 
-      # Checks whether 'README' text is in README.md
-      left: '/\README/g'     
-      operator: test
-      right: '%actions.readMeContents%'
-      else:
-        - type: respond
-          with: 01_bad-README.md
-          issue: 1
-    - type: getFileContents
-      action_id: licenseContents
-      filename: 'LICENSE'
-    - type: gate
-      # Checks for exact license header
-      left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'     
-      operator: test
-      right: '%actions.licenseContents%'
-      else:
-        - type: respond
-          with: 01_bad-LICENSE.md
-          issue: 1
-    - type: respond
-      with: 01_make-setup.md
-      issue: 1
+    # Validate the filepath for the README.md file
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: "%payload.pull_request.head.sha%"
+        store:
+          firstPullNumber: "%payload.pull_request.number%"
+          firstPullUrl: "%payload.pull_request.html_url%"
+
+      # check for a file in a tree
+      - type: gate
+        left: "%actions.isInTree.data.tree%"
+        operator: includes
+        right: "path:README.md"
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: README.md
+            tree: "%actions.isInTree.data.tree%"
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: "%actions.fileLocation.path%"
+              needFile: "README.md"
+              editLink: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%"
+              fileName: README.md
+        # End filepath verification
+        #######################################################
+
+    #- type: getFileContents
+    #  action_id: readMeContents
+    #  filename: 'README.md'
+    #- type: gate 
+    #   Checks whether 'README' text is in README.md
+    #  left: '/\README/g'     
+    #  operator: test
+    #  right: '%actions.readMeContents%'
+    #  else:
+    #    - type: respond
+    #      with: 01_bad-README.md
+    #      issue: 1
+    #- type: getFileContents
+    #  action_id: licenseContents
+    #- type: gate
+    #  # Checks for exact license header
+    #  left: '/MIT\s\License\n\nCopyright\s\(c\)\s202\d\snanoMFG/g'     
+    #  operator: test
+    #  right: '%actions.licenseContents%'
+    #  else:
+    #    - type: respond
+    #      with: 01_bad-LICENSE.md
+    #      issue: 1
+    #- type: respond
+    #  with: 01_make-setup.md
+    #  issue: 1
+
+
 # Step 2: Create setup.py
   - title: Create a Setup.py
     description: NA
@@ -214,7 +254,40 @@ steps:
       with: 04_successful-push.md
       issue: 4
 
-# Step 6: INTERNAL COMMENT FOR STEP 6
+# Step 8: Fix failing test in the repository
+  - title: Fix a failing test
+    description: Commit the fix to the test in a new branch, create a pull request to merge to fix pytest branch
+    event: 
+      - pull_request
+      - check_suite.completed
+    link: '{{ repoUrl }}/issues/4' 
+    actions:
+      - type: gate
+        left: "%payload.pull_request.title%"
+        operator: ===
+        right: Fix Pytest
+        else:
+          - type: respond
+            with: 04_bad-pull-request.md
+            issue: 1
+      - type: respond
+        with: 04_successful-pr.md
+        issue: 1
+      - type: gate
+        left: "%payload.check_suite.conclusion%"
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: 04_bad-check-run.md
+            issue: 1
+      - type: respond
+        with: 04_successful-push.md
+        issue: 1
+
+
+# Step 9: Create a new test
+# same structure as Step 8 with some additional checks maybe checking how many pytests ran.
 # - title: 
 #  description: 
 #  event: 
