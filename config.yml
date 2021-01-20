@@ -14,6 +14,8 @@ before:
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
+  # add separate comment for the add README.md activity, here:
+  
   - type: updateBranchProtection
     store:
       repository_url: '{{ payload.repository.html_url }}'
