@@ -58,11 +58,11 @@ before:
   #    first_pull_url: "{{result.data.html_url}}"
   # debug
   - type: respond
-    with: d-check-a-value
+    with: d-check-a-value.md
     data:
       value: "{{ repository_name }}"
   - type: respond
-    with: d-check-a-value
+    with: d-check-a-value.md
     data:
       value: "{{ repository_default_branch }}"
   
