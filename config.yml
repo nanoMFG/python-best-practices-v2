@@ -27,7 +27,7 @@ before:
     repo: "{{ store.repository_name }}"
     branch: "{{ store.repository_default_branch }}"
     store:
-      main_sha: "%result.commit.sha%"
+      main_sha: "%result.data.commit.sha%"
   # Create branch for 01 steps
   #- type: octokit
   #  method: git.createRef
