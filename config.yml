@@ -21,13 +21,13 @@ before:
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
   # Get the sha hash of the main branch
-  #- type: octokit
-  #  method: repos.getBranch
-  #  owner: "%store.repository_owner%"
-  #  repo: "%store.repository_name%"
-  #  branch: "%store.repository_default_branch%"
-  #  store:
-  #    main_sha: "%result.commit.sha%"
+  - type: octokit
+    method: repos.getBranch
+    owner: "{{ store.repository_owner }}"
+    repo: "{{ store.repository_name }}"
+    branch: "{{ store.repository_default_branch }}"
+    store:
+      main_sha: "%result.commit.sha%"
   # Create branch for 01 steps
   #- type: octokit
   #  method: git.createRef
@@ -66,7 +66,7 @@ before:
     issue: "{{store.first_issue_num}}"
     with: d-check-a-value.md
     data:
-      value: "{{ store.repository_default_branch }}"
+      value: "{{ store.main_sha }}"
   
   # Respond in first issue with first activity
   - type: respond
