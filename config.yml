@@ -33,7 +33,7 @@ before:
     method: git.createRef
     owner: "{{ store.repository_owner }}"
     repo: "{{ store.repository_name }}"
-    ref: "refs/heads/add-first-files"
+    ref: "refs/head/add-first-files"
     sha: "{{ store.main_sha }}"
     store:
       first_branch_url: "%result.data.url%"
