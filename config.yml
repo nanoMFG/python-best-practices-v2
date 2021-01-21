@@ -29,14 +29,12 @@ before:
     store:
       main_sha: "%result.data.commit.sha%"
   # Create branch for 01 steps
-
   #- type: octokit
     #method: git.createRef
     #owner: "{{ store.repository_owner }}"
     #repo: "{{ store.repository_name }}"
     #ref: "refs/heads/add-first-files"
     #sha: "{{ store.main_sha }}"
-
     #store:
     #  first_branch_url: "%result.data.url%"
     #  first_branch_name: "add-first-files"
@@ -47,7 +45,8 @@ before:
   #  new_name: "README.md"
   #  branch: "add-first-files"
   #  message: "Added a README.md from template"
-  # Create the first issue  
+
+   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
     body: 01_setup-python-project.md
@@ -68,6 +67,11 @@ before:
     with: d-check-a-value.md
     data:
       value: "{{ store.repository_name }}"
+  - type: respond
+    issue: "{{store.first_issue_num}}"
+    with: d-check-a-value.md
+    data:
+      value: "{{ store.repository_owner }}"
   - type: respond
     issue: "{{store.first_issue_num}}"
     with: d-check-a-value.md
