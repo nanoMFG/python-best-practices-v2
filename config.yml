@@ -52,7 +52,7 @@ before:
   # Respond in first issue with first activity
   - type: respond
     with: 01_add-a-README.md
-    issue: {{store.first_issue_num}}
+    issue: "{{store.first_issue_num}}"
     data:
       readmelink: "%store.first_pull_url"
 
