@@ -46,7 +46,7 @@ before:
   #  branch: "add-first-files"
   #  message: "Added a README.md from template"
 
-   Create the first issue  
+  #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
     body: 01_setup-python-project.md
