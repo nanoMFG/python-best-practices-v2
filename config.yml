@@ -57,16 +57,16 @@ before:
   #    first_pull_num: "{{result.data.number}}"
   #    first_pull_url: "{{result.data.html_url}}"
   # debug
-  #- type: respond
-  #  issue: "{{store.first_issue_num}}"
-  #  with: d-check-a-value.md
-  #  data:
-  #    value: "{{ repository_name }}"
-  #- type: respond
-  #  issue: "{{store.first_issue_num}}"
-  #  with: d-check-a-value.md
-  #  data:
-  #    value: "{{ repository_default_branch }}"
+  - type: respond
+    issue: "{{store.first_issue_num}}"
+    with: d-check-a-value.md
+    data:
+      value: "{{ store.repository_name }}"
+  - type: respond
+    issue: "{{store.first_issue_num}}"
+    with: d-check-a-value.md
+    data:
+      value: "{{ store.repository_default_branch }}"
   
   # Respond in first issue with first activity
   - type: respond
