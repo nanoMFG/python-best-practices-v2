@@ -29,12 +29,14 @@ before:
     store:
       main_sha: "%result.data.commit.sha%"
   # Create branch for 01 steps
-  - type: octokit
-    method: git.createRef
-    owner: "{{ store.repository_owner }}"
-    repo: "{{ store.repository_name }}"
-    ref: "refs/heads/add-first-files"
-    sha: "{{ store.main_sha }}"
+
+  #- type: octokit
+    #method: git.createRef
+    #owner: "{{ store.repository_owner }}"
+    #repo: "{{ store.repository_name }}"
+    #ref: "refs/heads/add-first-files"
+    #sha: "{{ store.main_sha }}"
+
     #store:
     #  first_branch_url: "%result.data.url%"
     #  first_branch_name: "add-first-files"
