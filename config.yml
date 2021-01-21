@@ -8,17 +8,55 @@ template:
   description: Description
 
 before:
+  - type: updateBranchProtection
+    store:
+      repository_name: '{{ payload.repository.name }}'
+      repository_url: '{{ payload.repository.html_url }}'
+      repository_owner: '{{ payload.repository.owner.login }}'
+      repository_default_branch: '{{ payload.repository.default_branch }}'
+  # Get the sha has of the main branch
+  - type: octokit
+    method: repos.getBranch
+    owner: {{ store.repository_owner }}
+    repo: {{ store.repository_name }}
+    branch: {{ store.repository_default_branch }}
+    store:
+      main_sha: "%result.commit.sha%"
+  # Create branch for 01 steps
+  - type: octokit
+    method: git.createRef
+    owner: {{ store.repository_owner }}
+    repo: {{ store.repository_name }}
+    ref: "add-first-files"
+    sha: {{ store.main_sha }}
+  - type: createFile
+    filename: "t-README-template.md"
+    new_name: "README.md"
+    branch: "add-first-files"
+    message: "Added a README.md from template"
+  # Create the first issue  
   - type: createIssue
     title: Set up a Python Project
     body: 01_setup-python-project.md
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
-  # add separate comment for the add README.md activity, here:
-
-  - type: updateBranchProtection
+  # Create first pull request
+  - type: createPullRequest
+    title: "Add first files to the project"
+    body: "nothing yet"
+    head: "add-first-files"
     store:
-      repository_url: '{{ payload.repository.html_url }}'
+      first_pull_num: "{{result.data.number}}"
+      first_pull_url: "{{result.data.html_url}}"
+  # Respond in first issue with first activity
+  - type: respond
+    with: 01_add-a-README.md
+    issue: "{{store.first_issue_num}}"
+    data:
+      readmelink: "%store.first_pull_url"
+
+  
   # The following tags are optional:
   # By default this action applies protection to the default branch on the repo
   # branch: main
