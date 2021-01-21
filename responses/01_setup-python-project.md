@@ -6,14 +6,16 @@ Of course, no practice can be considered "best" for every situation.  Many of th
 This is intended to be a stepping stone for modest python applications away from monolithic single scripts, or cluttered notebooks and toward code that is more maintainable, easier to read, easier to test and install and ultimately easier for **others** to use and contribute to.
 
 
-where the primary functions are collected into a python [module file](https://docs.python.org/3/tutorial/modules.html) within a simple [package]()
+Need links and clean-up below:
+* primary functions and classes are collected into a python [module files](https://docs.python.org/3/tutorial/modules.html) within a simple [package](https://docs.python.org/3/tutorial/modules.html#packages).
+* docstrings are used with a consistent style to document modules, classes and functions
+* A code formatter is used to apply consistent styling
+* ...
 
 <!-- ### Built With Not sure wha to put here yet -DA -->
 
 <!-- GETTING STARTED -->
 ## Getting Started: Directory Layout
-
-If you have ever been on GitHub, you must have noticed that a regular project’s structure looks like this:
 
 There are many ways to structure a python application.  Many factors can influence the final structure including: underlying framework (such as web applications), deployment context (some environments require special files or directories) and conventions of various libraries that may be used in the application.
 

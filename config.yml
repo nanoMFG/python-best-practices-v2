@@ -14,6 +14,8 @@ before:
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
+  # add separate comment for the add README.md activity, here:
+
   - type: updateBranchProtection
     store:
       repository_url: '{{ payload.repository.html_url }}'
@@ -54,10 +56,10 @@ steps:
           first_pull_number: "%payload.pull_request.number%"
           first_pull_url: "%payload.pull_request.html_url%"
           first_pull_head_ref: "%payload.pull_request.head.ref%"
-      - type: respond
-        with: d-check-a-value.md
-        data: 
-          value: "head.sha: %payload.pull_request.head.sha%"
+      #- type: respond
+      #  with: d-check-a-value.md
+      #  data: 
+      #    value: "head.sha: %payload.pull_request.head.sha%"
 
       # check for a file in a tree
       - type: gate
@@ -84,7 +86,7 @@ steps:
       - type: respond
         with: 01_added-README.md
         data:
-          quicklink: "{{ store.repositoryUrl }}/new/{{ payload.pull_request.head.ref }}?filename=LICENSE"
+          quicklink: "%store.repository_url%/new/%first_pull_head_ref%?filename=LICENSE"
 
   #############################################################
   # Step 1-2
@@ -94,12 +96,12 @@ steps:
     event: pull_request.synchronize
     link: '{{store.first_pull_url}}' 
     actions:
-      - type: respond
-        with: good-job.md
-      - type: respond
-        with: d-check-a-value.md
-        data: 
-          value: "head.sha: %payload.pull_request.head.sha%"
+    #  - type: respond
+    #    with: good-job.md
+    #  - type: respond
+    #    with: d-check-a-value.md
+    #    data: 
+    #      value: "head.sha: %payload.pull_request.head.sha%"
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
@@ -134,7 +136,7 @@ steps:
       - type: respond
         with: 01_added-LICENSE.md
         data:
-          quicklink: "{{ store.repositoryUrl }}/new/{{ payload.pull_request.head.ref }}?filename=.gitignore"
+          quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore"
 
     #- type: getFileContents
     #  action_id: readMeContents
