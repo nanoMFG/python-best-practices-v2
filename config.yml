@@ -17,9 +17,9 @@ before:
   # Get the sha hash of the main branch
   - type: octokit
     method: repos.getBranch
-    owner: {{ store.repository_owner }}
-    repo: {{ store.repository_name }}
-    branch: {{ store.repository_default_branch }}
+    owner: "{{ store.repository_owner }}"
+    repo: "{{ store.repository_name }}"
+    branch: "{{ store.repository_default_branch }}"
     store:
       main_sha: "%result.commit.sha%"
   # Create branch for 01 steps
