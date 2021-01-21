@@ -9,6 +9,12 @@ template:
 
 before:
   - type: updateBranchProtection
+    # The following tags are optional:
+    # By default this action applies protection to the default branch on the repo
+    # branch: main
+    # Might want to use these tags
+    # required_status_checks: 
+    # required_pull_request_reviews:
     store:
       repository_name: '{{ payload.repository.name }}'
       repository_url: '{{ payload.repository.html_url }}'
@@ -23,18 +29,18 @@ before:
     store:
       main_sha: "%result.commit.sha%"
   # Create branch for 01 steps
-  #- type: octokit
-  #  method: git.createRef
-  #  owner: {{ store.repository_owner }}
-  #  repo: {{ store.repository_name }}
-  #  ref: "add-first-files"
-  #  sha: {{ store.main_sha }}
+  - type: octokit
+    method: git.createRef
+    owner: "{{ store.repository_owner }}"
+    repo: "{{ store.repository_name }}"
+    ref: "add-first-files"
+    sha: "{{ store.main_sha }}"
   # Create the README.md file for the user
-  #- type: createFile
-  #  filename: "t-README-template.md"
-  #  new_name: "README.md"
-  #  branch: "add-first-files"
-  #  message: "Added a README.md from template"
+  - type: createFile
+    filename: "t-README-template.md"
+    new_name: "README.md"
+    branch: "add-first-files"
+    message: "Added a README.md from template"
   # Create the first issue  
   - type: createIssue
     title: Set up a Python Project
@@ -43,27 +49,19 @@ before:
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
   # Create first pull request
-  #- type: createPullRequest
-  #  title: "Add first files to the project"
-  #  body: "nothing yet"
-  #  head: "add-first-files"
-  #  store:
-  #    first_pull_num: "{{result.data.number}}"
-  #    first_pull_url: "{{result.data.html_url}}"
+  - type: createPullRequest
+    title: "Add first files to the project"
+    body: "nothing yet"
+    head: "add-first-files"
+    store:
+      first_pull_num: "{{result.data.number}}"
+      first_pull_url: "{{result.data.html_url}}"
   # Respond in first issue with first activity
   - type: respond
     with: 01_add-a-README.md
     issue: "{{store.first_issue_num}}"
-   # data:
-   #   readmelink: "%store.first_pull_url"
-
-  
-  # The following tags are optional:
-  # By default this action applies protection to the default branch on the repo
-  # branch: main
-  # Might want to use these tags
-  # required_status_checks: 
-  # required_pull_request_reviews:
+    data:
+      readmelink: "%store.first_pull_url"
   
 # Steps for the course
 # A list of steps that take the learner through the course
