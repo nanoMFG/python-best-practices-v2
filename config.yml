@@ -253,7 +253,7 @@ steps:
         #######################################################
       - type: createReview
         body: 01_merge-startup.md
-        pullRequest: {{store.first_pull_num}}
+        pullRequest: "{{store.first_pull_num}}"
         event: APPROVE
 
       - type: respond
