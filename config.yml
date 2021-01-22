@@ -28,14 +28,6 @@ before:
     branch: "{{ store.repository_default_branch }}"
     store:
       main_sha: "%result.data.commit.sha%"
-
-  # Create the README.md file for the user
-  #- type: createFile
-  #  filename: "t-README-template.md"
-  #  new_name: "README.md"
-  #  branch: "add-first-files"
-  #  message: "Added a README.md from template"
-
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
@@ -68,12 +60,15 @@ before:
     data:
       value: "{{ store.main_sha }}"
   # Create branch for 01 steps
-  - type: octokit
-    method: git.createRef
-    owner: "{{ store.repository_owner }}"
-    repo: "{{ store.repository_name }}"
-    ref: "heads/add-first-files"
-    sha: "{{ store.main_sha }}"
+  # Not sure why this doesn't work
+  # Plan B, add the branch to the template repo
+  # sync with master, addfile to branch openPR...
+  #- type: octokit
+  #  method: git.createRef
+  #  owner: "{{ store.repository_owner }}"
+  #  repo: "{{ store.repository_name }}"
+  #  ref: "refs/heads/add-first-files"
+  #  sha: "{{ store.main_sha }}"
     #store:
     #  first_branch_url: "%result.data.url%"
     #  first_branch_name: "add-first-files"
@@ -84,7 +79,22 @@ before:
     issue: "{{store.first_issue_num}}"
     #data:
     #  readmelink: "%store.first_pull_url"
-  
+  # Make sure startup is synced with main
+  #   
+  # Create the README.md file for the user
+  - type: createFile
+    filename: "t-README-template.md"
+    new_name: "README.md"
+    branch: "startup"
+    message: "Added a README.md from template"
+  # Open the first PR
+  - type: createPullRequest
+    title: "Add preliminary files"
+    body: "01_pull-request-body.md"
+    head: "startup"
+    store:
+      first_pull_num: "{{ result.data.number }}"
+      first_pull_url: "{{ result.data.html_url }}"
 # Steps for the course
 # A list of steps that take the learner through the course
 # Create one step for each action that a learner will complete
