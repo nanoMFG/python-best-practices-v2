@@ -57,12 +57,7 @@ before:
     #  first_branch_url: "%result.data.url%"
     #  first_branch_name: "add-first-files"
   
-  # Respond in first issue with first activity
-  - type: respond
-    with: 01_add-a-README.md
-    issue: "{{store.first_issue_num}}"
-    #data:
-    #  readmelink: "%store.first_pull_url"
+  
   # Make sure startup is synced with main
   #   
   # Create the README.md file for the user
@@ -79,22 +74,37 @@ before:
     store:
       first_pull_num: "{{ result.data.number }}"
       first_pull_url: "{{ result.data.html_url }}"
-  # Respond with add LICNESE instructions.
+  # Respond in first issue with first activity
   - type: respond
-    with: "01_added-README.md"
-    issue: "{{ store.first_pull_num }}"
+    with: 01_add-a-README.md
+    issue: "{{store.first_issue_num}}"
     data:
-      quicklink: "%store.repository_url%/new/%first_pull_head_ref%?filename=LICENSE"
+      readmelink: "%store.first_pull_url"
+  # Respond in first PR with add LICENSE instructions.
+  #- type: respond
+  #  with: "01_added-README.md"
+  #  issue: "{{ store.first_pull_num }}"
+  #  data:
+  #    quicklink: "%store.repository_url%/new/%first_pull_head_ref%?filename=LICENSE"
 # Steps for the course
 # A list of steps that take the learner through the course
 # Create one step for each action that a learner will complete
 
 steps:
-# Step 1: Set up a Python Project
-# Artifacts:
-#   - PR (created by learner)
+# Step 1: Review the README.
 #
 #
+- title: Review the README.md file
+  description: Add a pull request review to approve the README.md file
+  event: pull_request_review.submitted
+  link: "{{store.first_pull_url}}"
+  actions:
+  # Respond in first PR with add LICENSE instructions.
+  - type: respond
+    with: "01_added-README.md"
+    issue: "{{ store.first_pull_num }}"
+    data:
+      quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
 
   # - title: Add a README.md file. 
   #   description: Use a template and setup a nice README.md to build on as your project takes shape.
@@ -244,6 +254,7 @@ steps:
         #######################################################
       - type: createReview
         body: 01_merge-startup.md
+        pullRequest: {{store.first_pull_num}}
         event: APPROVE
 
       - type: respond
