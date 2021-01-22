@@ -94,7 +94,7 @@ steps:
 # Step 1: Review the README.
 #
 #
-- title: Review the README.md file
+- title: Review the README file
   description: Add a pull request review to approve the README.md file
   event: pull_request_review.submitted
   link: "{{store.first_pull_url}}"
