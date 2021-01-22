@@ -94,16 +94,16 @@ steps:
 # Step 1: Review the README.
 #
 #
- - title: Review the README file
-   description: Add a pull request review to approve the README.md file
-   event: pull_request_review.submitted
-   link: '{{store.first_pull_url}}'
-   actions:
-    - type: respond
-      with: 01_added-README.md
-      issue: "{{ store.first_pull_num }}"
-      data:
-       quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
+  - title: Review the README file
+    description: Add a pull request review to approve the README.md file
+    event: pull_request_review.submitted
+    link: '{{store.first_pull_url}}'
+    actions:
+      - type: respond
+        with: 01_added-README.md
+        issue: "{{ store.first_pull_num }}"
+        data:
+         quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
 
   # - title: Add a README.md file. 
   #   description: Use a template and setup a nice README.md to build on as your project takes shape.
