@@ -35,6 +35,8 @@ before:
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
+    comments:
+      - 00_directory-structure.md
   # Create first pull request
   #- type: createPullRequest
   #  title: "Add first files to the project"
@@ -79,7 +81,7 @@ before:
     with: 01_add-a-README.md
     issue: "{{store.first_issue_num}}"
     data:
-      readmelink: "%store.first_pull_url"
+      readmelink: "%store.first_pull_url%"
   # Respond in first PR with add LICENSE instructions.
   #- type: respond
   #  with: "01_added-README.md"
@@ -91,13 +93,13 @@ before:
 # Create one step for each action that a learner will complete
 
 steps:
-# Step 1: Review the README.
+# Step 1-1: Review the README.
 #
 #
-  - title: Review the README file
+  - title: Start Here!
     description: Add a pull request review to approve the README.md file
     event: pull_request_review.submitted
-    link: '{{store.first_pull_url}}'
+    link: '{{store.first_issue_url}}'
     actions:
       - type: respond
         with: 01_added-README.md
@@ -243,6 +245,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
+            issue: "{{store.first_pull_num}}"
             data:
               haveFile: "%actions.fileLocation.path%"
               needFile: ".gitignore"
@@ -257,6 +260,7 @@ steps:
         event: APPROVE
 
       - type: respond
+        issue: "{{store.first_pull_num}}"
         with: 01_added-gitignore.md
 
         
