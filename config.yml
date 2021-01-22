@@ -242,10 +242,10 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      - type createReview
+      - type: createReview
         body: 01_merge-startup.md
         event: APPROVE
-        
+
       - type: respond
         with: 01_added-gitignore.md
 
