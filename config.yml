@@ -113,6 +113,10 @@ steps:
     # Validate the filepath for the expected file
     ###########################################################
       # get tree
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Hey"
       - type: getTree
         action_id: isInTree
         recursive: true
