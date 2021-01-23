@@ -153,10 +153,10 @@ steps:
     event: pull_request.synchronize
     link: '{{store.first_pull_url}}' 
     actions:
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "In sync"
+      # - type: respond
+      #   with: d-check-a-value.md
+      #   data:
+      #     value: "In sync"
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
