@@ -8,9 +8,9 @@ For this activity, we did most of the work for you.  Click the link below to hea
 have commited a README file that is based on a template we like.  
 
 ### :keyboard: Activity: Review our README.md file
-:bulb:[This link]({{readmelink}}) will land you in a pull request where we can take a look at the 
-README.md file and add the remaining 
-preliminary files, then we'll move on to the fun stuff, some live machine leaning code!
+##### :bulb:[Go here]({{readmelink}}) 
+Navigate to the pull request we opened where we can take a look at the README.md file and 
+add the remaining preliminary files.  After that, we'll move on to the fun stuff, some live machine leaning code!
 
 #### References
 

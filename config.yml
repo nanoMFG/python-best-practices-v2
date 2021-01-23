@@ -68,6 +68,8 @@ before:
     title: "Add preliminary files"
     body: "01_pull-request-body.md"
     head: "startup"
+    data:
+      fileschangedlink: "{{result.data.html_url}}/files"
     store:
       first_pull_num: "{{ result.data.number }}"
       first_pull_url: "{{ result.data.html_url }}"
@@ -179,6 +181,10 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Nice work!  Keep going..."
         # Close first issue
       - type: closeIssue
         issue: "{{first_issue_num}}"
