@@ -154,6 +154,10 @@ steps:
     # Validate the filepath for the expected file
     ###########################################################
       # get tree
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Checking for .gitignore..."
       - type: getTree
         action_id: isInTree
         recursive: true
@@ -181,10 +185,6 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "Nice work!  Keep going..."
         # Close first issue
       - type: closeIssue
         issue: "{{first_issue_num}}"
