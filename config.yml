@@ -82,13 +82,7 @@ before:
     issue: "{{store.first_issue_num}}"
     data:
       readmelink: "%store.first_pull_url%"
-  # Respond in first PR with add LICENSE instructions.
-  #- type: respond
-  #  with: "01_added-README.md"
-  #  issue: "{{ store.first_pull_num }}"
-  #  data:
-  #    quicklink: "%store.repository_url%/new/%first_pull_head_ref%?filename=LICENSE"
-# Steps for the course
+  
 # A list of steps that take the learner through the course
 # Create one step for each action that a learner will complete
 
@@ -107,57 +101,6 @@ steps:
         data:
          quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
 
-  # - title: Add a README.md file. 
-  #   description: Use a template and setup a nice README.md to build on as your project takes shape.
-  #   event: 
-  #     - pull_request.opened
-  #     - pull_request.edited
-  #   link: '{{store.first_issue_url}}' 
-  #   actions:
-  #   ###########################################################
-  #   # Validate the filepath for the README.md file
-  #   ###########################################################
-  #     # get tree
-  #     - type: getTree
-  #       action_id: isInTree
-  #       recursive: true
-  #       sha: "%payload.pull_request.head.sha%"
-  #       store:
-  #         first_pull_number: "%payload.pull_request.number%"
-  #         first_pull_url: "%payload.pull_request.html_url%"
-  #         first_pull_head_ref: "%payload.pull_request.head.ref%"
-  #     #- type: respond
-  #     #  with: d-check-a-value.md
-  #     #  data: 
-  #     #    value: "head.sha: %payload.pull_request.head.sha%"
-
-  #     # check for a file in a tree
-  #     - type: gate
-  #       left: "%actions.isInTree.data.tree%"
-  #       operator: includes
-  #       right: "path:README.md"
-  #       else:
-  #         # if file isn't where expected find true location
-  #         - type: findInTree
-  #           path: README.md
-  #           tree: "%actions.isInTree.data.tree%"
-  #           action_id: fileLocation
-  #         # help user with proper file location
-  #         - type: respond
-  #           with: e-wrong-file-location.md
-  #           data:
-  #             haveFile: "%actions.fileLocation.path%"
-  #             needFile: "README.md"
-  #             editLink: "%payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%"
-  #             fileName: README.md
-  #       #######################################################
-  #       # End filepath verification
-  #       #######################################################
-  #     - type: respond
-  #       with: 01_added-README.md
-  #       data:
-  #         quicklink: "%store.repository_url%/new/%first_pull_head_ref%?filename=LICENSE"
-
   #############################################################
   # Step 1-2
   #############################################################
@@ -166,12 +109,6 @@ steps:
     event: pull_request.synchronize
     link: '{{store.first_pull_url}}' 
     actions:
-    #  - type: respond
-    #    with: good-job.md
-    #  - type: respond
-    #    with: d-check-a-value.md
-    #    data: 
-    #      value: "head.sha: %payload.pull_request.head.sha%"
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
@@ -216,12 +153,10 @@ steps:
     event: pull_request.synchronize
     link: '{{store.first_pull_url}}' 
     actions:
-    #  - type: respond
-    #    with: good-job.md
-    #  - type: respond
-    #    with: d-check-a-value.md
-    #    data: 
-    #      value: "head.sha: %payload.pull_request.head.sha%"
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "In sync"
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
@@ -230,6 +165,10 @@ steps:
         action_id: isInTree
         recursive: true
         sha: "%payload.pull_request.head.sha%"
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "%payload.pull_request.head.sha%"
 
       # check for a file in a tree
       - type: gate
@@ -237,6 +176,10 @@ steps:
         operator: includes
         right: "path:.gitignore"
         else:
+          - type: respond
+            with: d-check-a-value.md
+            data:
+              value: "In else"
           # if file isn't where expected find true location
           - type: findInTree
             path: .gitignore
@@ -254,14 +197,15 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      - type: createReview
-        body: 01_merge-startup.md
-        pullRequest: "{{store.first_pull_num}}"
-        event: APPROVE
-
       - type: respond
         issue: "{{store.first_pull_num}}"
         with: 01_added-gitignore.md
+
+      - type: createReview
+        body: 01_merge-startup.md
+        event: APPROVE
+
+     
 
         
     #- type: getFileContents
