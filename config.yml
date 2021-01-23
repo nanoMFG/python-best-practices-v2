@@ -165,10 +165,11 @@ steps:
         action_id: isInTree
         recursive: true
         sha: "%payload.pull_request.head.sha%"
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "%payload.pull_request.head.sha%"
+      # - type: respond
+      #   with: d-check-a-value.md
+      #   issue: "{{store.first_pull_num}}"
+      #   data:
+      #     value: "%payload.pull_request.head.sha%"
 
       # check for a file in a tree
       - type: gate
@@ -176,10 +177,11 @@ steps:
         operator: includes
         right: "path:.gitignore"
         else:
-          - type: respond
-            with: d-check-a-value.md
-            data:
-              value: "In else"
+          # - type: respond
+          #   with: d-check-a-value.md
+          #   issue: "{{store.first_pull_num}}"
+          #   data:
+          #     value: "In else"
           # if file isn't where expected find true location
           - type: findInTree
             path: .gitignore
