@@ -185,6 +185,10 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Okay, let's keep going..."
         # Close first issue
       - type: closeIssue
         issue: "{{first_issue_num}}"
