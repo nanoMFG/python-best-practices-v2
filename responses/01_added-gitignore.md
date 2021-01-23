@@ -1,6 +1,7 @@
-Great!  Let's move on.  
+Nice work! 
 
-If you haven't already, add an "approve" review (see above).  Then merge and close 
-this pull request and we'll see you in the next activity here:
+Now, if you haven't already, add an "approve" review (see above), then...
 
-##### :bulb: [Next activity]({{quicklink}})
+#### :keyboard: Activity: Merge this Pull Request 
+
+Go ahead and hit the merge button, then check the next comment and we'll keep moving along...
