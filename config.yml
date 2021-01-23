@@ -69,7 +69,7 @@ before:
     body: "01_pull-request-body.md"
     head: "startup"
     data:
-      fileschangedlink: "%result.data.html_url%/files"
+      fileschangedlink: "%store.repository_url%/pull/2/files"
     store:
       first_pull_num: "{{ result.data.number }}"
       first_pull_url: "{{ result.data.html_url }}"
@@ -197,7 +197,7 @@ steps:
 # Step 1-4: Merge PR
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
-    event: pull_request.merged
+    event: pull_request.closed
     link: "{{store.first_pull_url}}"
     actions:
       # Close first issue
