@@ -9,12 +9,7 @@ template:
 
 before:
   - type: updateBranchProtection
-    # The following tags are optional:
-    # By default this action applies protection to the default branch on the repo
-    # branch: main
-    # Might want to use these tags
-    # required_status_checks: 
-    # required_pull_request_reviews:
+
     store:
       repository_name: '{{ payload.repository.name }}'
       repository_url: '{{ payload.repository.html_url }}'
@@ -156,10 +151,6 @@ steps:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "Hey"
       # get tree
       - type: getTree
         action_id: isInTree
@@ -188,13 +179,24 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
+        # Close first issue
+      - type: closeIssue
+        issue: "{{first_issue_num}}"
+        # Create next issue
+      - type: createIssue
+        title: Add your Own Python Package
+        body: 02-add-python-code.md
+        store: 
+          second_issue_num: '{{result.data.number}}'
+          second_issue_url: '{{result.data.html_url}}'
+        # respond with link
       - type: respond
         issue: "{{store.first_pull_num}}"
         with: 01_added-gitignore.md
+        data:
+          quicklink: "{{store.second_issue_url}}"
 
-      - type: createReview
-        body: 01_merge-startup.md
-        event: APPROVE
+        # Next step will look for pull_request.opened (by user this time...)
 
 # Step 2: Create setup.py
   - title: Create a Setup.py
