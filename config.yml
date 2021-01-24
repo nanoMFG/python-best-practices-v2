@@ -28,43 +28,39 @@ before:
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
-    body: 01_setup-python-project.md
+    body: 00_welcome.md
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
-    comments:
-      - 00_directory-structure.md
 
   # Make sure startup is synced with main at beginning of course
-  - type: mergeBranch
-    head: main
-    base: startup
+  #- type: mergeBranch
+  #  head: main
+  #  base: startup
 
   # Create the README.md file for the user
-  - type: createFile
-    filename: "t-README-template.md"
-    new_name: "README.md"
-    branch: "startup"
-    message: "Added a README.md from template"
+  #  
 
   # Open the first PR
   # Provide link to files changed tab
-  - type: createPullRequest
-    title: "Add preliminary files"
-    body: "01_pull-request-body.md"
-    head: "startup"
-    data:
-      fileschangedlink: "%store.repository_url%/pull/2/files"
-    store:
-      first_pull_num: "{{ result.data.number }}"
-      first_pull_url: "{{ result.data.html_url }}"
+  # - type: createPullRequest
+  #   title: "Add preliminary files"
+  #   body: "01_pull-request-body.md"
+  #   head: "startup"
+  #   data:
+  #     fileschangedlink: "%store.repository_url%/pull/2/files"
+  #   store:
+  #     first_pull_num: "{{ result.data.number }}"
+  #     first_pull_url: "{{ result.data.html_url }}"
 
   # Respond in first issue with first activity
   - type: respond
-    with: 01_add-a-README.md
+#    with: 01_add-a-README.md
+    with: 01_add-LICENSE.md
     issue: "{{store.first_issue_num}}"
     data:
-      readmelink: "%store.first_pull_url%"
+#      readmelink: "%store.first_pull_url%"
+      quicklink: "{{store.repository_url}}/new/main?filename=LICENSE"
 
 # end before
   
@@ -74,7 +70,7 @@ before:
 steps:
   ###############################################################
   # Step 1: Review the README.
-  # - User submits PR review
+  # - User opens PR
   # - App asks user to submit LICENSE to same branch
   # ToDo
   # - Maybe change to user created branch/PR with a "suggested changes"
@@ -82,27 +78,27 @@ steps:
   # such that the review can be added by app at the end to enable merge.
   # -
   ###############################################################
-  - title: Start Here!
-    description: Add a pull request review to approve the README.md file
-    event: pull_request_review.submitted
-    link: '{{store.first_issue_url}}'
-    actions:
-      - type: respond
-        with: 01_added-README.md
-        issue: "{{ store.first_pull_num }}"
-        data:
-         quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
+  # - title: Start Here!
+  #   description: Add a pull request review to approve the README.md file
+  #   event: pull_request_review.submitted
+  #   link: '{{store.first_issue_url}}'
+  #   actions:
+  #     - type: respond
+  #       with: 01_added-README.md
+  #       issue: "{{ store.first_pull_num }}"
+  #       data:
+  #        quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
 
   #############################################################
-  # Step 2
+  # Step 1
   # - User commits to head branch of first_pull
   # - App checks if LICENSE exists at top-level
   # - App responds, asks user to commit .gitignore
   #############################################################
   - title: Add a LICENSE file. 
     description: Use GitHub to add a LICENSE file from a template.
-    event: pull_request.synchronize
-    link: '{{store.first_pull_url}}' 
+    event: pull_request.opened
+    link: '{{store.first_issue_url}}' 
     actions:
     ###########################################################
     # Validate the filepath for the expected file
@@ -141,7 +137,7 @@ steps:
           quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore"
   
   #############################################################
-  # Step 3
+  # Step 2
   # - User commits to head branch
   # - App checks if .gitignore exists at top-level
   # - App responds, asks user to merge PR
@@ -190,7 +186,10 @@ steps:
       #   with: d-check-a-value.md
       #   data:
       #     value: "Okay, let's keep going..."
-      
+      - type: createReview
+        body: "Nice work!"
+        event: APPROVE
+
       - type: respond
         issue: "{{store.first_pull_num}}"
         with: 01_added-gitignore.md
