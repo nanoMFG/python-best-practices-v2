@@ -182,14 +182,13 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      # - type: respond
-      #   with: d-check-a-value.md
-      #   data:
-      #     value: "Okay, let's keep going..."
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Okay, let's keep going..."
       - type: createReview
         body: "Nice work!"
         event: APPROVE
-
       - type: respond
         issue: "{{store.first_pull_num}}"
         with: 01_added-gitignore.md
