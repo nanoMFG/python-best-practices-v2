@@ -187,11 +187,11 @@ steps:
         data:
           value: "Okay, let's keep going..."
       - type: createReview
-        body: "Nice work!"
+        body: 01_added-gitignore.md
         event: APPROVE
-      - type: respond
-        issue: "{{store.first_pull_num}}"
-        with: 01_added-gitignore.md
+      #- type: respond
+      #  issue: "{{store.first_pull_num}}"
+      #  with: 01_added-gitignore.md
   #############################################################
   # Step 4: Merge PR
   # - User merges first PR
