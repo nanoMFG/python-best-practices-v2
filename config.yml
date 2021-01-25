@@ -7,104 +7,44 @@ template:
   repo: python-best-practices-v2-template
   description: Description
 
+#################################################################
+#################################################################
 before:
   - type: updateBranchProtection
-
     store:
       repository_name: '{{ payload.repository.name }}'
       repository_url: '{{ payload.repository.html_url }}'
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
-  # Get the sha hash of the main branch
-  - type: octokit
-    method: repos.getBranch
-    owner: "{{ store.repository_owner }}"
-    repo: "{{ store.repository_name }}"
-    branch: "{{ store.repository_default_branch }}"
-    store:
-      main_sha: "%result.data.commit.sha%"
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
-    body: 01_setup-python-project.md
+    body: 00_welcome.md
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
-    comments:
-      - 00_directory-structure.md
-  # Create first pull request
-  #- type: createPullRequest
-  #  title: "Add first files to the project"
-  #  body: "nothing yet"
-  #  head: "add-first-files"
-  #  store:
-  #    first_pull_num: "{{result.data.number}}"
-  #    first_pull_url: "{{result.data.html_url}}"
-  # Create branch for 01 steps
-  # Not sure why this doesn't work
-  # Plan B, add the branch to the template repo
-  # sync with master, addfile to branch openPR...
-  #- type: octokit
-  #  method: git.createRef
-  #  owner: "{{ store.repository_owner }}"
-  #  repo: "{{ store.repository_name }}"
-  #  ref: "refs/heads/add-first-files"
-  #  sha: "{{ store.main_sha }}"
-    #store:
-    #  first_branch_url: "%result.data.url%"
-    #  first_branch_name: "add-first-files"
-  
-  
-  # Make sure startup is synced with main
-  #   
-  # Create the README.md file for the user
-  - type: createFile
-    filename: "t-README-template.md"
-    new_name: "README.md"
-    branch: "startup"
-    message: "Added a README.md from template"
-  # Open the first PR
-  - type: createPullRequest
-    title: "Add preliminary files"
-    body: "01_pull-request-body.md"
-    head: "startup"
-    data:
-      fileschangedlink: "%store.repository_url%/pull/2/files"
-    store:
-      first_pull_num: "{{ result.data.number }}"
-      first_pull_url: "{{ result.data.html_url }}"
   # Respond in first issue with first activity
   - type: respond
-    with: 01_add-a-README.md
+    with: 01_add-LICENSE.md
     issue: "{{store.first_issue_num}}"
     data:
-      readmelink: "%store.first_pull_url%"
+      quicklink: "{{store.repository_url}}/new/main?filename=LICENSE"
+# end before
   
-# A list of steps that take the learner through the course
-# Create one step for each action that a learner will complete
-
+# begin steps
+#  - A list of steps that take the learner through the course
+#  - Create one step for each action that a learner will complete
 steps:
-# Step 1-1: Review the README.
-#
-#
-  - title: Start Here!
-    description: Add a pull request review to approve the README.md file
-    event: pull_request_review.submitted
-    link: '{{store.first_issue_url}}'
-    actions:
-      - type: respond
-        with: 01_added-README.md
-        issue: "{{ store.first_pull_num }}"
-        data:
-         quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
-
   #############################################################
-  # Step 1-2
+  # Step 1
+  # - User commits to head branch of first_pull
+  # - App checks if LICENSE exists at top-level
+  # - App responds, asks user to commit .gitignore
   #############################################################
   - title: Add a LICENSE file. 
     description: Use GitHub to add a LICENSE file from a template.
-    event: pull_request.synchronize
-    link: '{{store.first_pull_url}}' 
+    event: pull_request.opened
+    link: '{{store.first_issue_url}}' 
     actions:
     ###########################################################
     # Validate the filepath for the expected file
@@ -138,12 +78,17 @@ steps:
         # End filepath verification
         #######################################################
       - type: respond
-        with: 01_added-LICENSE.md
+        with: 02_add-gitignore.md
         data:
           quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore"
   
   #############################################################
-  # Step 1-3
+  # Step 2: Add a Python .gitignore file.
+  # - User commits to head branch
+  # - App checks if .gitignore exists at top-level
+  # - App responds, asks user to merge PR
+  # ToDo
+  # - Check that it is the right file for Python?
   #############################################################
   - title: Add a .gitignore file. 
     description: Use GitHub to add a .gitignore file from a template.
@@ -154,10 +99,10 @@ steps:
     # Validate the filepath for the expected file
     ###########################################################
       # get tree
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "Checking for .gitignore..."
+      # - type: respond
+      #   with: d-check-a-value.md
+      #   data:
+      #     value: "Checking for .gitignore..."
       - type: getTree
         action_id: isInTree
         recursive: true
@@ -185,39 +130,54 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      # - type: respond
-      #   with: d-check-a-value.md
-      #   data:
-      #     value: "Okay, let's keep going..."
-      
-      - type: respond
-        issue: "{{store.first_pull_num}}"
-        with: 01_added-gitignore.md
+      # Create README.md
+      - type: createFile
+        filename: t-README-template.md
+        branch: "%payload.pull_request.head.ref%"
+        new_name: README.md
+        message: "Created a README.md from a template."
+      # Approve PR 
+      - type: createReview
+        body: 03_added-README-merge.md
+        event: APPROVE
+        data:
+          files_changed_tab: "%store.repository_url%/pull/2/files"
+          readme_link: "%store.repository_url%/blob/%payload.pull_request.head.ref%/README.md"
 
-# Step 1-4: Merge PR
+  #############################################################
+  # Step 3: Merge PR
+  # - User merges first PR
+  # - App closes first issue
+  # - App creates new issue
+  # - App responds in closed PR with link to new issue for next
+  #   step
+  #############################################################
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
     link: "{{store.first_pull_url}}"
     actions:
-      # Close first issue
-      - type: closeIssue
-        issue: "{{store.first_issue_num}}"
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Creating content for the next step..."
       # Create next issue
       - type: createIssue
         title: Add your Own Python Package
-        body: 02_add-python-code.md
+        body: 04_add-python-code.md
         store: 
           second_issue_num: '{{result.data.number}}'
           second_issue_url: '{{result.data.html_url}}'
       # respond with link
       - type: respond
-        issue: "{{store.first_pull_num}}"
-        with: 02_go-to-next-issue.md
+        with: go-to-next-issue.md
         data:
           quicklink: "{{store.second_issue_url}}"
+      # Close first issue
+      - type: closeIssue
+        issue: "%store.first_issue_num%"
 
-# Next step will look for pull_request.opened (by user this time...)
+# The next step should look for pull_request.opened
 
 # Step 2: Create setup.py
   - title: Create a Setup.py
