@@ -35,27 +35,6 @@ before:
 #  - A list of steps that take the learner through the course
 #  - Create one step for each action that a learner will complete
 steps:
-  ###############################################################
-  # Step 1: Review the README.
-  # - User opens PR
-  # - App asks user to submit LICENSE to same branch
-  # ToDo
-  # - Maybe change to user created branch/PR with a "suggested changes"
-  # available for the README -- might work better when ending PR
-  # such that the review can be added by app at the end to enable merge.
-  # -
-  ###############################################################
-  # - title: Start Here!
-  #   description: Add a pull request review to approve the README.md file
-  #   event: pull_request_review.submitted
-  #   link: '{{store.first_issue_url}}'
-  #   actions:
-  #     - type: respond
-  #       with: 01_added-README.md 
-  #       issue: "{{ store.first_pull_num }}"
-  #       data:
-  #        quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
-
   #############################################################
   # Step 1
   # - User commits to head branch of first_pull
@@ -170,18 +149,14 @@ steps:
   # - User merges first PR
   # - App closes first issue
   # - App creates new issue
-  # - App responds in closed PR with link to new issue
+  # - App responds in closed PR with link to new issue for next
+  #   step
   #############################################################
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
     link: "{{store.first_pull_url}}"
     actions:
-      # Test response
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "Hey"
       # Create next issue
       - type: createIssue
         title: Add your Own Python Package
