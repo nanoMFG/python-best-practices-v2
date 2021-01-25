@@ -1,22 +1,21 @@
-# :wave: Welcome to "Python Project Best Practices 
+# :wave: Welcome to "Python Best Practices" 
 Hello and welcome to the interactive GitHub Learning Lab course on Python and "best practices".
 
 ## About The Project
 This project will introduce basic skills for building up a Python project and good habits to follow while developing it.  A commonly used directory structure and its purpose will be presented along with a number of what we consider to be "best practices".
 
-This approach is intended to be a stepping stone for modest python applications away from monolithic single scripts, or cluttered notebooks and toward code that is more maintainable, easier to read, easier to test and install and ultimately easier for **others** to use and contribute to.
+The best practices presented here are intended to be a stepping stone away from monolithic single scripts, or cluttered notebooks and toward code that is more maintainable, easier to read, test and install and ultimately easier for **others** to use and contribute to.
 
 ### Project Goals
 
-* Create a working Python application that lives on GitHub.
-* Develop primary functions within Python [module files](https://docs.python.org/3/tutorial/modules.html) in a simple [package](https://docs.python.org/3/tutorial/modules.html#packages).
-* Use docstrings with a consistent style to document modules, classes and functions.
+* Create a working Python machine learning application that lives on GitHub.
+* Develop primary functions within Python [module files](https://docs.python.org/3/tutorial/modules.html) within a simple [package](https://docs.python.org/3/tutorial/modules.html#packages).
+* Use [docstrings](https://www.python.org/dev/peps/pep-0257/) with a [consistent style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) to document modules, classes and functions.
 * Use code linting and formatting to maintain consistent styling.
-* Add a basic [`setup.py`](https://docs.python.org/3/distutils/setupscript.html) file enable `pip install`.
-* Pin requirements and use a virtual environment with [pip tools]() and conda
+* Add a basic [`setup.py`](https://docs.python.org/3/distutils/setupscript.html) file to enable local `pip install`.
+* Pin requirements and use a virtual environment with [pip tools](https://github.com/jazzband/pip-tools) and Conda.
 * Develop code that passes tests using [pytest](https://docs.pytest.org).
-* Use continuous integration to enforce testing and formatting.
-* Develop an application that uses our internal package to solve a classic machine learning problem.  
+* Add GitHub continuous integration features to automate testing and formatting.  
 
 To get started, I'll guide you through some background on what the term "best practices" means and why we need them.
 Then I'll show you a particular set of best practices and how they apply to a modest Python-based machine learning
