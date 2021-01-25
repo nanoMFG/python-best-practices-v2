@@ -3,6 +3,7 @@ Github is a great resource for adding license files.
 Templates for most the most commonly used software licenses
 are available via the web interface.  Go ahead and use the GitHub interface to add a file
 named `LICENSE` to the top-level of the project, or follow our quick link below.  
+
 **:bulb: [Add a LICENSE]({{quicklink}})**  
 
 Spend some time looking over the different templates and select one.  After that scroll down

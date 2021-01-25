@@ -158,7 +158,7 @@ steps:
     link: "{{store.first_pull_url}}"
     actions:
       - type: respond
-        with: check-a-value.md
+        with: d-check-a-value.md
         data:
           value: "Creating content for the next step..."
       # Create next issue
