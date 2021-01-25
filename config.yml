@@ -138,7 +138,7 @@ steps:
         message: "Created a README.md from a template."
       # Approve PR 
       - type: createReview
-        body: 01_add-README.md
+        body: 03_added-README-merge.md
         event: APPROVE
         data:
           files_changed_tab: "%store.repository_url%/pull/2/files"
@@ -157,16 +157,20 @@ steps:
     event: pull_request.closed
     link: "{{store.first_pull_url}}"
     actions:
+      - type: respond
+        with: check-a-value.md
+        data:
+          value: "Creating content for the next step..."
       # Create next issue
       - type: createIssue
         title: Add your Own Python Package
-        body: 02_add-python-code.md
+        body: 04_add-python-code.md
         store: 
           second_issue_num: '{{result.data.number}}'
           second_issue_url: '{{result.data.html_url}}'
       # respond with link
       - type: respond
-        with: 02_go-to-next-issue.md
+        with: go-to-next-issue.md
         data:
           quicklink: "{{store.second_issue_url}}"
       # Close first issue
