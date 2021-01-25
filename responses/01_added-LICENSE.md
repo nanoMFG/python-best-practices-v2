@@ -11,10 +11,7 @@ from which you can select: (Python-of course).
 
 Take a minute to scroll through and see what file types are in there, the commit the file to this branch.  I'll see you in the next comment below
 
-#### GitHub 
-:bulb: [add a .gitignore]({{quicklink}})
-
-#### Git commands
+**:bulb: [add a .gitignore]({{quicklink}})**  
 
 ### References
 [gitignore documentation](https://git-scm.com/docs/gitignore)  
