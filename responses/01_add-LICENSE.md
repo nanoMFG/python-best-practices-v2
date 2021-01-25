@@ -5,9 +5,10 @@ are available via the web interface.  Go ahead and use the GitHub interface to a
 named `LICENSE` to the top-level of the project, or follow our quick link below.  
 **:bulb: [Add a LICENSE]({{quicklink}})**  
 
-Spend some time looking over the differnet templates and select one.  After that scroll down
+Spend some time looking over the different templates and select one.  After that scroll down
 and commit the change to a new branch and open a pull request:  
-![image](https://user-images.githubusercontent.com/12611210/105708543-3cbf8d00-5eda-11eb-814e-7f0cc9563684.png)  
+<img width="400" src="https://user-images.githubusercontent.com/12611210/105708543-3cbf8d00-5eda-11eb-814e-7f0cc9563684.png"><br> 
+<!--![image](https://user-images.githubusercontent.com/12611210/105708543-3cbf8d00-5eda-11eb-814e-7f0cc9563684.png)  -->
 Finally, click the "create pull request: button.  Once I detect the new pull request, I'll add a
 comment there with the next activity.
 
