@@ -99,7 +99,7 @@ steps:
         # End filepath verification
         #######################################################
       - type: respond
-        with: 01_added-LICENSE.md
+        with: 02_add-gitignore.md
         data:
           quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore"
   
