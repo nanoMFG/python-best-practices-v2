@@ -151,17 +151,12 @@ steps:
         #######################################################
         # End filepath verification
         #######################################################
-      # - type: respond
-      #   with: d-check-a-value.md
-      #   data:
-      #     value: "Okay, let's keep going..."
       # Create README.md
       - type: createFile
         filename: t-README-template.md
         branch: "%payload.pull_request.head.ref%"
         new_name: README.md
         message: "Created a README.md from a template."
-      
       # Approve PR 
       - type: createReview
         body: 01_add-README.md
@@ -175,7 +170,7 @@ steps:
   # - User merges first PR
   # - App closes first issue
   # - App creates new issue
-  # - App responds with link to new issue
+  # - App responds in closed PR with link to new issue
   #############################################################
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
@@ -199,7 +194,7 @@ steps:
         data:
           quicklink: "{{store.second_issue_url}}"
 
-# Next step will look for pull_request.opened (by user this time...)
+# The next step should look for pull_request.opened
 
 # Step 2: Create setup.py
   - title: Create a Setup.py
