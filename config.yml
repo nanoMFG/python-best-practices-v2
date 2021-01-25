@@ -191,13 +191,12 @@ steps:
           second_issue_url: '{{result.data.html_url}}'
       # respond with link
       - type: respond
-        issue: "{{store.first_pull_num}}"
         with: 02_go-to-next-issue.md
         data:
           quicklink: "{{store.second_issue_url}}"
       # Close first issue
       - type: closeIssue
-        issue: "{{store.first_issue_num}}"
+        issue: "%store.first_issue_num%"
 
 # The next step should look for pull_request.opened
 
