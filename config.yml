@@ -16,15 +16,6 @@ before:
       repository_url: '{{ payload.repository.html_url }}'
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
-  # Get the sha hash of the main branch
-  #- type: octokit
-  #  method: repos.getBranch
-  #  owner: "{{ store.repository_owner }}"
-  #  repo: "{{ store.repository_name }}"
-  #  branch: "{{ store.repository_default_branch }}"
-  #  store:
-  #    main_sha: "%result.data.commit.sha%"
-
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
@@ -32,36 +23,12 @@ before:
     store: 
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
-
-  # Make sure startup is synced with main at beginning of course
-  #- type: mergeBranch
-  #  head: main
-  #  base: startup
-
-  # Create the README.md file for the user
-  #  
-
-  # Open the first PR
-  # Provide link to files changed tab
-  # - type: createPullRequest
-  #   title: "Add preliminary files"
-  #   body: "01_pull-request-body.md"
-  #   head: "startup"
-  #   data:
-  #     fileschangedlink: "%store.repository_url%/pull/2/files"
-  #   store:
-  #     first_pull_num: "{{ result.data.number }}"
-  #     first_pull_url: "{{ result.data.html_url }}"
-
   # Respond in first issue with first activity
   - type: respond
-#    with: 01_add-a-README.md
     with: 01_add-LICENSE.md
     issue: "{{store.first_issue_num}}"
     data:
-#      readmelink: "%store.first_pull_url%"
       quicklink: "{{store.repository_url}}/new/main?filename=LICENSE"
-
 # end before
   
 # begin steps
@@ -84,7 +51,7 @@ steps:
   #   link: '{{store.first_issue_url}}'
   #   actions:
   #     - type: respond
-  #       with: 01_added-README.md
+  #       with: 01_added-README.md 
   #       issue: "{{ store.first_pull_num }}"
   #       data:
   #        quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=LICENSE"
@@ -137,10 +104,12 @@ steps:
           quicklink: "%store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore"
   
   #############################################################
-  # Step 2
+  # Step 2: Add a Python .gitignore file.
   # - User commits to head branch
   # - App checks if .gitignore exists at top-level
   # - App responds, asks user to merge PR
+  # ToDo
+  # - Check that it is the right file for Python?
   #############################################################
   - title: Add a .gitignore file. 
     description: Use GitHub to add a .gitignore file from a template.
@@ -200,9 +169,7 @@ steps:
         data:
           files_changed_tab: "%store.repository_url%/pull/2/files"
           readme_link: "%store.repository_url%/blob/%payload.pull_request.head.ref%/README.md"
-      #- type: respond
-      #  issue: "{{store.first_pull_num}}"
-      #  with: 01_added-gitignore.md
+
   #############################################################
   # Step 3: Merge PR
   # - User merges first PR
