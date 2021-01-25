@@ -120,10 +120,10 @@ steps:
     # Validate the filepath for the expected file
     ###########################################################
       # get tree
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: "Checking for .gitignore..."
+      # - type: respond
+      #   with: d-check-a-value.md
+      #   data:
+      #     value: "Checking for .gitignore..."
       - type: getTree
         action_id: isInTree
         recursive: true
@@ -177,6 +177,11 @@ steps:
     event: pull_request.closed
     link: "{{store.first_pull_url}}"
     actions:
+      # Test response
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: "Hey"
       # Close first issue
       - type: closeIssue
         issue: "{{store.first_issue_num}}"
