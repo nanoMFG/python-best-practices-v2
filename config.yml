@@ -182,9 +182,6 @@ steps:
         with: d-check-a-value.md
         data:
           value: "Hey"
-      # Close first issue
-      - type: closeIssue
-        issue: "{{store.first_issue_num}}"
       # Create next issue
       - type: createIssue
         title: Add your Own Python Package
@@ -198,6 +195,9 @@ steps:
         with: 02_go-to-next-issue.md
         data:
           quicklink: "{{store.second_issue_url}}"
+      # Close first issue
+      - type: closeIssue
+        issue: "{{store.first_issue_num}}"
 
 # The next step should look for pull_request.opened
 
