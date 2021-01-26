@@ -2,7 +2,7 @@
 name: Add Check or Other Action
 about: For Adding a check or creating content etc.
 title: ''
-labels: learning, infrastructure
+labels: infrastructure, learning
 assignees: ''
 
 ---

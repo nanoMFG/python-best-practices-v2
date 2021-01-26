@@ -9,11 +9,11 @@ assignees: dadamsncsa
 
 ## Summary of Activity
 
-## Expected by User
+## Event Expected by User
 
 ## Details
 * Step num: 
 * Action: ``
-* Response file: `<>`
-* Issue/pull: ``
+* Response file name: `<>`
+* Issue/pull var: ``
 * Data needed:
