@@ -1,18 +1,19 @@
 ---
 name: Add intro response
-about: Intro reponse for step
+about: Intro response for step
 title: ''
 labels: infrastructure, learning
 assignees: ''
 
 ---
 
-## Topic
+## Topic to Introduce
 
 ##Details
+* Step num: 
 * Action: ``
 * Response file: `<>`
 * Issue/pull: ``
-* Data:
+* Data needed:
 
 ## References

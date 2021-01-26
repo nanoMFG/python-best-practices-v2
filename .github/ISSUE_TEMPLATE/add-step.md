@@ -12,7 +12,7 @@ assignees: ''
 ### Reference
 Solution branch: https://github.com/nanoMFG/python-best-practices-v2-template/tree/solution
 
-##Details
+## Details
 Use a topic branch to apply updates with a branch name like : `step-<stepnum>` then plan on a PR and merge, next week.  
 - [ ] Establish template files.
 - [ ] Update response file
