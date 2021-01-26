@@ -9,17 +9,21 @@ assignees: ''
 
 ## Summary
 
-### Reference
-Solution branch: https://github.com/nanoMFG/python-best-practices-v2-template/tree/solution
-
-## Details
-Use a topic branch to apply updates with a branch name like : `step-<stepnum>` then plan on a PR and merge, next week.  
-- [ ] Establish template files.
-- [ ] Update response file
-- [ ] Update config.yml using step info in outline:  
-
-Step|App Actions| User Actions| Related Event
+Step|User Actions (to trigger step)| App Actions| Related Event
 -----|-----|-----|-----
-| |  |
+| | |
 
-- [ ] update course outline in [ZenHub Epic](https://app.zenhub.com/workspaces/community-infrastructure-5fbbbe32efc020002396923d/issues/nanomfg/community/31) with new status
+## Update procedure
+* Use a topic branch to apply updates with a branch name like : `step-<stepnum>`.  
+* Merge main into your topic branch occasionally: `topic_branch <- main`
+* When ready to test, open a PR to main.  When a PR is created the "course bot" will run checks and validation and if it passes it will create a deployment.
+* If the validation fails, look at the message, close the PR (without merging), add some more commits to the branch to fix. Then, re-open the PR to trigger a new deployment. 
+ * Use the deployment on the topic branch to test*
+
+\*Note you will need to delete the course repo that was created in your account if it already exists before testing a new deployment.
+
+### References
+* Solution branch: https://github.com/nanoMFG/python-best-practices-v2-template/tree/solution
+* [Response Style guide](https://google.github.io/styleguide/pyguide.html)
+* [Available actions](https://lab.github.com/docs/actions/)
+* [GitHub webhook Events](https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads)
