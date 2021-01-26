@@ -9,6 +9,8 @@ assignees: dadamsncsa
 
 ## Summary of Activity
 
+- [ ] Add response file for activity
+- [ ] update config.yml action
 ## Event Expected by User
 
 ## Details
