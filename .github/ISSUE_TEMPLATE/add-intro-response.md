@@ -10,8 +10,8 @@ assignees: ''
 ## Topic to Introduce
 
 ##Details
-* Step num: 
-* Action: ``
+* For step: 
+* Action: `` (from step )
 * Response file: `<>`
 * Issue/pull: ``
 * Data needed:
