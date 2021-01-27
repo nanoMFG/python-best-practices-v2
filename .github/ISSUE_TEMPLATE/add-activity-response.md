@@ -10,12 +10,13 @@ assignees: dadamsncsa
 ## Summary of Activity
 
 - [ ] Add response file for activity
-- [ ] update config.yml action
+- [ ] update config.yml with response action
+<br>
 ## Event Expected by User
 
-## Details
-* Step num: 
-* Action: ``
+## Course Details
+* For step: n
+* Action: `` in step: n
 * Response file name: `<>`
 * Issue/pull var: ``
 * Data needed:
