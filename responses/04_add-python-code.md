@@ -1,5 +1,7 @@
 ## Adding Our First Python PAckage
-When starting out with a Python application, oit is a good idea to anticipate what internal functions and classes will be created and have an idea how they might work together.  With a littl planning you can start a project with some simple structure on which you can build a set of packages and modules.
+When starting out with a Python application, oit is a good idea to anticipate what internal functions and classes will be created and have an idea how they might work together.  With a little planning you can start a project with some simple structure on which you can build out a set of packages and modules.
+
+Following these best practices will help you create organized, well-documented code that is easier to test, use and maintain.
 
 <details><summary>Python Packages and Modules</summary>
 <hr>
