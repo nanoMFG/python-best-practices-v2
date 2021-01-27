@@ -30,3 +30,6 @@ Intro discuss virtual environments
 
 <hr>
 </details>
+
+<hr>
+<h3 align="center">Keep reading below to find your next task</h3>
