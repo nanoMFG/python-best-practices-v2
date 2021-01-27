@@ -12,8 +12,8 @@ assignees: ''
 ## Expected Behavior
 
 ## Details
-* Step num: 
-* Action: ``
+* For step: n
+* Action: `` in step: n
 * Response file: `<>`
 * Issue/pull: ``
 * Data needed:
