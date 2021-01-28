@@ -2,7 +2,7 @@
 name: Check Action for Step
 about: Check that step was correctly completed
 title: ''
-labels: ''
+labels: learning, infrastructure
 assignees: ''
 
 ---
