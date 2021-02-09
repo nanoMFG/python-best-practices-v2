@@ -11,9 +11,9 @@ assignees: ''
 
 **working branch:** 
 ### Outline Description
-Step|User Actions (to trigger step)| App Actions| Related Event
------|-----|-----|-----
-| | |
+Step|App Prep Actions (done at end of previous step)|User Actions| Event | App Check Actions
+-----|-----|-----|-----|-----
+| | | |
 
 ### Primary Goal/Outcome
 
