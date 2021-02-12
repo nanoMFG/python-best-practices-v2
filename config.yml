@@ -8,6 +8,7 @@ template:
   description: Description
 
 #################################################################
+# test comment
 #################################################################
 before:
   - type: updateBranchProtection
