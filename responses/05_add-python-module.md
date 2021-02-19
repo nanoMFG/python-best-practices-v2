@@ -24,7 +24,7 @@ In this step we are going to create a simple python module, with no functionalit
 
 1. Create the file 'src/digit_reader/model/model.py'
 2. Create the class 'MNISTModel'
-3. Create blank methods named '__init__', 'train_model', and 'evaluate_model'
+3. Create blank methods named '\_\_init\_\_', 'train_model', and 'evaluate_model'
 4. Commit your changes to this pull request's branch
 
 If you get stuck, or don't feel like typing, you can click the dropdown below for the solution code. Feel free to copy and paste it.
