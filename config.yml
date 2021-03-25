@@ -51,6 +51,10 @@ steps:
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
+        # doing this here because its the first action
+        store:
+          first_pull_url: '{{payload.pull_request.html_url}}'
+          first_pull_num: '{{payload.pull_request.number}}'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
@@ -166,72 +170,125 @@ steps:
       # Close first issue
       - type: closeIssue
         issue: '%store.first_issue_num%'
-      # Respond wit next activity
+      # Respond with next activity
       - type: respond
         issue: "%store.second_issue_num%"
         with: 04_add-init-files.md
 # The next step should look for pull_request.opened
-# Step 4: Create setup.py
-  - title: Create a Setup.py
-    description: NA
-    event: push
+  
+  #############################################################
+  # Step 4: Add __init__.py for planned packages/modules
+  #
+  #
+  #
+  #############################################################
+  - title: Add __init__.py files to package.
+    description: Create a working package directory by adding the magic __init__.py python files
+    event: pull_request.opened
     link: '{{ repoUrl }}/issues/1'
     actions:
-      - type: getFileContents
-        action_id: setup1Contents
-        filename: setup.py
-      # Checks whether first 3 lines in https://github.com/pypa/sampleproject/blob/master/setup.py exist
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
+        store:
+          second_pull_url: '{{payload.pull_request.html_url}}'
+          second_pull_num: '{{payload.pull_request.number}}'
+      # check for a file in a tree
       - type: gate
-        left: >-
-          /from\ssetuptools\simport\ssetup,\sfind_packages\nimport\spathlib\n\nhere\s=\spathlib.Path/g
-        operator: test
-        right: '%actions.setup1Contents%'
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:.gitignore'
         else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: src/digit_reader/__init__.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
           - type: respond
-            with: 01_bad-setup.md
-            issue: 1
-      - type: createIssue
-        title: Follow style guidelines
-        body: 02_follow-style-guidelines.md
-        action_id: second_issue
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: src/digit_reader/__init__.py
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: src/digit_reader/__init__.py
+        # End filepath verification
+
+      # Probably should validate other file as well...
       - type: respond
-        with: 01_successful-push.md
-        issue: 1
-        data:
-          url: '%actions.second_issue.data.html_url%'
-  # Step 3: Format existing code in formatter.py
-  - title: Format existing code in formatting.py
-    description: NA
-    event: push
-    link: '{{ repoUrl }}/issues/2'
+        with: 05_add-python-module.md 
+      
+  #############################################################
+  # Step 5: Add skeleton module code
+  #
+  #
+  #
+  #############################################################
+  - title: Add skeleton for python module code.
+    description: Add the module file with basic outline of class and methods that will be needed
+    event: pull_request.synchronize
+    link: '{{second_pull_url}}'
     actions:
-      - type: getFileContents
-        action_id: formattingContents
-        filename: formatting.py
-      # We need to write a regex that checks whether the file contains the solution we
-      #desire (currently checks if file contains 'x = 5')
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
+      # check for a file in a tree
       - type: gate
-        left: /x\s=\s5/g
-        operator: test
-        right: '%actions.formattingContents%'
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:src/digit_reader/digit_reader.py'
         else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: src/digit_reader/digit_reader.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
           - type: respond
-            with: 02_bad-formatter.md
-            issue: 2
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: src/digit_reader/digit_reader.py
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: src/digit_reader/digit_reader.py
+        # End filepath verification
+      # Probably should validate other file as well...
       - type: respond
-        with: 02_add-google-style-comment.md
-        issue: 2
-  #############################################################
-  # Step: 4
-  #############################################################
+        with: 06_add-docstrings.md
 
   #############################################################
-  # Step: 5
+  # Step 6: Merge PR
+  # - User merges second PR
+  # - App closes second issue
+  # - App creates new issue
+  # - App responds in closed PR with link to new issue for next
+  #   step
   #############################################################
+  - title: Merge the First Pull Request
+    description: Merge the preliminary files to start the project
+    event: pull_request.closed
+    link: '{{store.second_pull_url}}'
+    actions:
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: Creating content for the next step...
 
-  #############################################################
-  # Step: 6
-  #############################################################
+  
 
   #############################################################
   # Step: 7
