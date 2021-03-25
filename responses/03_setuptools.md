@@ -10,15 +10,15 @@ The build script for setuptools is written in the file setup.py. For this step o
 
 ### :keyboard: Activity: Create setup.py 
 
-1. Create the file 'src/setup.py'
+1. Create the file ```src/setup.py```
 2. Import setuptools and create an empty call for setup.
-'''
+```python
 import setuptools
 
 setuptools.setup()
-'''
+```
 3. Write the name of the package, version, your name and email, and description like below.
-'''
+```python
 import setuptools
 
 setuptools.setup(
@@ -28,9 +28,9 @@ setuptools.setup(
     author_email="author@example.com",
     description="A small example package"
 )
-'''
-4. If you want you could add a field for long_description and set your README.md file as your content like this.
-'''
+```
+4. If you want you could add a field for ```long_description``` and set your ```README.md``` file as your content like this.
+```
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -43,13 +43,11 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown"
 )
-'''
-5. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the '''
-setuptools.find_packages()
-'''
+```
+5. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the ```setuptools.find_packages()```
 function.
 
-'''
+```
 ...
 setuptools.setup(
     name="example_package-username", # Replace with your own username
@@ -58,13 +56,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     ...
 )
-'''
-6. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the '''
-setuptools.find_packages()
-'''
-function.
-
-'''
+```
+6. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the ```setuptools.find_packages()``` function.
+```
 ...
 setuptools.setup(
     name="example_package-username", # Replace with your own username
@@ -73,18 +67,16 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     ...
 )
-'''
-
+```
 7. In later steps of the course, we will ask you to add additional fields to the setup build script. For now, commit the new setup.py file and move on to the next step!
 
 If you get stuck, or don't feel like typing, you can click the dropdown below for the solution code. Feel free to copy and paste it.
-<details><summary> A completed MNISTModel class </summary>
-
+<details><summary> A completed setup.py </summary>
+    
+```
 import setuptools
-
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
-
 setuptools.setup(
     name="mnist_example-nanoMFG", # Replace with your own username
     version="0.0.1",
@@ -96,7 +88,7 @@ setuptools.setup(
     url="https://github.com/pypa/sampleproject",
     packages=setuptools.find_packages()
 )
-
+```
 </details>
 <hr>
 <h3 align="center">Watch below this comment for my response</h3>
