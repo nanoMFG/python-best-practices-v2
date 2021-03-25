@@ -13,17 +13,17 @@ There are two main ways you can create virtual environments. One is using a Pyth
 ### :keyboard: Activity: Create and Activate a Virtual Environment
 
 If you are using venv,
-1. Run 'python3 -m venv my-env'. This will create the virtual environment.
+1. Run ```python3 -m venv my-env```. This will create the virtual environment.
 Now, to activate the virtual environment,
 On Windows, run:
-2. 'my-env\Scripts\activate.bat'
+2. ```my-env\Scripts\activate.bat```
 On Unix or MacOS, run:
-2. 'source my-env/bin/activate'
+2. ```source my-env/bin/activate```
 
 If you are using conda,
-1. Run 'conda create --name myenv'. This will create the virtual environment.
-2. When conda asks you to proceed, type y: 'proceed ([y]/n)?'
-3. Run 'conda activate myenv'
+1. Run ```conda create --name myenv```. This will create the virtual environment.
+2. When conda asks you to proceed, type y: ```proceed ([y]/n)?```
+3. Run ```conda activate myenv```
 
 </details>
 <hr>
