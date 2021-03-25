@@ -22,7 +22,7 @@ setuptools.setup()
 import setuptools
 
 setuptools.setup(
-    name="example-package", # Replace with your own username
+    name="example_package-username", # Replace with your own username
     version="0.0.1",
     author="Example Author",
     author_email="author@example.com",
@@ -37,7 +37,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="example-package", # Replace with your own username
+    name="example_package-username", # Replace with your own username
     ...
     description="A small example package",
     long_description=long_description,
@@ -52,7 +52,7 @@ function.
 '''
 ...
 setuptools.setup(
-    name="mnist_example-nanoMFG", # Replace with your own username
+    name="example_package-username", # Replace with your own username
     ...
     long_description_content_type="text/markdown"
     packages=setuptools.find_packages(),
@@ -67,7 +67,7 @@ function.
 '''
 ...
 setuptools.setup(
-    name="mnist_example-nanoMFG", # Replace with your own username
+    name="example_package-username", # Replace with your own username
     ...
     long_description_content_type="text/markdown"
     packages=setuptools.find_packages(),

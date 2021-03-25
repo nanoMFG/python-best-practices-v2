@@ -6,7 +6,7 @@ In this course, you will be using two widely used packages called numpy and tens
 '''
 pip install -r requirements.txt
 '''
-so you don't have to manually install all packages.
+so that you don't have to manually install all packages.
 
 ### Requirements.txt
 
@@ -14,21 +14,30 @@ In order to support the automatic installation of packages, you will first need 
 
 Luckily, we have a setup build script so we can use that to generate our build script. However, we'll first have to add 2 fields into our setup function to make that possible!
 
-## Step 7: Pip install and Requirements.txt
+## Step 7: Edit setup.py and install with pip
 
-There are two main ways you can create virtual environments. One is using a Python module called venv and the other is using a package manager called conda. Python virtual environments and Conda environments do have differences but for the purposes of this course, either should work. So if you already have Anaconda, you can use conda.
+As mentioned earlier, our project will use numpy and tensorflow and tensorflow actually requires your Python version to be 3.6-3.8. So, we would have to write that in our build script. Here's some example values for python_requires and install_requires. The following example project requires a Python version above 3.0 and requires installation of django and pandas. Use the example setup.py as an example for your project's setup.py.
+'''
+setuptools.setup(
+    name="example_package-username", # Replace with your own username
+    ...
+    packages=setuptools.find_packages(),
+    python_requires='>=3.0',
+    install_requires=[
+        'django',
+        'pandas'
+    ]
+'''
 
-### :keyboard: Activity: Create and Activate a Virtual Environment
+Once your setup.py is complete, we can run a few commands to install everything you need for your project.
+### :keyboard: Activity: From setup.py to pip install 
 
-If you are using venv,
-1. Run 'python3 -m venv my-env'. This will create the virtual environment.
-Now, to activate the virtual environment,
-On Windows, run:
-2. 'my-env\Scripts\activate.bat'
-On Unix or MacOS, run:
-2. 'source my-env/bin/activate'
+1. Commit the setup.py file after adding values for the python_requires and install_requires field
+2. Run 
+'''
+pip-compile
+'''
+This should create a requirements.txt file. If it's failing, check if there's any problems with your setup.py
+3. Run pip install -r requirements.txt
 
-If you are using conda,
-1. Run 'conda create --name myenv'. This will create the virtual environment.
-2. When conda asks you to proceed, type y: 'proceed ([y]/n)?'
-3. Run 'conda activate myenv'
+You should now be ready to run some tests for your project. Merge the pull request and we will let you know if you are good to go!
