@@ -17,7 +17,7 @@ Luckily, we have a setup build script so we can use that to generate our build s
 ## Step 7: Edit setup.py and install with pip
 
 As mentioned earlier, our project will use numpy and tensorflow and tensorflow actually requires your Python version to be 3.6-3.8. So, we would have to write that in our build script. Here's some example values for python_requires and install_requires. The following example project requires a Python version above 3.0 and requires installation of django and pandas. Use the example ```setup.py``` as an example for your project's ```setup.py```.
-```
+```python
 setuptools.setup(
     name="example_package-username", # Replace with your own username
     ...
