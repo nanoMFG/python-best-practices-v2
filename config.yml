@@ -92,7 +92,7 @@ steps:
   - title: Add a .gitignore file.
     description: Use GitHub to add a .gitignore file from a template.
     event: pull_request.synchronize
-    link: '{{store.first_issue_url}}'
+    link: '{{ store.first_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
@@ -149,7 +149,7 @@ steps:
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
-    link: '{{store.first_issue_url}}'
+    link: '{{ store.first_issue_url }}'
     actions:
       - type: respond
         with: d-check-a-value.md
@@ -185,7 +185,7 @@ steps:
   - title: Add __init__.py files to package.
     description: Create a working package directory by adding the magic python files
     event: pull_request.opened
-    link: '{{first_issue_url}}'
+    link: '{{ store.first_issue_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
@@ -234,7 +234,7 @@ steps:
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
     event: pull_request.synchronize
-    link: '{{first_issue_url}}'
+    link: '{{ store.first_issue_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
