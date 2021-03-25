@@ -30,7 +30,7 @@ setuptools.setup(
 )
 ```
 4. If you want you could add a field for ```long_description``` and set your ```README.md``` file as your content like this.
-```
+```python
 import setuptools
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -47,7 +47,7 @@ setuptools.setup(
 5. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the ```setuptools.find_packages()```
 function.
 
-```
+```python
 ...
 setuptools.setup(
     name="example_package-username", # Replace with your own username
@@ -62,7 +62,7 @@ setuptools.setup(
 If you get stuck, or don't feel like typing, you can click the dropdown below for the solution code. Feel free to copy and paste it.
 <details><summary> A completed setup.py </summary>
     
-```
+```python
 import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
