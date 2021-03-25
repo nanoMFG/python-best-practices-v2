@@ -92,7 +92,7 @@ steps:
   - title: Add a .gitignore file.
     description: Use GitHub to add a .gitignore file from a template.
     event: pull_request.synchronize
-    link: '{{store.first_pull_url}}'
+    link: '{{store.first_issue_url}}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
