@@ -33,10 +33,7 @@ Once your ```setup.py``` is complete, we can run a few commands to install every
 ### :keyboard: Activity: From setup.py to pip install 
 
 1. Commit the ```setup.py``` file after adding values for the ```python_requires and ```install_requires``` field
-2. Run 
-```
-pip-compile
-```
+2. Run ```pip-compile```
 This should create a ```requirements.txt file```. If it's failing, check if there's any problems with your setup.py
 3. Run ```pip install -r requirements.txt```
 
