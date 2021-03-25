@@ -165,6 +165,10 @@ steps:
       # Close first issue
       - type: closeIssue
         issue: '%store.first_issue_num%'
+      # Respond wit next activity
+      - type: respond
+        issue: "%store.second_issue_num%"
+        with: 04_add-init-files.md
 # The next step should look for pull_request.opened
 # Step 4: Create setup.py
   - title: Create a Setup.py
