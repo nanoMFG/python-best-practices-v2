@@ -55,21 +55,27 @@ steps:
         store:
           first_pull_url: '{{payload.pull_request.html_url}}'
           first_pull_num: '{{payload.pull_request.number}}'
+          first_pull_headref: '{{payload.pull_request.head.ref}}'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
         right: 'path:LICENSE'
         else:
-          # help user with proper file location
+          # help user with proper file name or location
           - type: respond
             with: e-wrong-file-location.md
             data:
               haveFile: ''
               needFile: LICENSE
               editLink: >-
-                {{store.repository_url}}/new/main?filename=LICENSE
+                {{store.repository_url}}/new/{{first_pull_headref}}?filename=LICENSE
               fileName: LICENSE
+          - type: respond
+            with: 02_add-gitignore.md
+            data:
+               quicklink: >-
+                  %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
         # End filepath verification
       - type: respond
         with: 02_add-gitignore.md
