@@ -89,256 +89,256 @@ steps:
         data:
           quicklink: >-
             %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
-  #############################################################
-  # Step 2: Add a Python .gitignore file.
-  # - User commits to head branch
-  # - App checks if .gitignore exists at top-level
-  # - App responds, asks user to merge PR
-  # ToDo
-  # - Check that it is the right file for Python?
-  #############################################################
-  - title: Add a .gitignore file.
-    description: Use GitHub to add a .gitignore file from a template.
-    event: pull_request.synchronize
-    link: '{{ store.first_pull_url }}'
-    actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ###########################################################
-      # get tree
-      - type: getTree
-        action_id: isInTree
-        recursive: true
-        sha: '%payload.pull_request.head.sha%'
-      # check for a file in a tree
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:.gitignore'
-        else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: .gitignore
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
-          # help user with proper file location
-          - type: respond
-            with: e-wrong-file-location.md
-            issue: '{{store.first_pull_num}}'
-            data:
-              haveFile: '%actions.fileLocation.path%'
-              needFile: .gitignore
-              editLink: >-
-                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
-              fileName: .gitignore
-          # Approve PR 
-          - type: createReview
-            body: 03_added-README-merge.md
-            event: APPROVE
-            data:
-              files_changed_tab: '%store.repository_url%/pull/2/files'
-              readme_link: >-
-                %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
-        # End filepath verification
+#   #############################################################
+#   # Step 2: Add a Python .gitignore file.
+#   # - User commits to head branch
+#   # - App checks if .gitignore exists at top-level
+#   # - App responds, asks user to merge PR
+#   # ToDo
+#   # - Check that it is the right file for Python?
+#   #############################################################
+#   - title: Add a .gitignore file.
+#     description: Use GitHub to add a .gitignore file from a template.
+#     event: pull_request.synchronize
+#     link: '{{ store.first_pull_url }}'
+#     actions:
+#     ###########################################################
+#     # Validate the filepath for the expected file
+#     ###########################################################
+#       # get tree
+#       - type: getTree
+#         action_id: isInTree
+#         recursive: true
+#         sha: '%payload.pull_request.head.sha%'
+#       # check for a file in a tree
+#       - type: gate
+#         left: '%actions.isInTree.data.tree%'
+#         operator: includes
+#         right: 'path:.gitignore'
+#         else:
+#           # if file isn't where expected find true location
+#           - type: findInTree
+#             path: .gitignore
+#             tree: '%actions.isInTree.data.tree%'
+#             action_id: fileLocation
+#           # help user with proper file location
+#           - type: respond
+#             with: e-wrong-file-location.md
+#             issue: '{{store.first_pull_num}}'
+#             data:
+#               haveFile: '%actions.fileLocation.path%'
+#               needFile: .gitignore
+#               editLink: >-
+#                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
+#               fileName: .gitignore
+#           # Approve PR 
+#           - type: createReview
+#             body: 03_added-README-merge.md
+#             event: APPROVE
+#             data:
+#               files_changed_tab: '%store.repository_url%/pull/2/files'
+#               readme_link: >-
+#                 %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
+#         # End filepath verification
       
-      # Approve PR 
-      - type: createReview
-        body: 03_added-README-merge.md
-        event: APPROVE
-        data:
-          files_changed_tab: '%store.repository_url%/pull/2/files'
-          readme_link: >-
-            %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
+#       # Approve PR 
+#       - type: createReview
+#         body: 03_added-README-merge.md
+#         event: APPROVE
+#         data:
+#           files_changed_tab: '%store.repository_url%/pull/2/files'
+#           readme_link: >-
+#             %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
 
-  #############################################################
-  # Step 3: Merge PR
-  # - User merges first PR
-  # - App closes first issue
-  # - App creates new issue
-  # - App responds in closed PR with link to new issue for next
-  #   step
-  #############################################################
-  - title: Merge the First Pull Request
-    description: Merge the preliminary files to start the project
-    event: pull_request.closed
-    link: '{{ store.second_pull_url }}'
-    actions:
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: Creating content for the next step...
-      # Create next issue
-      - type: createIssue
-        title: Add your Own Python Package
-        body: 04_add-python-code.md
-        store:
-          second_issue_num: '{{result.data.number}}'
-          second_issue_url: '{{result.data.html_url}}'
-      # respond with link
-      - type: respond
-        with: go-to-next-issue.md
-        data:
-          quicklink: '{{store.second_issue_url}}'
-      # Close first issue
-      - type: closeIssue
-        issue: '%store.first_issue_num%'
-      # Respond with next activity
-      - type: respond
-        issue: "%store.second_issue_num%"
-        with: 04_add-init-files.md
-        data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/__init__.py%'
-          quicklink2: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/__init__.py%'
+#   #############################################################
+#   # Step 3: Merge PR
+#   # - User merges first PR
+#   # - App closes first issue
+#   # - App creates new issue
+#   # - App responds in closed PR with link to new issue for next
+#   #   step
+#   #############################################################
+#   - title: Merge the First Pull Request
+#     description: Merge the preliminary files to start the project
+#     event: pull_request.closed
+#     link: '{{ store.second_pull_url }}'
+#     actions:
+#       - type: respond
+#         with: d-check-a-value.md
+#         data:
+#           value: Creating content for the next step...
+#       # Create next issue
+#       - type: createIssue
+#         title: Add your Own Python Package
+#         body: 04_add-python-code.md
+#         store:
+#           second_issue_num: '{{result.data.number}}'
+#           second_issue_url: '{{result.data.html_url}}'
+#       # respond with link
+#       - type: respond
+#         with: go-to-next-issue.md
+#         data:
+#           quicklink: '{{store.second_issue_url}}'
+#       # Close first issue
+#       - type: closeIssue
+#         issue: '%store.first_issue_num%'
+#       # Respond with next activity
+#       - type: respond
+#         issue: "%store.second_issue_num%"
+#         with: 04_add-init-files.md
+#         data:
+#           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/__init__.py%'
+#           quicklink2: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/__init__.py%'
 
-# The next step should look for pull_request.opened
+# # The next step should look for pull_request.opened
   
-  #############################################################
-  # Step 4: Add __init__.py for planned packages/modules
-  #
-  #
-  #
-  #############################################################
-  - title: Add __init__.py files to package.
-    description: Create a working package directory by adding the magic python files
-    event: pull_request.opened
-    link: '{{ store.second_pull_url }}'
-    actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ###########################################################
-      # get tree
-      - type: getTree
-        action_id: isInTree
-        recursive: true
-        sha: '%payload.pull_request.head.sha%'
-        store:
-          second_pull_url: '{{payload.pull_request.html_url}}'
-          second_pull_num: '{{payload.pull_request.number}}'
-      # check for a file in a tree
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:.gitignore'
-        else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: src/digit_reader/__init__.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
-          # help user with proper file location
-          - type: respond
-            with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
-            data:
-              haveFile: '%actions.fileLocation.path%'
-              needFile: src/digit_reader/__init__.py
-              editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: src/digit_reader/__init__.py
-        # End filepath verification
+#   #############################################################
+#   # Step 4: Add __init__.py for planned packages/modules
+#   #
+#   #
+#   #
+#   #############################################################
+#   - title: Add __init__.py files to package.
+#     description: Create a working package directory by adding the magic python files
+#     event: pull_request.opened
+#     link: '{{ store.second_pull_url }}'
+#     actions:
+#     ###########################################################
+#     # Validate the filepath for the expected file
+#     ###########################################################
+#       # get tree
+#       - type: getTree
+#         action_id: isInTree
+#         recursive: true
+#         sha: '%payload.pull_request.head.sha%'
+#         store:
+#           second_pull_url: '{{payload.pull_request.html_url}}'
+#           second_pull_num: '{{payload.pull_request.number}}'
+#       # check for a file in a tree
+#       - type: gate
+#         left: '%actions.isInTree.data.tree%'
+#         operator: includes
+#         right: 'path:.gitignore'
+#         else:
+#           # if file isn't where expected find true location
+#           - type: findInTree
+#             path: src/digit_reader/__init__.py
+#             tree: '%actions.isInTree.data.tree%'
+#             action_id: fileLocation
+#           # help user with proper file location
+#           - type: respond
+#             with: e-wrong-file-location.md
+#             issue: '{{store.second_pull_num}}'
+#             data:
+#               haveFile: '%actions.fileLocation.path%'
+#               needFile: src/digit_reader/__init__.py
+#               editLink: >-
+#                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+#               fileName: src/digit_reader/__init__.py
+#         # End filepath verification
 
-      # Probably should validate other file as well...
-      - type: respond
-        with: 05_add-python-module.md
-        data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/model.py%'
+#       # Probably should validate other file as well...
+#       - type: respond
+#         with: 05_add-python-module.md
+#         data:
+#           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/model.py%'
 
       
-  #############################################################
-  # Step 5: Add skeleton module code
-  #
-  #
-  # 
-  #############################################################
-  - title: Add skeleton for python module code.
-    description: Add the module file with basic outline of class and methods that will be needed
-    event: pull_request.synchronize
-    link: '{{ store.second_pull_url }}'
-    actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ###########################################################
-      # get tree
-      - type: getTree
-        action_id: isInTree
-        recursive: true
-        sha: '%payload.pull_request.head.sha%'
-      # check for a file in a tree
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:src/digit_reader/digit_reader.py'
-        else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: src/digit_reader/digit_reader.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
-          # help user with proper file location
-          - type: respond
-            with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
-            data:
-              haveFile: '%actions.fileLocation.path%'
-              needFile: src/digit_reader/digit_reader.py
-              editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: src/digit_reader/digit_reader.py
-        # End filepath verification
-      # Probably should validate other file as well...
-      - type: respond
-        with: 06_add-docstrings.md
+#   #############################################################
+#   # Step 5: Add skeleton module code
+#   #
+#   #
+#   # 
+#   #############################################################
+#   - title: Add skeleton for python module code.
+#     description: Add the module file with basic outline of class and methods that will be needed
+#     event: pull_request.synchronize
+#     link: '{{ store.second_pull_url }}'
+#     actions:
+#     ###########################################################
+#     # Validate the filepath for the expected file
+#     ###########################################################
+#       # get tree
+#       - type: getTree
+#         action_id: isInTree
+#         recursive: true
+#         sha: '%payload.pull_request.head.sha%'
+#       # check for a file in a tree
+#       - type: gate
+#         left: '%actions.isInTree.data.tree%'
+#         operator: includes
+#         right: 'path:src/digit_reader/digit_reader.py'
+#         else:
+#           # if file isn't where expected find true location
+#           - type: findInTree
+#             path: src/digit_reader/digit_reader.py
+#             tree: '%actions.isInTree.data.tree%'
+#             action_id: fileLocation
+#           # help user with proper file location
+#           - type: respond
+#             with: e-wrong-file-location.md
+#             issue: '{{store.second_pull_num}}'
+#             data:
+#               haveFile: '%actions.fileLocation.path%'
+#               needFile: src/digit_reader/digit_reader.py
+#               editLink: >-
+#                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+#               fileName: src/digit_reader/digit_reader.py
+#         # End filepath verification
+#       # Probably should validate other file as well...
+#       - type: respond
+#         with: 06_add-docstrings.md
 
-  #############################################################
-  # Step 6: Add docstrings
-  #############################################################
-  - title: Add skeleton for python module code.
-    description: Add the module file with basic outline of class and methods that will be needed
-    event: pull_request.synchronize
-    link: '{{ store.second_pull_url }}'
-    actions:
-      - type: respond
-        with: 06-continue-to-merge.md
-        data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
+#   #############################################################
+#   # Step 6: Add docstrings
+#   #############################################################
+#   - title: Add skeleton for python module code.
+#     description: Add the module file with basic outline of class and methods that will be needed
+#     event: pull_request.synchronize
+#     link: '{{ store.second_pull_url }}'
+#     actions:
+#       - type: respond
+#         with: 06-continue-to-merge.md
+#         data:
+#           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
           
 
-  #############################################################
-  # Step 7: Merge PR
-  # - User merges second PR
-  # - App closes second issue
-  # - App creates new issue
-  # - App responds in closed PR with link to new issue for next
-  #   step
-  #############################################################
-  - title: Merge the Second Pull Request
-    description: Merge the preliminary files to start the project
-    event: pull_request.closed
-    link: '{{store.first_issue_url}}'
-    actions:
-      - type: respond
-        with: d-check-a-value.md
-        data:
-          value: Creating content for the next step...
-      # Create next issue
-      - type: createIssue
-        title: Add Module Code tests and setup.py
-        body: 08_introduce.md
-        store:
-          third_issue_num: '{{result.data.number}}'
-          third_issue_url: '{{result.data.html_url}}'
-      # respond with link
-      - type: respond
-        with: go-to-next-issue.md
-        data:
-          quicklink: '{{store.third_issue_url}}'
-      # Close second issue
-      - type: closeIssue
-        issue: '%store.second_issue_num%'
-      # Respond with next activity
-     # - type: respond
-     #   issue: "%store.third_issue_num%"
-     #   with: 08-??.md
+#   #############################################################
+#   # Step 7: Merge PR
+#   # - User merges second PR
+#   # - App closes second issue
+#   # - App creates new issue
+#   # - App responds in closed PR with link to new issue for next
+#   #   step
+#   #############################################################
+#   - title: Merge the Second Pull Request
+#     description: Merge the preliminary files to start the project
+#     event: pull_request.closed
+#     link: '{{store.first_issue_url}}'
+#     actions:
+#       - type: respond
+#         with: d-check-a-value.md
+#         data:
+#           value: Creating content for the next step...
+#       # Create next issue
+#       - type: createIssue
+#         title: Add Module Code tests and setup.py
+#         body: 08_introduce.md
+#         store:
+#           third_issue_num: '{{result.data.number}}'
+#           third_issue_url: '{{result.data.html_url}}'
+#       # respond with link
+#       - type: respond
+#         with: go-to-next-issue.md
+#         data:
+#           quicklink: '{{store.third_issue_url}}'
+#       # Close second issue
+#       - type: closeIssue
+#         issue: '%store.second_issue_num%'
+#       # Respond with next activity
+#      # - type: respond
+#      #   issue: "%store.third_issue_num%"
+#      #   with: 08-??.md
 
   #############################################################
   # Step: 8
