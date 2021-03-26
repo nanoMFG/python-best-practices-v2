@@ -294,7 +294,7 @@ steps:
   # - App responds in closed PR with link to new issue for next
   #   step
   #############################################################
-  - title: Merge the First Pull Request
+  - title: Merge the Second Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
     link: '{{store.first_issue_url}}'
@@ -345,160 +345,154 @@ steps:
 
 
 
-
-
-
-
-
-
   #############################################################
   # Below are older steps that may be useful to pull into the course above
   #############################################################
 
-  # Step 4: Add google-style comment blocks in formatting.py
-  - title: Add google-style comment blocks in formatting.py
-    description: NA
-    event: push
-    link: '{{ repoUrl }}/issues/2'
-    actions:
-      - type: getFileContents
-        action_id: formatting2Contents
-        filename: formatting.py
-      # Need to write a regex to check for comment blocks. Ideally we should write
-      # multiple gates for multiple comment types the user can add
-      # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html 
-      # for google comment examples Currently, only one simple regex check is executed
-      # We need to write a regex that checks whether the file contains the solution we desire 
-      #(currently checks if file contains 'x = 5')
-      - type: gate
-        left: /x\s=\s5/g
-        operator: test
-        right: '%actions.formatting2Contents%'
-        else:
-          - type: respond
-            with: 02_bad-google-comment.md
-            issue: 2
-      - type: createIssue
-        title: Pip install and requirements.txt
-        body: 03_pip-and-venv.md
-        action_id: third_issue
-      - type: respond
-        with: 02_successful-push.md
-        issue: 2
-        data:
-          url: '%actions.third_issue.data.html_url%'
-# Step 5: Create dependencies in setup.py and use pip tools to create a requirements.txt
-  - title: >-
-      Create dependencies in setup.py and use pip tools to create a
-      requirements.txt
-    description: NA
-    event: push
-    link: '{{ repoUrl }}/issues/3'
-    actions:
-      - type: getFileContents
-        action_id: setup2Contents
-        filename: setup.py
-      # We need to write a regex that checks whether the file contains the solution we
-      # desire (currently checks if file contains 'a = 5')
-      - type: gate
-        left: /a\s=\s5/g
-        operator: test
-        right: '%actions.setup2Contents%'
-        else:
-          - type: respond
-            with: 03_bad-setup.md
-            issue: 3
-      - type: getFileContents
-        action_id: requirementsContents
-        filename: requirements.txt
-      # We need to write a regex that checks whether the file contains the solution we
-      # desire (currently checks if file contains 'numpy')
-      - type: gate
-        left: /numpy/g
-        operator: test
-        right: '%actions.requirementsContents%'
-        else:
-          - type: respond
-            with: 03_bad-requirements.md
-            issue: 3
-      - type: respond
-        with: 03_activate-venv.md
-        issue: 3
-# Step 6: Install/create/activate virtual environment and Pip install packages using requirements.txt
-  - title: >-
-      Install/create/activate virtual environment and Pip install packages using
-      requirements.txt
-    description: NA
-    event: issue_comment.created
-    link: '{{ repoUrl }}/issues/3'
-    actions:
-      # We need to write a regex that checks whether the comment contains the output we
-      # desire (currently checks if comment contains 'Output')
-      - type: gate
-        left: /Output/g
-        operator: test
-        right: '%payload.comment.body%'
-        else:
-          - type: respond
-            with: 03_bad-comment.md
-            issue: 3
-      - type: createIssue
-        title: Pytest
-        body: 04_pytest.md
-        action_id: fourth_issue
-      - type: respond
-        with: 03_successful-push.md
-        issue: 3
-        data:
-          url: '%actions.fourth_issue.data.html_url%'
-  # Step 7: Run existing tests in the repository
-  - title: Run an existing test
-    description: NA
-    event: issue_comment.created
-    link: '{{ repoUrl }}/issues/4'
-    actions:
-      # We need to write a regex that checks whether the comment contains the output we
-      # desire (currently checks if comment contains 'ERROR')
-      - type: gate
-        left: /ERROR/g
-        operator: test
-        right: '%payload.comment.body%'
-        else:
-          - type: respond
-            with: 04_bad-comment.md
-            issue: 3
-      - type: respond
-        with: 04_successful-push.md
-        issue: 4
-  # Step 8: Fix failing test in the repository
-  - title: Fix a failing test
-    description: >-
-      Commit the fix to the test in a new branch, create a pull request to merge
-      to fix pytest branch
-    event:
-      - pull_request
-      - check_suite.completed
-    link: '{{ repoUrl }}/issues/4'
-    actions:
-      - type: gate
-        left: '%payload.pull_request.title%'
-        operator: ===
-        right: Fix Pytest
-        else:
-          - type: respond
-            with: 04_bad-pull-request.md
-            issue: 1
-      - type: respond
-        with: 04_successful-pr.md
-        issue: 1
-      - type: gate
-        left: '%payload.check_suite.conclusion%'
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: 04_bad-check-run.md
-            issue: 1
-      - type: respond
-        with: 04_successful-push.md
-        issue: 1
+#   # Step 4: Add google-style comment blocks in formatting.py
+#   - title: Add google-style comment blocks in formatting.py
+#     description: NA
+#     event: push
+#     link: '{{ repoUrl }}/issues/2'
+#     actions:
+#       - type: getFileContents
+#         action_id: formatting2Contents
+#         filename: formatting.py
+#       # Need to write a regex to check for comment blocks. Ideally we should write
+#       # multiple gates for multiple comment types the user can add
+#       # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html 
+#       # for google comment examples Currently, only one simple regex check is executed
+#       # We need to write a regex that checks whether the file contains the solution we desire 
+#       #(currently checks if file contains 'x = 5')
+#       - type: gate
+#         left: /x\s=\s5/g
+#         operator: test
+#         right: '%actions.formatting2Contents%'
+#         else:
+#           - type: respond
+#             with: 02_bad-google-comment.md
+#             issue: 2
+#       - type: createIssue
+#         title: Pip install and requirements.txt
+#         body: 03_pip-and-venv.md
+#         action_id: third_issue
+#       - type: respond
+#         with: 02_successful-push.md
+#         issue: 2
+#         data:
+#           url: '%actions.third_issue.data.html_url%'
+# # Step 5: Create dependencies in setup.py and use pip tools to create a requirements.txt
+#   - title: >-
+#       Create dependencies in setup.py and use pip tools to create a
+#       requirements.txt
+#     description: NA
+#     event: push
+#     link: '{{ repoUrl }}/issues/3'
+#     actions:
+#       - type: getFileContents
+#         action_id: setup2Contents
+#         filename: setup.py
+#       # We need to write a regex that checks whether the file contains the solution we
+#       # desire (currently checks if file contains 'a = 5')
+#       - type: gate
+#         left: /a\s=\s5/g
+#         operator: test
+#         right: '%actions.setup2Contents%'
+#         else:
+#           - type: respond
+#             with: 03_bad-setup.md
+#             issue: 3
+#       - type: getFileContents
+#         action_id: requirementsContents
+#         filename: requirements.txt
+#       # We need to write a regex that checks whether the file contains the solution we
+#       # desire (currently checks if file contains 'numpy')
+#       - type: gate
+#         left: /numpy/g
+#         operator: test
+#         right: '%actions.requirementsContents%'
+#         else:
+#           - type: respond
+#             with: 03_bad-requirements.md
+#             issue: 3
+#       - type: respond
+#         with: 03_activate-venv.md
+#         issue: 3
+# # Step 6: Install/create/activate virtual environment and Pip install packages using requirements.txt
+#   - title: >-
+#       Install/create/activate virtual environment and Pip install packages using
+#       requirements.txt
+#     description: NA
+#     event: issue_comment.created
+#     link: '{{ repoUrl }}/issues/3'
+#     actions:
+#       # We need to write a regex that checks whether the comment contains the output we
+#       # desire (currently checks if comment contains 'Output')
+#       - type: gate
+#         left: /Output/g
+#         operator: test
+#         right: '%payload.comment.body%'
+#         else:
+#           - type: respond
+#             with: 03_bad-comment.md
+#             issue: 3
+#       - type: createIssue
+#         title: Pytest
+#         body: 04_pytest.md
+#         action_id: fourth_issue
+#       - type: respond
+#         with: 03_successful-push.md
+#         issue: 3
+#         data:
+#           url: '%actions.fourth_issue.data.html_url%'
+#   # Step 7: Run existing tests in the repository
+#   - title: Run an existing test
+#     description: NA
+#     event: issue_comment.created
+#     link: '{{ repoUrl }}/issues/4'
+#     actions:
+#       # We need to write a regex that checks whether the comment contains the output we
+#       # desire (currently checks if comment contains 'ERROR')
+#       - type: gate
+#         left: /ERROR/g
+#         operator: test
+#         right: '%payload.comment.body%'
+#         else:
+#           - type: respond
+#             with: 04_bad-comment.md
+#             issue: 3
+#       - type: respond
+#         with: 04_successful-push.md
+#         issue: 4
+#   # Step 8: Fix failing test in the repository
+#   - title: Fix a failing test
+#     description: >-
+#       Commit the fix to the test in a new branch, create a pull request to merge
+#       to fix pytest branch
+#     event:
+#       - pull_request
+#       - check_suite.completed
+#     link: '{{ repoUrl }}/issues/4'
+#     actions:
+#       - type: gate
+#         left: '%payload.pull_request.title%'
+#         operator: ===
+#         right: Fix Pytest
+#         else:
+#           - type: respond
+#             with: 04_bad-pull-request.md
+#             issue: 1
+#       - type: respond
+#         with: 04_successful-pr.md
+#         issue: 1
+#       - type: gate
+#         left: '%payload.check_suite.conclusion%'
+#         operator: ===
+#         right: success
+#         else:
+#           - type: respond
+#             with: 04_bad-check-run.md
+#             issue: 1
+#       - type: respond
+#         with: 04_successful-push.md
+#         issue: 1
