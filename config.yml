@@ -75,7 +75,7 @@ steps:
               haveFile: ''
               needFile: LICENSE
               editLink: >-
-                {{store.repository_url}}/new/{{first_pull_headref}}?filename=LICENSE
+                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=LICENSE
               fileName: LICENSE
           - type: respond
             with: 02_add-gitignore.md
@@ -128,7 +128,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: .gitignore
               editLink: >-
-                {{store.repository_url}}/new/{{first_pull_headref}}?filename=.gitignore
+                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
           # Approve PR 
           - type: createReview
@@ -148,7 +148,7 @@ steps:
           files_changed_tab: '%store.repository_url%/pull/2/files'
           readme_link: >-
             %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
-            
+
   #############################################################
   # Step 3: Merge PR
   # - User merges first PR
