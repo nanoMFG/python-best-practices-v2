@@ -273,7 +273,21 @@ steps:
         with: 06_add-docstrings.md
 
   #############################################################
-  # Step 6: Merge PR
+  # Step 6: Add docstrings
+  #############################################################
+  - title: Add skeleton for python module code.
+    description: Add the module file with basic outline of class and methods that will be needed
+    event: pull_request.synchronize
+    link: '{{ store.second_pull_url }}'
+    actions:
+      - type: respond
+        with: 06-continue-to-merge.md
+        data:
+          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
+          
+
+  #############################################################
+  # Step 7: Merge PR
   # - User merges second PR
   # - App closes second issue
   # - App creates new issue
@@ -289,12 +303,25 @@ steps:
         with: d-check-a-value.md
         data:
           value: Creating content for the next step...
-
-  
-
-  #############################################################
-  # Step: 7
-  #############################################################
+      # Create next issue
+      - type: createIssue
+        title: Add Module Code tests and setup.py
+        body: 08_introduce.md
+        store:
+          third_issue_num: '{{result.data.number}}'
+          third_issue_url: '{{result.data.html_url}}'
+      # respond with link
+      - type: respond
+        with: go-to-next-issue.md
+        data:
+          quicklink: '{{store.third_issue_url}}'
+      # Close second issue
+      - type: closeIssue
+        issue: '%store.second_issue_num%'
+      # Respond with next activity
+     # - type: respond
+     #   issue: "%store.third_issue_num%"
+     #   with: 08-??.md
 
   #############################################################
   # Step: 8
