@@ -144,7 +144,7 @@ steps:
   - title: Merge the First Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
-    link: '{{ store.first_pull_url }}'
+    link: '{{ store.second_pull_url }}'
     actions:
       - type: respond
         with: d-check-a-value.md
