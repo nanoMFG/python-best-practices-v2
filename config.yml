@@ -130,6 +130,14 @@ steps:
               editLink: >-
                 {{store.repository_url}}/new/{{first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
+          # Approve PR 
+          - type: createReview
+            body: 03_added-README-merge.md
+            event: APPROVE
+            data:
+              files_changed_tab: '%store.repository_url%/pull/2/files'
+              readme_link: >-
+                %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
         # End filepath verification
       
       # Approve PR 
@@ -140,6 +148,7 @@ steps:
           files_changed_tab: '%store.repository_url%/pull/2/files'
           readme_link: >-
             %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
+            
   #############################################################
   # Step 3: Merge PR
   # - User merges first PR
