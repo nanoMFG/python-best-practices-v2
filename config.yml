@@ -18,7 +18,6 @@ before:
       repository_url: '{{ payload.repository.html_url }}'
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
-  
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
@@ -32,8 +31,8 @@ before:
     issue: '{{store.first_issue_num}}'
     data:
       quicklink: '{{store.repository_url}}/new/main?filename=LICENSE'
-  
 # end before
+
 steps:
   #############################################################
   # Step 1
