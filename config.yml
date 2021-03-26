@@ -8,8 +8,8 @@ template:
   repo: python-best-practices-v2-template
   description: Description
 #################################################################
-
-
+#
+#
 #################################################################
 before:
   - type: updateBranchProtection
