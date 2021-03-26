@@ -181,7 +181,7 @@ steps:
   - title: Add __init__.py files to package.
     description: Create a working package directory by adding the magic python files
     event: pull_request.opened
-    link: '{{ store.first_issue_url }}'
+    link: '{{ store.second_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
