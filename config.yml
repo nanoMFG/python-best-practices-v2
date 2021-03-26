@@ -18,12 +18,7 @@ before:
       repository_url: '{{ payload.repository.html_url }}'
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
-  # Create README.md
-  - type: createFile
-    filename: t-README-template.md
-    branch: main
-    new_name: README.md
-    message: Created a README.md from a template.
+  
   #   Create the first issue  
   - type: createIssue
     title: Set up a Python Project
@@ -131,6 +126,12 @@ steps:
               editLink: >-
                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
+          # Create README.md
+          - type: createFile
+            filename: t-README-template.md
+            branch: '%payload.pull_request.head.ref%'
+            new_name: README.md
+            message: Created a README.md from a template.
           # Approve PR 
           - type: createReview
             body: 03_added-README-merge.md
