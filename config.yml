@@ -32,6 +32,11 @@ before:
     issue: '{{store.first_issue_num}}'
     data:
       quicklink: '{{store.repository_url}}/new/main?filename=LICENSE'
+  # Create README.md
+  - type: createFile
+    filename: t-README-template.md
+    new_name: README.md
+    message: Created a README.md from a template.
 # end before
 steps:
   #############################################################
@@ -126,12 +131,12 @@ steps:
               editLink: >-
                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
-          # Create README.md
-          - type: createFile
-            filename: t-README-template.md
-            branch: '%payload.pull_request.head.ref%'
-            new_name: README.md
-            message: Created a README.md from a template.
+          # # Create README.md
+          # - type: createFile
+          #   filename: t-README-template.md
+          #   branch: '%payload.pull_request.head.ref%'
+          #   new_name: README.md
+          #   message: Created a README.md from a template.
           # Approve PR 
           - type: createReview
             body: 03_added-README-merge.md
