@@ -8,12 +8,15 @@ The \_\_init\_\_.py needs to be placed in the directory that contains the rest o
 
 ## Step 4: Create an \_\_init\_\_.py
 
-In our case, we need to create two \_\_init\_\_.py's, one for the 'digit_reader' module, and one for its internal 'model' module.
+In our case, we need to create two \_\_init\_\_.py's, one for the 'digit_reader' package, and one for its internal 'model' package.
 
 ### :keyboard: Activity: Commit your \_\_init\_\_.py's
 
 1. Commit a blank \_\_init\_\_.py for the 'digit_reader' module
 2. Commit a blank \_\_init\_\_.py for the 'digit_reader/model' module
 3. Open a pull request to main with your changes
+
+**:bulb: [Add `src/digit_reader/__init__.py`]({{quicklink1}})**
+**:bulb: [Add `src/digit_reader/model/__init__.py`]({{quicklink2}})**
 
 > _I will respond in the pull request one you open it!_ 

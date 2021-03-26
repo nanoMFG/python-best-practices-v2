@@ -27,6 +27,8 @@ In this step we are going to create a simple python module, with no functionalit
 3. Create blank methods named '\_\_init\_\_', 'train_model', and 'evaluate_model'
 4. Commit your changes to this pull request's branch
 
+**:bulb: [Add `src/digit_reader/model/model.py`]({{quicklink1}})**
+
 If you get stuck, or don't feel like typing, you can click the dropdown below for the solution code. Feel free to copy and paste it.
 <details><summary> A completed MNISTModel class </summary>
 

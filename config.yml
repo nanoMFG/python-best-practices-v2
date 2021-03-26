@@ -169,6 +169,9 @@ steps:
       - type: respond
         issue: "%store.second_issue_num%"
         with: 04_add-init-files.md
+        data:
+          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/__init__.py%'
+          quicklink2: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/__init__.py%'
 
 # The next step should look for pull_request.opened
   
@@ -219,7 +222,10 @@ steps:
 
       # Probably should validate other file as well...
       - type: respond
-        with: 05_add-python-module.md 
+        with: 05_add-python-module.md
+        data:
+          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/model.py%'
+
       
   #############################################################
   # Step 5: Add skeleton module code
