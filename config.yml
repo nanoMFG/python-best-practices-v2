@@ -61,19 +61,14 @@ steps:
         operator: includes
         right: 'path:LICENSE'
         else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: LICENSE
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: '%actions.fileLocation.path%'
+              haveFile: ''
               needFile: LICENSE
               editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+                {{store.repository_url}}/new/main?filename=LICENSE
               fileName: LICENSE
         # End filepath verification
       - type: respond
@@ -229,7 +224,7 @@ steps:
   # Step 5: Add skeleton module code
   #
   #
-  #
+  # 
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
