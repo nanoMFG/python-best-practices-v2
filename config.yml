@@ -169,6 +169,7 @@ steps:
       - type: respond
         issue: "%store.second_issue_num%"
         with: 04_add-init-files.md
+        
 # The next step should look for pull_request.opened
   
   #############################################################
