@@ -302,6 +302,9 @@ steps:
         with: 06-continue-to-merge.md
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
+      - type: createReview
+        body: 03_added-README-merge.md
+        event: APPROVE
           
 
   #############################################################
