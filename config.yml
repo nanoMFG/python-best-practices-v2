@@ -242,7 +242,7 @@ steps:
       - type: respond
         with: 05_add-python-module.md
         data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src/digit_reader/model/model.py%'
+          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src\%2Fdigit_reader\%2Fmodel\%2Fmodel.py'
 
       
   #############################################################
