@@ -188,8 +188,8 @@ steps:
         issue: "%store.second_issue_num%"
         with: 04_add-init-files.md
         data:
-          quicklink1: '%store.repository_url%/new/main?filename=src%2Fdigit_reader%2F__init__.py%'
-          quicklink2: '%store.repository_url%/new/main?filename=src%2Fdigit_reader%2Fmodel%2F__init__.py%'
+          quicklink1: '%store.repository_url%/new/main?filename=src\%2Fdigit_reader\%2F__init__.py'
+          quicklink2: '%store.repository_url%/new/main?filename=src\%2Fdigit_reader\%2Fmodel\%2F__init__.py'
 
 # The next step should look for pull_request.opened
   
