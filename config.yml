@@ -49,47 +49,47 @@ steps:
     # Validate the filepath for the expected file
     ###########################################################
       # get tree
-    - type: getTree
-      action_id: isInTree
-      recursive: true
-      sha: '%payload.pull_request.head.sha%'
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
         # doing this here because its the first action
-      store:
-        first_pull_url: '{{payload.pull_request.html_url}}'
-        first_pull_num: '{{payload.pull_request.number}}'
-        first_pull_headref: '{{payload.pull_request.head.ref}}'
+        store:
+          first_pull_url: '{{payload.pull_request.html_url}}'
+          first_pull_num: '{{payload.pull_request.number}}'
+          first_pull_headref: '{{payload.pull_request.head.ref}}'
       # Create README.md
-    - type: createFile
-      filename: t-README-template.md
-      branch: '%payload.pull_request.head.ref%'
-      new_name: README.md
-      message: Created a README.md from a template.
+      - type: createFile
+        filename: t-README-template.md
+        branch: '%payload.pull_request.head.ref%'
+        new_name: README.md
+        message: Created a README.md from a template.
       # check for a file in a tree
-    - type: gate
-      left: '%actions.isInTree.data.tree%'
-      operator: includes
-      right: 'path:LICENSE'
-      else:
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:LICENSE'
+        else:
           # help user with proper file name or location
-      - type: respond
-        with: e-wrong-file-location.md
-        data:
-          haveFile: ''
-          needFile: LICENSE
-          editLink: >-
-            {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=LICENSE
-          fileName: LICENSE
+          - type: respond
+            with: e-wrong-file-location.md
+            data:
+              haveFile: ''
+              needFile: LICENSE
+              editLink: >-
+                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=LICENSE
+              fileName: LICENSE
+          - type: respond
+            with: 02_add-gitignore.md
+            data:
+               quicklink: >-
+                  %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
+        # End filepath verification
       - type: respond
         with: 02_add-gitignore.md
         data:
-        quicklink: >-
-          %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
-        # End filepath verification
-    - type: respond
-      with: 02_add-gitignore.md
-      data:
-      quicklink: >-
-        %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
+          quicklink: >-
+            %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
   #############################################################
   # Step 2: Add a Python .gitignore file.
   # - User commits to head branch
