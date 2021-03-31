@@ -18,7 +18,7 @@ before:
       repository_url: '{{ payload.repository.html_url }}'
       repository_owner: '{{ payload.repository.owner.login }}'
       repository_default_branch: '{{ payload.repository.default_branch }}'
-  #   Create the first issue  
+  #   Create the first issue
   - type: createIssue
     title: Set up a Python Project
     body: 00_welcome.md
@@ -132,7 +132,7 @@ steps:
               editLink: >-
                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
-          # Approve PR 
+          # Approve PR
           - type: createReview
             body: 03_added-README-merge.md
             event: APPROVE
@@ -141,8 +141,8 @@ steps:
               readme_link: >-
                 %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
         # End filepath verification
-      
-      # Approve PR 
+
+      # Approve PR
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
@@ -192,7 +192,7 @@ steps:
           quicklink2: '%store.repository_url%/new/main?filename=src\%2Fdigit_reader\%2Fmodel\%2F__init__.py'
 
 # The next step should look for pull_request.opened
-  
+
   #############################################################
   # Step 4: Add __init__.py for planned packages/modules
   #
@@ -207,6 +207,12 @@ steps:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
+    #Add new tests for steps 4-6
+      - type: createFile
+        filename: t-test_module.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: test/test_module.py
+        message: Added new tests for steps 4-6.
       # get tree
       - type: getTree
         action_id: isInTree
@@ -244,12 +250,12 @@ steps:
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src\%2Fdigit_reader\%2Fmodel\%2Fmodel.py'
 
-      
+
   #############################################################
   # Step 5: Add skeleton module code
   #
   #
-  # 
+  #
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
@@ -305,7 +311,7 @@ steps:
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
-          
+
 
   #############################################################
   # Step 7: Merge PR
@@ -381,9 +387,9 @@ steps:
 #         filename: formatting.py
 #       # Need to write a regex to check for comment blocks. Ideally we should write
 #       # multiple gates for multiple comment types the user can add
-#       # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html 
+#       # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
 #       # for google comment examples Currently, only one simple regex check is executed
-#       # We need to write a regex that checks whether the file contains the solution we desire 
+#       # We need to write a regex that checks whether the file contains the solution we desire
 #       #(currently checks if file contains 'x = 5')
 #       - type: gate
 #         left: /x\s=\s5/g
