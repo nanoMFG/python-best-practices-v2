@@ -14,4 +14,9 @@ class TestModules():
         model.evaluate_model()
 
     def test_docstrings(self):
-        assert True
+        with open('src/digit_reader/model/model.py') as model_file:
+            docstrings = 0
+            for line in model_file:
+                if '\"\"\"' in line:
+                    docstrings += 1
+        assert docstrings >= 3
