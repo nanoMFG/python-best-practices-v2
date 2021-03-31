@@ -8,7 +8,7 @@ In order to support the automatic installation of packages, you will first need 
 
 Luckily, we have a setup build script that we can use to generate a ```requirements.txt``` file. However, we'll first have to add 2 fields into our setup function to make that possible!
 
-## Step 7: Edit setup.py and install with pip
+## Step 9: Edit setup.py and install with pip
 
 TensorFlow, one of the packages we need to install, actually requires your Python version to be 3.6-3.8. As a result, we have to specify that in our build script. Here's some example values for python_requires and install_requires. The following example project requires a Python version above 3.0 and requires installation of django and pandas. Use the example ```setup.py``` as an example for your project's ```setup.py```.
 ```python
