@@ -221,15 +221,15 @@ steps:
         store:
           second_pull_url: '{{payload.pull_request.html_url}}'
           second_pull_num: '{{payload.pull_request.number}}'
-      # check for a file in a tree
+      # check for a file (src/digit_reader/__init__.py) in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: 'path:.gitignore'
+        right: 'path:src/digit_reader/__init__.py'
         else:
           # if file isn't where expected find true location
           - type: findInTree
-            path: src/digit_reader/__init__.py
+            path: __init__.py
             tree: '%actions.isInTree.data.tree%'
             action_id: fileLocation
           # help user with proper file location
@@ -244,7 +244,29 @@ steps:
               fileName: src/digit_reader/__init__.py
         # End filepath verification
 
-      # Probably should validate other file as well...
+    # check for a file (src/digit_reader/model/__init__.py) in a tree
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:src/digit_reader/model/__init__.py'
+        else:
+        # if file isn't where expected find true location
+          - type: findInTree
+            path: model/__init__.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+        # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: src/digit_reader/model/__init__.py
+              editLink: >-
+                    %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: src/digit_reader/model/__init__.py
+      # End filepath verification
+
       - type: respond
         with: 05_add-python-module.md
         data:
@@ -274,11 +296,11 @@ steps:
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: 'path:src/digit_reader/digit_reader.py'
+        right: 'path:src/digit_reader/model/model.py'
         else:
           # if file isn't where expected find true location
           - type: findInTree
-            path: src/digit_reader/digit_reader.py
+            path: model.py
             tree: '%actions.isInTree.data.tree%'
             action_id: fileLocation
           # help user with proper file location
@@ -287,10 +309,10 @@ steps:
             issue: '{{store.second_pull_num}}'
             data:
               haveFile: '%actions.fileLocation.path%'
-              needFile: src/digit_reader/digit_reader.py
+              needFile: src/digit_reader/model/model.py
               editLink: >-
                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: src/digit_reader/digit_reader.py
+              fileName: src/digit_reader/model/model.py
         # End filepath verification
       # Probably should validate other file as well...
       - type: respond

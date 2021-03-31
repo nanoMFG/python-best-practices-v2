@@ -8,7 +8,7 @@ class TestModules():
 
     def test_skeleton_code(self):
         assert os.path.isfile('src/digit_reader/model/model.py')
-        import digit_reader.model.MNISTModel
+        from digit_reader.model.model import MNISTModel
         model = MNISTModel()
         model.train_model()
         model.evaluate_model()
