@@ -211,7 +211,7 @@ steps:
       - type: createFile
         filename: t-test_module.py
         branch: '%payload.pull_request.head.ref%'
-        new_name: test/test_module.py
+        new_name: src/digit_reader/test/test_module.py
         message: Added new tests for steps 4-6.
       # get tree
       - type: getTree
