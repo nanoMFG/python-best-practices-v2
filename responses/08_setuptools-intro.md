@@ -4,7 +4,7 @@ Now that you have all the files needed to create a Python package and organized 
 
 The Python distutils package provides support for building and installing additional modules into a Python installation. However, we don't want to use this module directly. Instead we will use setuptools, a collection of enhancements to the Python distutils that allow you to more easily build and distribute Python distributions.
 
-## Step 6: Setup.py
+## Step 7: Setup.py
 
 The build script for setuptools is written in the file setup.py. For this step of the course, we will ask you to create a new setup.py file and write the build script.
 
