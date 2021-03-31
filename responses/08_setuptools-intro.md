@@ -1,6 +1,6 @@
 ### Setuptools
 
-Now that you have learned about all the files you need to create a Python package. Let's actually build our package. 
+Now that you have all the files needed to create a Python package and organized your code into modules, it's time to build our package so that so that the various commands that operate on your modules can do the right thing!
 
 The Python distutils package provides support for building and installing additional modules into a Python installation. However, we don't want to use this module directly. Instead we will use setuptools, a collection of enhancements to the Python distutils that allow you to more easily build and distribute Python distributions.
 
