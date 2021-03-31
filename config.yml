@@ -42,9 +42,7 @@ steps:
   #############################################################
   - title: Add a LICENSE file.
     description: Use GitHub to add a LICENSE file from a template.
-    event:
-      - pull_request.opened
-      - pull_request.synchronize
+    event: pull_request
     link: '{{store.first_issue_url}}'
     actions:
     ###########################################################
