@@ -373,9 +373,49 @@ steps:
      #   with: 08-??.md
 
   #############################################################
-  # Step: 8
+  # Step 8: Write a setup script
+  # 
+  # 
+  # 
   #############################################################
-
+  - title: Write a setup script.
+    description: write a setup script to build application
+    event: pull_request.closed
+    link: '{{ store.second_pull_url }}'
+    actions:
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+      # get tree
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
+      # check for a file in a tree
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:src/digit_reader/model/model.py'
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: model.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: src/digit_reader/model/model.py
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: src/digit_reader/model/model.py
+        # End filepath verification
+      # Probably should validate other file as well...
+      - type: respond
+        with: 06_add-docstrings.md
   #############################################################
   # Step: 9
   #############################################################
