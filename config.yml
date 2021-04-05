@@ -386,6 +386,9 @@ steps:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
+      - type: respond
+        issue: '{{store.third_issue_url}}'
+        with: 08_setuptools-intro.md
       # get tree
       - type: getTree
         action_id: isInTree
@@ -420,13 +423,51 @@ steps:
       - type: respond
         with: 08_venv-intro.md
   #############################################################
-  # Step: 9
+  # Step 9: Activate virtual environment
   #############################################################
+  - title: Activate virtual environment
+    description: Create and activate a virtual environment
+    event: issue_comment.created
+    link: '{{ store.third_pull_url }}'
+    actions:
+      - type: respond
+        with: 09_pip.md
 
   #############################################################
-  # Step: 10
+  # Step 10: Install external packages using pip
   #############################################################
-
+  - title: Install external packages using pip
+    description: Create a requirements.txt using setup.py and install external packages with pip
+    event: pull_request.synchronize
+    link: '{{ store.third_pull_url }}'
+    actions:
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+    # add compiliation test somewhere here
+      # check for a file in a tree
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:requirements.txt'
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: model.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: requirements.txt
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: setup.py
+        # End filepath verification
+      # Probably should validate other file as well...
 #############################################################
   # Step: 4
   #############################################################
