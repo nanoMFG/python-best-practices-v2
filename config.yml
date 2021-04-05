@@ -346,7 +346,7 @@ steps:
   - title: Merge the Second Pull Request
     description: Merge the preliminary files to start the project
     event: pull_request.closed
-    link: '{{store.first_issue_url}}'
+    link: '{{store.second_pull_url}}'
     actions:
       - type: respond
         with: d-check-a-value.md
@@ -359,6 +359,10 @@ steps:
         store:
           third_issue_num: '{{result.data.number}}'
           third_issue_url: '{{result.data.html_url}}'
+      # Respond with next activity
+      - type: respond
+        with: 08_setuptools-intro.md
+        issue: '{{store.third_issue_url}}'
       # respond with link
       - type: respond
         with: go-to-next-issue.md
@@ -367,10 +371,7 @@ steps:
       # Close second issue
       - type: closeIssue
         issue: '%store.second_issue_num%'
-      # Respond with next activity
-      - type: respond
-        with: 08_setuptools-intro.md
-        issue: '{{store.third_issue_url}}'
+
 
 
   #############################################################
