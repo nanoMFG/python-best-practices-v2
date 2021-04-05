@@ -380,8 +380,8 @@ steps:
   #############################################################
   - title: Write a setup script.
     description: write a setup script to build application
-    event: pull_request.closed
-    link: '{{ store.second_pull_url }}'
+    event: pull_request.synchronize
+    link: '{{ store.third_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
@@ -391,11 +391,14 @@ steps:
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
+        store:
+          third_pull_url: '{{payload.pull_request.html_url}}'
+          third_pull_num: '{{payload.pull_request.number}}'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
-        right: 'path:src/digit_reader/model/model.py'
+        right: 'path:setup.py'
         else:
           # if file isn't where expected find true location
           - type: findInTree
@@ -408,14 +411,14 @@ steps:
             issue: '{{store.second_pull_num}}'
             data:
               haveFile: '%actions.fileLocation.path%'
-              needFile: src/digit_reader/model/model.py
+              needFile: setup.py
               editLink: >-
                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: src/digit_reader/model/model.py
+              fileName: setup.py
         # End filepath verification
       # Probably should validate other file as well...
       - type: respond
-        with: 06_add-docstrings.md
+        with: 08_venv-intro.md
   #############################################################
   # Step: 9
   #############################################################
