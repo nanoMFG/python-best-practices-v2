@@ -355,7 +355,7 @@ steps:
       # Create next issue
       - type: createIssue
         title: Add Module Code tests and setup.py
-        body: 08_introduce.md
+        body: 08_introduce-setup-and-pip.md
         store:
           third_issue_num: '{{result.data.number}}'
           third_issue_url: '{{result.data.html_url}}'
