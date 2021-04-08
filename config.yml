@@ -440,10 +440,10 @@ steps:
     event: pull_request.synchronize
     link: '{{ store.third_pull_url }}'
     actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ###########################################################
-    # add compiliation test somewhere here
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
