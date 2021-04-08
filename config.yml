@@ -281,12 +281,21 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: pull_request.synchronize
+    event: 
+      - pull_request.synchronize
+      - check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
+      - type: gate
+        left: "%payload.check_suite.conclusion%"
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: 09_pip.md
       # get tree
       - type: getTree
         action_id: isInTree
@@ -437,9 +446,17 @@ steps:
   #############################################################
   - title: Install external packages using pip
     description: Create a requirements.txt using setup.py and install external packages with pip
-    event: pull_request.synchronize
+    event: 
+      - pull_request.synchronize
+      - check_suite.completed
     link: '{{ store.third_pull_url }}'
     actions:
+      # Add test for whether requirements.txt contains numpy, tensorflow etc
+      - type: createFile
+        filename: t-test_import.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: src/digit_reader/test/test_import.py
+        message: Added new import test for steps 10.  
       - type: getTree
         action_id: isInTree
         recursive: true
@@ -465,8 +482,13 @@ steps:
               editLink: >-
                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
               fileName: requirements.txt
-        # End filepath verification
-            # Create next issue
+      - type: gate
+        left: "%payload.check_suite.conclusion%"
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: 09_pip.md
       - type: createIssue
         title: Testing
         body: 10_test-intro.md
@@ -486,53 +508,52 @@ steps:
       - type: closeIssue
         issue: '%store.second_issue_num%'  
       # Probably should validate other file as well...
-#   #############################################################
-#   # Step 11: Run pytest
-#   # 
-#   # 
-#   # 
-#   #############################################################
-#   - title: Write a setup script.
-#     description: write a setup script to build application
-#     event: pull_request.synchronize
-#     link: '{{ store.third_pull_url }}'
-#     actions:
-#     ###########################################################
-#     # Validate the filepath for the expected file
-#     ###########################################################
-#       # get tree
-#       - type: getTree
-#         action_id: isInTree
-#         recursive: true
-#         sha: '%payload.pull_request.head.sha%'
-#         store:
-#           third_pull_url: '{{payload.pull_request.html_url}}'
-#           third_pull_num: '{{payload.pull_request.number}}'
-#       # check for a file in a tree
-#       - type: gate
-#         left: '%actions.isInTree.data.tree%'
-#         operator: includes
-#         right: 'path:setup.py'
-#         else:
-#           # if file isn't where expected find true location
-#           - type: findInTree
-#             path: model.py
-#             tree: '%actions.isInTree.data.tree%'
-#             action_id: fileLocation
-#           # help user with proper file location
-#           - type: respond
-#             with: e-wrong-file-location.md
-#             issue: '{{store.second_pull_num}}'
-#             data:
-#               haveFile: '%actions.fileLocation.path%'
-#               needFile: setup.py
-#               editLink: >-
-#                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-#               fileName: setup.py
-#         # End filepath verification
-#       # Probably should validate other file as well...
-#       - type: respond
-#         with: 08_venv-intro.md
+  #############################################################
+  # Step 11: Run pytest
+  # 
+  # 
+  # 
+  #############################################################
+  - title: Run pytest.
+    description: how to run pytest
+    event: pull_request.synchronize
+    link: '{{ store.fourth_pull_url }}'
+    actions:
+    ###########################################################
+    # Validate the filepath for the expected file
+    ###########################################################
+      # get tree
+      # Add test for whether requirements.txt contains numpy, tensorflow etc
+      - type: createFile
+        filename: t-test_import.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: src/digit_reader/test/test_import.py
+        message: Added new import test for steps 10.  
+      # check for a file in a tree
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:setup.py'
+        else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: model.py
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
+          - type: respond
+            with: e-wrong-file-location.md
+            issue: '{{store.second_pull_num}}'
+            data:
+              haveFile: '%actions.fileLocation.path%'
+              needFile: setup.py
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: setup.py
+        # End filepath verification
+      # Probably should validate other file as well...
+      - type: respond
+        with: 08_venv-intro.md
 
 
 
