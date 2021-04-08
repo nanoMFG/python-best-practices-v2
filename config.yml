@@ -404,13 +404,13 @@ steps:
         else:
           # if file isn't where expected find true location
           - type: findInTree
-            path: model.py
+            path: setup.py
             tree: '%actions.isInTree.data.tree%'
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
+            issue: '{{store.third_pull_num}}'
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: setup.py
@@ -452,19 +452,19 @@ steps:
         else:
           # if file isn't where expected find true location
           - type: findInTree
-            path: model.py
+            path: requirements.txt
             tree: '%actions.isInTree.data.tree%'
             action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
+            issue: '{{store.third_pull_num}}'
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: requirements.txt
               editLink: >-
                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: setup.py
+              fileName: requirements.txt
         # End filepath verification
             # Create next issue
       - type: createIssue
