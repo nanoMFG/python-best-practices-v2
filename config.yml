@@ -469,19 +469,19 @@ steps:
             # Create next issue
       - type: createIssue
         title: Testing
-        body: 08_introduce-setup-and-pip.md
+        body: 10_test-intro.md
         store:
           fourth_issue_num: '{{result.data.number}}'
           fourth_issue_url: '{{result.data.html_url}}'
       # Respond with next activity
       - type: respond
-        with: 08_setuptools-intro.md
+        with: 10_pytest.md
         issue: '{{store.fourth_issue_num}}'
       # respond with link
       - type: respond
         with: go-to-next-issue.md
         data:
-          quicklink: '{{store.third_issue_url}}'
+          quicklink: '{{store.fourth_issue_url}}'
       # Close second issue
       - type: closeIssue
         issue: '%store.second_issue_num%'  
