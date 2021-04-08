@@ -362,7 +362,8 @@ steps:
       # Respond with next activity
       - type: respond
         with: 08_setuptools-intro.md
-        issue: '{{store.third_issue_url}}'
+        issue: '{{store.third_issue_num}}'
+          - type: createIssue
       # respond with link
       - type: respond
         with: go-to-next-issue.md
