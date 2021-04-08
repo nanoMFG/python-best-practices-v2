@@ -490,7 +490,7 @@ steps:
           - type: respond
             with: e-failed-checks.md
             date:
-              message: Is your requirements.txt correct? Does it contain numpy or tensorflow?
+              value: Is your requirements.txt correct? Does it contain numpy or tensorflow?
       - type: createIssue
         title: Testing
         body: 10_test-intro.md
@@ -540,7 +540,7 @@ steps:
           - type: respond
             with: e-failed-checks.md
             date:
-              message: Did you forget to fix text_failing so that the test would pass? 
+              value: Did you forget to fix text_failing so that the test would pass? 
         # End filepath verification
       # Probably should validate other file as well...
       - type: respond
