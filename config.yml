@@ -491,6 +491,26 @@ steps:
             with: e-failed-checks.md
             date:
               value: Is your requirements.txt correct? Does it contain numpy or tensorflow?
+      # Close second issue
+      - type: closeIssue
+        issue: '%store.second_issue_num%'  
+      - type: createReview
+        body: 03_added-README-merge.md
+        event: APPROVE
+      # Probably should validate other file as well...
+      
+  #############################################################
+  # Step 11: Merge PR
+  #############################################################
+  - title: Merge the Third Pull Request
+    description: Merge the setup and requirements
+    event: pull_request.closed
+    link: '{{store.third_pull_url}}'
+    actions:
+      - type: respond
+        with: d-check-a-value.md
+        data:
+          value: Creating content for the next step...   
       - type: createIssue
         title: Testing
         body: 10_test-intro.md
@@ -505,13 +525,9 @@ steps:
       - type: respond
         with: go-to-next-issue.md
         data:
-          quicklink: '{{store.fourth_issue_url}}'
-      # Close second issue
-      - type: closeIssue
-        issue: '%store.second_issue_num%'  
-      # Probably should validate other file as well...
+          quicklink: '{{store.fourth_issue_url}}'    
   #############################################################
-  # Step 11: Run pytest
+  # Step 12: Run pytest
   # 
   # 
   # 
