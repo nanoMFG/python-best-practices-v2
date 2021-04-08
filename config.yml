@@ -325,16 +325,15 @@ steps:
       - check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
-    ###########################################################
-    # REPLACE WITH A LEGIT ERROR FILE!!!
-    ###########################################################
-      - type: gate
-        left: "%payload.check_suite.conclusion%"
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: 09_pip.md
+#       - type: gate
+#         left: "%payload.check_suite.conclusion%"
+#         operator: ===
+#         right: success
+#         else:
+#           - type: respond
+#             with: e-failed-checks.md
+#             date:
+#               message: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: respond
         with: 06-continue-to-merge.md
         data:
@@ -489,7 +488,9 @@ steps:
         right: success
         else:
           - type: respond
-            with: 09_pip.md
+            with: e-failed-checks.md
+            date:
+              message: Is your requirements.txt correct? Does it contain numpy or tensorflow?
       - type: createIssue
         title: Testing
         body: 10_test-intro.md
@@ -527,17 +528,19 @@ steps:
     ###########################################################
       # Adds test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
-        filename: t-test_import.py
+        filename: t-test_failing.py
         branch: '%payload.pull_request.head.ref%'
-        new_name: src/digit_reader/test/test_import.py
-        message: Added new import test for steps 10.  
+        new_name: src/digit_reader/test/test_failing.py
+        message: Added new failing test for steps 11.  
       - type: gate
         left: "%payload.check_suite.conclusion%"
         operator: ===
         right: success
         else:
           - type: respond
-            with: 09_pip.md
+            with: e-failed-checks.md
+            date:
+              message: Did you forget to fix text_failing so that the test would pass? 
         # End filepath verification
       # Probably should validate other file as well...
       - type: respond
