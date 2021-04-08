@@ -1,6 +1,3 @@
-## Pytest
-Earlier in the course, you probably saw some test files in the repository when setting up your package. Tests are a crucial part of your project because they let you know whether the functions you wrote work as expected. For our course, we will be teaching you about Pytest a popular testing framework for Python.
-
 ## Step 10: First test with pytest
 Look through some of the tests we wrote to see how your write the tests. Inside tests, you check for whether a function is behaving as expected by asserting that the actual value obtained from the function is equal to the value you expect from the function.
 
