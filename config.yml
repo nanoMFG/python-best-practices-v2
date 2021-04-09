@@ -440,48 +440,25 @@ steps:
     actions:
       - type: respond
         with: 09_pip.md
-
-  #############################################################
-  # Step 10: Install external packages using pip
-  #############################################################
-  - title: Install external packages using pip
-    description: Create a requirements.txt using setup.py and install external packages with pip
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
-    link: '{{ store.third_pull_url }}'
-    actions:
       # Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
         branch: '%payload.pull_request.head.ref%'
         new_name: src/digit_reader/test/test_import.py
         message: Added new import test for steps 10.  
+
+  #############################################################
+  # Step 10: Install external packages using pip
+  #############################################################
+  - title: Install external packages using pip
+    description: Create a requirements.txt using setup.py and install external packages with pip
+    event: check_suite.completed
+    link: '{{ store.third_pull_url }}'
+    actions:
       - type: getTree
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
-      # check for a file in a tree
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:requirements.txt'
-        else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: requirements.txt
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
-          # help user with proper file location
-          - type: respond
-            with: e-wrong-file-location.md
-            issue: '{{store.third_pull_num}}'
-            data:
-              haveFile: '%actions.fileLocation.path%'
-              needFile: requirements.txt
-              editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: requirements.txt
       - type: gate
         left: "%payload.check_suite.conclusion%"
         operator: ===
@@ -490,13 +467,13 @@ steps:
           - type: respond
             with: e-failed-checks.md
             date:
-              value: Is your requirements.txt correct? Does it contain numpy or tensorflow?
-      # Close second issue
-      - type: closeIssue
-        issue: '%store.second_issue_num%'  
+              value: Is your requirements.txt correct? Does it contain numpy or tensorflow? 
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
+      # Close second issue
+      - type: closeIssue
+        issue: '%store.second_issue_num%' 
       # Probably should validate other file as well...
       
   #############################################################
