@@ -452,9 +452,7 @@ steps:
   #############################################################
   - title: Install external packages using pip
     description: Create a requirements.txt using setup.py and install external packages with pip
-    event: 
-      - pull_request.synchronize
-      - check_run.completed
+    event: check_run.completed
     link: '{{ store.third_pull_url }}'
     actions:
       - type: getTree
@@ -462,26 +460,26 @@ steps:
         recursive: true
         sha: '%payload.pull_request.head.sha%'
       # check for a file in a tree
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:requirements.txt'
-        else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: 'path:requirements.txt'
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
-          # help user with proper file location
-          - type: respond
-            with: e-wrong-file-location.md
-            issue: '{{store.third_pull_num}}'
-            data:
-              haveFile: '%actions.fileLocation.path%'
-              needFile: requirements.txt
-              editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-              fileName: requirements.txt
+#       - type: gate
+#         left: '%actions.isInTree.data.tree%'
+#         operator: includes
+#         right: 'path:requirements.txt'
+#         else:
+#           # if file isn't where expected find true location
+#           - type: findInTree
+#             path: 'path:requirements.txt'
+#             tree: '%actions.isInTree.data.tree%'
+#             action_id: fileLocation
+#           # help user with proper file location
+#           - type: respond
+#             with: e-wrong-file-location.md
+#             issue: '{{store.third_pull_num}}'
+#             data:
+#               haveFile: '%actions.fileLocation.path%'
+#               needFile: requirements.txt
+#               editLink: >-
+#                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+#               fileName: requirements.txt
       - type: gate
         left: "%payload.check_run.conclusion%"
         operator: ===
