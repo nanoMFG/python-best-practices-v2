@@ -26,7 +26,7 @@ before:
       first_issue_num: '{{result.data.number}}'
       first_issue_url: '{{result.data.html_url}}'
   # Respond in first issue with first activity
-  - type: respond
+  - type: respond 
     with: 01_add-LICENSE.md
     issue: '{{store.first_issue_num}}'
     data:
