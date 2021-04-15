@@ -55,11 +55,6 @@ steps:
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
-        # doing this here because its the first action
-        store:
-          first_pull_url: '{{payload.pull_request.html_url}}'
-          first_pull_num: '{{payload.pull_request.number}}'
-          first_pull_headref: '{{payload.pull_request.head.ref}}'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
@@ -88,6 +83,11 @@ steps:
         branch: '%payload.pull_request.head.ref%'
         new_name: README.md
         message: Created a README.md from a template.
+        # doing this here because its the first step
+        store:
+          first_pull_url: '{{payload.pull_request.html_url}}'
+          first_pull_num: '{{payload.pull_request.number}}'
+          first_pull_headref: '{{payload.pull_request.head.ref}}'
       - type: respond
         with: 02_add-gitignore.md
         data:
@@ -209,9 +209,6 @@ steps:
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
-        store:
-          second_pull_url: '{{payload.pull_request.html_url}}'
-          second_pull_num: '{{payload.pull_request.number}}'
       # check for a file (src/digit_reader/__init__.py) in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
@@ -264,6 +261,9 @@ steps:
         branch: '%payload.pull_request.head.ref%'
         new_name: src/digit_reader/test/test_module.py
         message: Added new tests for steps 4-6.
+        store:
+          second_pull_url: '{{payload.pull_request.html_url}}'
+          second_pull_num: '{{payload.pull_request.number}}'
       - type: respond
         with: 05_add-python-module.md
         data:
@@ -398,9 +398,6 @@ steps:
         action_id: isInTree
         recursive: true
         sha: '%payload.pull_request.head.sha%'
-        store:
-          third_pull_url: '{{payload.pull_request.html_url}}'
-          third_pull_num: '{{payload.pull_request.number}}'
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
@@ -426,6 +423,9 @@ steps:
       # Probably should validate other file as well...
       - type: respond
         with: 08_venv-intro.md
+        store:
+          third_pull_url: '{{payload.pull_request.html_url}}'
+          third_pull_num: '{{payload.pull_request.number}}'
   #############################################################
   # Step 9: Activate virtual environment
   #############################################################
