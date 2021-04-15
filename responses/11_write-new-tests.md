@@ -20,3 +20,16 @@ Let's go through how we can write a rough test to check whether the model is wor
 4. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```9```.
 
 Once you write your test, compare your code with the solution and then commit and push your changes. Next, we will actually write out the implment the ```classify_images``` function.
+
+<details><summary>Solution</summary>
+  
+```  
+    
+def test_classify_image():
+    (x_train, y_train), (x_test, y_test) = prepare_data()
+    model = MNISTModel()
+    assert model.classify_image(x_test[0]) == 9
+    
+```        
+
+</details>
