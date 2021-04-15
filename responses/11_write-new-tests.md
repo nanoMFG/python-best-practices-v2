@@ -6,30 +6,17 @@ Although we won't ask you to write any rigorous tests for this course as our foc
 
 ## Step 12: Write your own tests
 
-As we explained in Step 5 of the course, the project you are working on is an MNIST Model. The MNIST database (Modified National Institute of Standards and Technology database) is a large database of handwritten digits that is commonly used for training various image processing systems. So after you implement your model and train the model, your model should be able to determine what digit an image represents. If your model can classify images as expected, your model is working but if it isn't it must be failing to do its job.
+As we explained in Step 5 of the course, the project you are working on is a MNIST Model. The MNIST database (Modified National Institute of Standards and Technology database) is a large database of handwritten digits that is commonly used for training various image processing systems. So after you implement your model and train the model, your model should be able to determine what digit an image represents. If your model can classify images as expected, your model is working but if it isn't it must be failing to do its job.
+
+Although in real projects, we wouldn't want to test few particular cases but instead aim to cover a large range of inputs and outputs, to simplify things, we just want you to write a test that checks whether one of the test images are properly classified.
 
 Let's go through how we can write a rough test to check whether the model is working as expected!
 
-
-TensorFlow, one of the packages we need to install, actually requires your Python version to be 3.6-3.8. As a result, we have to specify that in our build script. Here's some example values for python_requires and install_requires. The following example project requires a Python version above 3.0 and requires installation of django and pandas. Use the example ```setup.py``` as an example for your project's ```setup.py```.
-```python
-setuptools.setup(
-    name="example_package-username", # Replace with your own username
-    ...
-    packages=setuptools.find_packages(),
-    python_requires='>=3.0',
-    install_requires=[
-        'django',
-        'pandas'
-    ]
-```
-
-Once your ```setup.py``` is complete, we can run a few commands to install everything you need for your project.
 ### :keyboard: Activity: Write a test for the MINIST classifier
 
-1. Check the documentation for the ```model.py``` file. For the evaluate_after adding values for the ```python_requires and ```install_requires``` field
-2. Run ```pip-compile```
-This should create a ```requirements.txt file```. If it's failing, check if there's any problems with your setup.py
-3. Run ```pip install -r requirements.txt```
+1. Read the comments for the ```classify_images``` function in the ```model.py``` file.
+2. Go to ```mnist_test.py``` and create a new test case called ```test_classify_images```.
+3. In the test case, you need to write a line of code to prepare the data you will used to test whether the function is working as expected. Refer to ```test_x_shape``` for help.
+4. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```9```.
 
-You should now be ready to run some tests for your project. Merge the pull request and we will let you know if you are good to go!
+Once you write your test, compare your code with the solution and then commit and push your changes. Next, we will actually write out the implment the ```classify_images``` function.
