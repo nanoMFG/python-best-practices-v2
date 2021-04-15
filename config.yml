@@ -42,7 +42,9 @@ steps:
   #############################################################
   - title: Add a LICENSE file.
     description: Use GitHub to add a LICENSE file from a template.
-    event: pull_request
+    event: 
+      - pull_request.opened
+      - pull_request.synchronize
     link: '{{store.first_issue_url}}'
     actions:
     ###########################################################
@@ -58,12 +60,6 @@ steps:
           first_pull_url: '{{payload.pull_request.html_url}}'
           first_pull_num: '{{payload.pull_request.number}}'
           first_pull_headref: '{{payload.pull_request.head.ref}}'
-      # Create README.md
-      - type: createFile
-        filename: t-README-template.md
-        branch: '%payload.pull_request.head.ref%'
-        new_name: README.md
-        message: Created a README.md from a template.
       # check for a file in a tree
       - type: gate
         left: '%actions.isInTree.data.tree%'
@@ -71,20 +67,27 @@ steps:
         right: 'path:LICENSE'
         else:
           # help user with proper file name or location
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: LICENSE
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: ''
+              haveFile: '%actions.fileLocation.path%'
               needFile: LICENSE
               editLink: >-
                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=LICENSE
               fileName: LICENSE
-          - type: respond
-            with: 02_add-gitignore.md
-            data:
-               quicklink: >-
-                  %store.repository_url%/new/%payload.pull_request.head.ref%?filename=.gitignore
         # End filepath verification
+        # Create README.md
+        # Moved to end of step to keep it from interfering with other actions
+      - type: createFile
+        filename: t-README-template.md
+        branch: '%payload.pull_request.head.ref%'
+        new_name: README.md
+        message: Created a README.md from a template.
       - type: respond
         with: 02_add-gitignore.md
         data:
@@ -132,14 +135,6 @@ steps:
               editLink: >-
                 {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
               fileName: .gitignore
-          # Approve PR
-          - type: createReview
-            body: 03_added-README-merge.md
-            event: APPROVE
-            data:
-              files_changed_tab: '%store.repository_url%/pull/2/files'
-              readme_link: >-
-                %store.repository_url%/blob/%payload.pull_request.head.ref%/README.md
         # End filepath verification
 
       # Approve PR
@@ -201,18 +196,14 @@ steps:
   #############################################################
   - title: Add __init__.py files to package.
     description: Create a working package directory by adding the magic python files
-    event: pull_request.synchronize
+    event: 
+      - pull_request.opened
+      - pull_request.synchronize
     link: '{{ store.second_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
-    #Add new tests for steps 4-6
-      - type: createFile
-        filename: t-test_module.py
-        branch: '%payload.pull_request.head.ref%'
-        new_name: src/digit_reader/test/test_module.py
-        message: Added new tests for steps 4-6.
       # get tree
       - type: getTree
         action_id: isInTree
@@ -267,6 +258,12 @@ steps:
               fileName: src/digit_reader/model/__init__.py
       # End filepath verification
 
+      # Add new tests for steps 4-6
+      - type: createFile
+        filename: t-test_module.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: src/digit_reader/test/test_module.py
+        message: Added new tests for steps 4-6.
       - type: respond
         with: 05_add-python-module.md
         data:
