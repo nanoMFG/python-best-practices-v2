@@ -1,12 +1,6 @@
 ## Oops....
 
-It seems as though your file is located here:
-
-`{{haveFile}}`
-
-and it should be located here:
-
-`{{needFile}}`
+It looks like you are missing `{{needFile}}`. You'll need to create it before you can move on.
 
 **Solution**
-Click [here]({{editLink}}) to edit `{{fileName}}` and move it to the proper directory
+Click [here]({{editLink}}) to create `{{fileName}}` and add some content to it.
