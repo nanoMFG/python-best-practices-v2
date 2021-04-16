@@ -62,15 +62,9 @@ steps:
         right: 'path:LICENSE'
         else:
           # help user with proper file name or location
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: LICENSE
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           - type: respond
             with: e-wrong-file-location.md
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: LICENSE
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=LICENSE
@@ -120,17 +114,11 @@ steps:
         operator: includes
         right: 'path:.gitignore'
         else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: .gitignore
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             issue: '{{store.first_pull_num}}'
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: .gitignore
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=.gitignore
@@ -215,17 +203,11 @@ steps:
         operator: includes
         right: 'path:src/digit_reader/__init__.py'
         else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: __init__.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             issue: '{{payload.pull_request.number}}'
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/__init__.py
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/__init__.py
@@ -238,17 +220,11 @@ steps:
         operator: includes
         right: 'path:src/digit_reader/model/__init__.py'
         else:
-        # if file isn't where expected find true location
-          - type: findInTree
-            path: model/__init__.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
         # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             issue: '{{payload.pull_request.number}}'
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/model/__init__.py
               editLink: >-
                     {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/model/__init__.py
@@ -292,17 +268,11 @@ steps:
         operator: includes
         right: 'path:src/digit_reader/model/model.py'
         else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: model.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             issue: '{{store.second_pull_num}}'
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/model/model.py
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/model/model.py
@@ -404,17 +374,11 @@ steps:
         operator: includes
         right: 'path:setup.py'
         else:
-          # if file isn't where expected find true location
-          - type: findInTree
-            path: setup.py
-            tree: '%actions.isInTree.data.tree%'
-            action_id: fileLocation
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
             issue: '{{payload.pull_request.number}}'
             data:
-              haveFile: '%actions.fileLocation.path%'
               needFile: setup.py
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=setup.py
