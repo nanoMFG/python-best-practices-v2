@@ -223,7 +223,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
+            issue: '{{payload.pull_request.number}}'
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/__init__.py
@@ -246,7 +246,7 @@ steps:
         # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
+            issue: '{{payload.pull_request.number}}'
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/model/__init__.py
@@ -412,7 +412,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.third_pull_num}}'
+            issue: '{{payload.pull_request.number}}'
             data:
               haveFile: '%actions.fileLocation.path%'
               needFile: setup.py
