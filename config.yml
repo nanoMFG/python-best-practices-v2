@@ -73,7 +73,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: LICENSE
               editLink: >-
-                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=LICENSE
+                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=LICENSE
               fileName: LICENSE
         # End filepath verification
         # Create README.md
@@ -133,7 +133,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: .gitignore
               editLink: >-
-                {{store.repository_url}}/new/{{store.first_pull_headref}}?filename=.gitignore
+                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=.gitignore
               fileName: .gitignore
         # End filepath verification
 
@@ -228,7 +228,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/__init__.py
               editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/__init__.py
               fileName: src/digit_reader/__init__.py
         # End filepath verification
 
@@ -251,7 +251,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/model/__init__.py
               editLink: >-
-                    %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+                    {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/model/__init__.py
               fileName: src/digit_reader/model/__init__.py
       # End filepath verification
 
@@ -305,7 +305,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: src/digit_reader/model/model.py
               editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=src/digit_reader/model/model.py
               fileName: src/digit_reader/model/model.py
         # End filepath verification
       # Probably should validate other file as well...
@@ -417,7 +417,7 @@ steps:
               haveFile: '%actions.fileLocation.path%'
               needFile: setup.py
               editLink: >-
-                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=setup.py
               fileName: setup.py
         # End filepath verification
       # Probably should validate other file as well...
