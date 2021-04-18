@@ -367,7 +367,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.third_pull_num}}'
+            issue: '{{payload.pull_request.number}}'
             data:
               needFile: setup.py
               editLink: >-
@@ -417,12 +417,14 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.third_pull_num}}'
+            issue: '{{payload.pull_request.number}}'
             data:
               needFile: requirements.txt
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=requirements.txt
-              fileName: requirements.txt  
+              fileName: requirements.txt             
+      - type: respond
+        with: 09_pip.md
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
