@@ -287,18 +287,9 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: check_suite.completed
+    event: pull_request.synchronize
     link: '{{ store.second_pull_url }}'
     actions:
-      - type: gate
-        left: "%payload.check_suite.conclusion%"
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: e-failed-checks.md
-            data:
-              message: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE        
@@ -362,7 +353,6 @@ steps:
     ###########################################################
     # Validate the filepath for the expected file
     ###########################################################
-    # TODO: Add a check_suite.completed gate for a test file that tests for content of setup file
       # get tree
       - type: getTree
         action_id: isInTree
@@ -412,43 +402,34 @@ steps:
   #############################################################
   - title: Install external packages using pip
     description: Create a requirements.txt using setup.py and install external packages with pip
-    event: check_suite.completed
+    event: pull_request.synchronize
     link: '{{ store.third_pull_url }}'
     actions:
-#       - type: getTree
-#         action_id: isInTree
-#         recursive: true
-#         sha: '%payload.pull_request.head.sha%'
-      # check for a file in a tree
-#       - type: gate
-#         left: '%actions.isInTree.data.tree%'
-#         operator: includes
-#         right: 'path:requirements.txt'
-#         else:
-#           # if file isn't where expected find true location
-#           - type: findInTree
-#             path: 'path:requirements.txt'
-#             tree: '%actions.isInTree.data.tree%'
-#             action_id: fileLocation
-#           # help user with proper file location
-#           - type: respond
-#             with: e-wrong-file-location.md
-#             issue: '{{store.third_pull_num}}'
-#             data:
-#               haveFile: '%actions.fileLocation.path%'
-#               needFile: requirements.txt
-#               editLink: >-
-#                 %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
-#               fileName: requirements.txt
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%'
+      check for a file in a tree
       - type: gate
-        left: "%payload.check_suite.conclusion%"
-        operator: ===
-        right: success
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:requirements.txt'
         else:
+          # if file isn't where expected find true location
+          - type: findInTree
+            path: 'path:requirements.txt'
+            tree: '%actions.isInTree.data.tree%'
+            action_id: fileLocation
+          # help user with proper file location
           - type: respond
-            with: e-failed-checks.md
+            with: e-wrong-file-location.md
+            issue: '{{store.third_pull_num}}'
             data:
-              value: Is your requirements.txt correct? Does it contain numpy or tensorflow? 
+              haveFile: '%actions.fileLocation.path%'
+              needFile: requirements.txt
+              editLink: >-
+                %payload.repository.html_url%/edit/%payload.pull_request.head.ref%/%actions.fileLocation.path%
+              fileName: requirements.txt
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
@@ -483,7 +464,13 @@ steps:
       - type: respond
         with: go-to-next-issue.md
         data:
-          quicklink: '{{store.fourth_issue_url}}'    
+          quicklink: '{{store.fourth_issue_url}}'  
+      # Adds test for whether requirements.txt contains numpy, tensorflow etc
+      - type: createFile
+        filename: t-test_failing.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: src/digit_reader/test/test_failing.py
+        message: Added new failing test for steps 11.       
   #############################################################
   # Step 12: Run pytest
   # 
@@ -492,33 +479,54 @@ steps:
   #############################################################
   - title: Run pytest.
     description: how to run pytest
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
+    event: pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
     ###########################################################
     # Validate the filepath for the expected file
-    ###########################################################
-      # Adds test for whether requirements.txt contains numpy, tensorflow etc
-      - type: createFile
-        filename: t-test_failing.py
-        branch: '%payload.pull_request.head.ref%'
-        new_name: src/digit_reader/test/test_failing.py
-        message: Added new failing test for steps 11.  
-      - type: gate
-        left: "%payload.check_suite.conclusion%"
-        operator: ===
-        right: success
-        else:
-          - type: respond
-            with: e-failed-checks.md
-            date:
-              value: Did you forget to fix text_failing so that the test would pass? 
+    ########################################################### 
         # End filepath verification
       # Probably should validate other file as well...
       - type: respond
         with: 11_write-new-tests.md
+
+  #############################################################
+  # Step 13: Write new tests
+  # 
+  # 
+  # 
+  #############################################################
+  - title: Write tests
+    description: how to write tests
+    event: pull_request.synchronize
+    link: '{{ store.fourth_pull_url }}'
+    actions:
+    ###########################################################
+    # Validate the filepath for the expected file
+    ########################################################### 
+        # End filepath verification
+      # Probably should validate other file as well...
+      - type: respond
+        with: 12_implement_function.md
+
+  #############################################################
+  # Step 14: Implement classifier function
+  # 
+  # 
+  # 
+  #############################################################
+  - title: Implement classifer function
+    description: write implementationf for MNIST classifier
+    event: pull_request.synchronize
+    link: '{{ store.fourth_pull_url }}'
+    actions:
+    ###########################################################
+    # Validate the filepath for the expected file
+    ########################################################### 
+        # End filepath verification
+      # Probably should validate other file as well...
+      - type: respond
+        with: 12_implement_function.md        
 
 
 
