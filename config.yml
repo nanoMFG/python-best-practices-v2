@@ -382,7 +382,7 @@ steps:
         store:
           third_pull_url: '{{payload.pull_request.html_url}}'
           third_pull_num: '{{payload.pull_request.number}}'
-          third_pull: '{{payload.pull_request}}'
+          third_pull_branch: '{{payload.pull_request.head.ref}}'
   #############################################################
   # Step 9: Activate virtual environment
   #############################################################
@@ -396,7 +396,7 @@ steps:
       # Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
-        branch: '%store.third_pull.head.ref%'
+        branch: '%store.third_pull_branch%'
         new_name: src/digit_reader/test/test_import.py
         message: Added new import test for steps 10.  
 
