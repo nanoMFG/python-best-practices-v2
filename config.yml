@@ -408,10 +408,10 @@ steps:
     event: pull_request.synchronize
     link: '{{ store.third_pull_url }}'
     actions:
-      # - type: getTree
-      #   action_id: isInTree
-      #   recursive: true
-      #   sha: '%payload.pull_request.head.sha%' 
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '%payload.pull_request.head.sha%' 
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
