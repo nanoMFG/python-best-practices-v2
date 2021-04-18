@@ -367,7 +367,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{payload.third_pull_num}}'
+            issue: '{{store.third_pull_num}}'
             data:
               needFile: setup.py
               editLink: >-
@@ -417,7 +417,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{payload.third_pull_num}}'
+            issue: '{{store.third_pull_num}}'
             data:
               needFile: requirements.txt
               editLink: >-
