@@ -410,7 +410,7 @@ steps:
       # - type: getTree
       #   action_id: isInTree
       #   recursive: true
-      #   sha: '%payload.pull_request.head.sha%'
+      #   sha: '%payload.pull_request.head.sha%' 
       - type: gate
         left: '%actions.isInTree.data.tree%'
         operator: includes
