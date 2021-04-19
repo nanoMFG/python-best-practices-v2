@@ -425,15 +425,13 @@ steps:
               needFile: requirements.txt
               editLink: >-
                 {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=requirements.txt
-              fileName: requirements.txt             
-      - type: respond
-        with: 09_pip.md
+              fileName: requirements.txt         
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
-      # Close second issue
+      # Close third issue
       - type: closeIssue
-        issue: '%store.second_issue_num%' 
+        issue: '%store.third_issue_num%' 
       # Probably should validate other file as well...
       
   #############################################################
@@ -466,9 +464,8 @@ steps:
       # Adds test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_failing.py
-        branch: '%payload.pull_request.head.ref%'
         new_name: src/digit_reader/test/test_failing.py
-        message: Added new failing test for steps 11.       
+        message: Added new failing test for steps 11.    
   #############################################################
   # Step 12: Run pytest
   # 
@@ -480,13 +477,13 @@ steps:
     event: pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ########################################################### 
-        # End filepath verification
-      # Probably should validate other file as well...
       - type: respond
         with: 11_write-new-tests.md
+      - type: createFile
+        filename: t-test_mnist.py
+        branch: '%payload.pull_request.head.ref%'
+        new_name: src/digit_reader/test/test_mnist.py
+        message: Added new failing test for steps 11.      
 
   #############################################################
   # Step 13: Write new tests
