@@ -282,6 +282,7 @@ steps:
       - type: respond
         with: 06_add-docstrings.md
 
+
   #############################################################
   # Step 6: Add docstrings
   #############################################################
@@ -297,7 +298,6 @@ steps:
         with: 06-continue-to-merge.md
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
-
 
 
   #############################################################
@@ -338,12 +338,8 @@ steps:
         issue: '%store.second_issue_num%'
 
 
-
   #############################################################
   # Step 8: Write a setup script
-  # 
-  # 
-  # 
   #############################################################
   - title: Write a setup script. 
     description: write a setup script to build application
@@ -352,9 +348,6 @@ steps:
       - pull_request.synchronize
     link: '{{ store.third_pull_url }}'
     actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ###########################################################
       # get tree
       - type: getTree
         action_id: isInTree
@@ -383,6 +376,8 @@ steps:
           third_pull_url: '{{payload.pull_request.html_url}}'
           third_pull_num: '{{payload.pull_request.number}}'
           third_pull_branch: '{{payload.pull_request.head.ref}}'
+  
+  
   #############################################################
   # Step 9: Activate virtual environment
   #############################################################
@@ -393,12 +388,14 @@ steps:
     actions:
       - type: respond
         with: 09_pip.md
-      # Add test for whether requirements.txt contains numpy, tensorflow etc
+      # TODO: Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
         branch: '%store.third_pull_branch%'
         new_name: src/digit_reader/test/test_import.py
-        message: Added new import test for steps 10.  
+        message: Added new import test for steps 10. 
+   
+
 
   #############################################################
   # Step 10: Install external packages using pip
@@ -432,8 +429,8 @@ steps:
       # Close third issue
       - type: closeIssue
         issue: '%store.third_issue_num%' 
-      # Probably should validate other file as well...
-      
+
+
   #############################################################
   # Step 11: Merge PR
   #############################################################
@@ -461,18 +458,16 @@ steps:
         with: go-to-next-issue.md
         data:
           quicklink: '{{store.fourth_issue_url}}'  
-      # Adds test for whether requirements.txt contains numpy, tensorflow etc
       - type: removeBranchProtection
       - type: createFile
         filename: t-test_failing.py
         new_name: src/digit_reader/test/test_failing.py
         message: Added new failing test for steps 11.  
       - type: updateBranchProtection    
+
+
   #############################################################
   # Step 12: Run pytest
-  # 
-  # 
-  # 
   #############################################################
   - title: Run pytest.
     description: how to run pytest
@@ -489,197 +484,26 @@ steps:
         new_name: src/digit_reader/test/test_mnist.py
         message: Added new failing test for steps 11.      
 
+
   #############################################################
   # Step 13: Write new tests
-  # 
-  # 
-  # 
   #############################################################
   - title: Write tests
     description: how to write tests
     event: pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ########################################################### 
-        # End filepath verification
-      # Probably should validate other file as well...
       - type: respond
         with: 12_implement_function.md
 
+
   #############################################################
   # Step 14: Implement classifier function
-  # 
-  # 
-  # 
   #############################################################
   - title: Implement classifer function
     description: write implementationf for MNIST classifier
     event: pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
-    ###########################################################
-    # Validate the filepath for the expected file
-    ########################################################### 
-        # End filepath verification
-      # Probably should validate other file as well...
       - type: respond
         with: 12_final-response.md        
-
-
-
-
-
-
-  #############################################################
-  # Below are older steps that may be useful to pull into the course above
-  #############################################################
-
-#   # Step 4: Add google-style comment blocks in formatting.py
-#   - title: Add google-style comment blocks in formatting.py
-#     description: NA
-#     event: push
-#     link: '{{ repoUrl }}/issues/2'
-#     actions:
-#       - type: getFileContents
-#         action_id: formatting2Contents
-#         filename: formatting.py
-#       # Need to write a regex to check for comment blocks. Ideally we should write
-#       # multiple gates for multiple comment types the user can add
-#       # Refer to https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
-#       # for google comment examples Currently, only one simple regex check is executed
-#       # We need to write a regex that checks whether the file contains the solution we desire
-#       #(currently checks if file contains 'x = 5')
-#       - type: gate
-#         left: /x\s=\s5/g
-#         operator: test
-#         right: '%actions.formatting2Contents%'
-#         else:
-#           - type: respond
-#             with: 02_bad-google-comment.md
-#             issue: 2
-#       - type: createIssue
-#         title: Pip install and requirements.txt
-#         body: 03_pip-and-venv.md
-#         action_id: third_issue
-#       - type: respond
-#         with: 02_successful-push.md
-#         issue: 2
-#         data:
-#           url: '%actions.third_issue.data.html_url%'
-# # Step 5: Create dependencies in setup.py and use pip tools to create a requirements.txt
-#   - title: >-
-#       Create dependencies in setup.py and use pip tools to create a
-#       requirements.txt
-#     description: NA
-#     event: push
-#     link: '{{ repoUrl }}/issues/3'
-#     actions:
-#       - type: getFileContents
-#         action_id: setup2Contents
-#         filename: setup.py
-#       # We need to write a regex that checks whether the file contains the solution we
-#       # desire (currently checks if file contains 'a = 5')
-#       - type: gate
-#         left: /a\s=\s5/g
-#         operator: test
-#         right: '%actions.setup2Contents%'
-#         else:
-#           - type: respond
-#             with: 03_bad-setup.md
-#             issue: 3
-#       - type: getFileContents
-#         action_id: requirementsContents
-#         filename: requirements.txt
-#       # We need to write a regex that checks whether the file contains the solution we
-#       # desire (currently checks if file contains 'numpy')
-#       - type: gate
-#         left: /numpy/g
-#         operator: test
-#         right: '%actions.requirementsContents%'
-#         else:
-#           - type: respond
-#             with: 03_bad-requirements.md
-#             issue: 3
-#       - type: respond
-#         with: 03_activate-venv.md
-#         issue: 3
-# # Step 6: Install/create/activate virtual environment and Pip install packages using requirements.txt
-#   - title: >-
-#       Install/create/activate virtual environment and Pip install packages using
-#       requirements.txt
-#     description: NA
-#     event: issue_comment.created
-#     link: '{{ repoUrl }}/issues/3'
-#     actions:
-#       # We need to write a regex that checks whether the comment contains the output we
-#       # desire (currently checks if comment contains 'Output')
-#       - type: gate
-#         left: /Output/g
-#         operator: test
-#         right: '%payload.comment.body%'
-#         else:
-#           - type: respond
-#             with: 03_bad-comment.md
-#             issue: 3
-#       - type: createIssue
-#         title: Pytest
-#         body: 04_pytest.md
-#         action_id: fourth_issue
-#       - type: respond
-#         with: 03_successful-push.md
-#         issue: 3
-#         data:
-#           url: '%actions.fourth_issue.data.html_url%'
-#   # Step 7: Run existing tests in the repository
-#   - title: Run an existing test
-#     description: NA
-#     event: issue_comment.created
-#     link: '{{ repoUrl }}/issues/4'
-#     actions:
-#       # We need to write a regex that checks whether the comment contains the output we
-#       # desire (currently checks if comment contains 'ERROR')
-#       - type: gate
-#         left: /ERROR/g
-#         operator: test
-#         right: '%payload.comment.body%'
-#         else:
-#           - type: respond
-#             with: 04_bad-comment.md
-#             issue: 3
-#       - type: respond
-#         with: 04_successful-push.md
-#         issue: 4
-#   # Step 8: Fix failing test in the repository
-#   - title: Fix a failing test
-#     description: >-
-#       Commit the fix to the test in a new branch, create a pull request to merge
-#       to fix pytest branch
-#     event:
-#       - pull_request
-#       - check_suite.completed
-#     link: '{{ repoUrl }}/issues/4'
-#     actions:
-#       - type: gate
-#         left: '%payload.pull_request.title%'
-#         operator: ===
-#         right: Fix Pytest
-#         else:
-#           - type: respond
-#             with: 04_bad-pull-request.md
-#             issue: 1
-#       - type: respond
-#         with: 04_successful-pr.md
-#         issue: 1
-#       - type: gate
-#         left: '%payload.check_suite.conclusion%'
-#         operator: ===
-#         right: success
-#         else:
-#           - type: respond
-#             with: 04_bad-check-run.md
-#             issue: 1
-#       - type: respond
-#         with: 04_successful-push.md
-#         issue: 1
