@@ -329,7 +329,7 @@ steps:
         with: 08_setuptools-intro.md
         issue: '{{store.third_issue_num}}'
         data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=setup.py'  
+          quicklink1: '{{store.repository_url}}/new/main?filename=setup.py'
       # respond with link
       - type: respond
         with: go-to-next-issue.md
@@ -368,7 +368,7 @@ steps:
             data:
               needFile: setup.py
               editLink: >-
-                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=setup.py
+                {{store.repository_url}}/new/main?filename=setup.py
               fileName: setup.py
         # End filepath verification
       # Probably should validate other file as well...
