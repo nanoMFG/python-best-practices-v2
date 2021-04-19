@@ -10,7 +10,9 @@ The build script for setuptools is written in the file setup.py. For this step o
 
 ### :keyboard: Activity: Create setup.py 
 
-1. Create the file ```src/setup.py```
+**:bulb: [Add `setup.py`]({{quicklink1}})**
+
+1. Create the file ```setup.py```
 2. Import setuptools and create an empty call for setup.
 ```python
 import setuptools
