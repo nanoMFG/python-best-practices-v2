@@ -462,10 +462,12 @@ steps:
         data:
           quicklink: '{{store.fourth_issue_url}}'  
       # Adds test for whether requirements.txt contains numpy, tensorflow etc
+      - type: removeBranchProtection
       - type: createFile
         filename: t-test_failing.py
         new_name: src/digit_reader/test/test_failing.py
-        message: Added new failing test for steps 11.    
+        message: Added new failing test for steps 11.  
+      - type: updateBranchProtection    
   #############################################################
   # Step 12: Run pytest
   # 
@@ -474,7 +476,9 @@ steps:
   #############################################################
   - title: Run pytest.
     description: how to run pytest
-    event: pull_request.synchronize
+    event: 
+      - pull_request.opened
+      - pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
       - type: respond
