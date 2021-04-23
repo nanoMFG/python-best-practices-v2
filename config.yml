@@ -286,7 +286,7 @@ steps:
   #############################################################
   # Step 6: Add docstrings
   #############################################################
-   - title: Add skeleton for python module code.
+  - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
     event: check_suite.completed
     link: '{{ store.second_pull_url }}'
