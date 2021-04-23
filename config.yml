@@ -1,4 +1,4 @@
-title: Python Best Practices
+ctitle: Python Best Practices
 tagline: Learn the best practices for coding in Python
 description: >-
   This course covers the best Python coding practices every developer should
@@ -291,6 +291,10 @@ steps:
     event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
+      - type: gate
+        left: "%payload.check_suite.app.slug%"
+        operator: ===
+        right: github-actions
       - type: gate
         left: "%payload.check_suite.conclusion%"
         operator: ===
