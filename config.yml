@@ -28,7 +28,7 @@ before:
   # Respond in first issue with first activity
   - type: respond 
     with: 01_add-LICENSE.md
-    issue: '{{store.first_issue_num}}'
+    issue: '{{store.first_issue_num}}' 
     data:
       quicklink: '{{store.repository_url}}/new/main?filename=LICENSE'
 # end before
