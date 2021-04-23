@@ -288,9 +288,7 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
+    event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
       - type: gate
