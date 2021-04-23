@@ -534,8 +534,8 @@ steps:
           with: e-failed-checks.md
           data:
             value: Compare your answer to the solution
-      - type: respond
-        with: 12_implement_function.md
+    - type: respond
+      with: 12_implement_function.md
 
 
   #############################################################
