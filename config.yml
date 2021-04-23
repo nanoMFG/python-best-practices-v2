@@ -286,11 +286,20 @@ steps:
   #############################################################
   # Step 6: Add docstrings
   #############################################################
-  - title: Add skeleton for python module code.
+   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: pull_request.synchronize
+    event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
+      - type: gate
+        left: "%payload.check_suite.conclusion%"
+        operator: ===
+        right: success
+        else:
+          - type: respond
+            with: e-failed-checks.md
+            data:
+              message: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE        
@@ -298,7 +307,6 @@ steps:
         with: 06-continue-to-merge.md
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
- 
 
   #############################################################
   # Step 7: Merge PR
