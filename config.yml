@@ -288,7 +288,9 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: check_suite.completed
+    event: 
+      - pull_request.synchronize
+      - check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
       - type: gate
@@ -299,7 +301,7 @@ steps:
           - type: respond
             with: e-failed-checks.md
             data:
-              message: Did you create the files we asked you to create? Did you write docstrings in the right format? 
+              value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE        
