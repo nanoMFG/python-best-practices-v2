@@ -244,8 +244,6 @@ steps:
         with: 05_add-python-module.md
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%?filename=src\%2Fdigit_reader\%2Fmodel\%2Fmodel.py'
-
-
   #############################################################
   # Step 5: Add skeleton module code
   #
@@ -288,9 +286,7 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
+    event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
       - type: gate
@@ -314,7 +310,6 @@ steps:
         with: 06-continue-to-merge.md
         data:
           quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
-
   #############################################################
   # Step 7: Merge PR
   # - User merges second PR
