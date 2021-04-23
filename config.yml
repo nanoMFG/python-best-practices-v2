@@ -524,7 +524,6 @@ steps:
       action_id: testContents
       filename: 'src/digit_reader/test/test_mnist.py'
     - type: gate 
-      # We need to write a regex that checks whether the file contains the solution we desire (currently checks if file contains 'x = 5')
       left: '/(\(x_train, y_train\), \(x_test, y_test\) = prepare_data\(\)\n.*model = MNISTModel\(\)\n.*assert model\.classify_image\(x_test\[0]\))/g'     
       operator: test
       right: '%actions.testContents%'
