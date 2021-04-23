@@ -305,8 +305,9 @@ steps:
             data:
               value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: createReview
+        event: APPROVE    
         body: 03_added-README-merge.md
-        event: APPROVE        
+        pullRequest: Create __init__.py
       - type: respond
         with: 06-continue-to-merge.md
         data:
