@@ -4,22 +4,17 @@ When starting out with a Python application, it is a good idea to anticipate wha
 Following these best practices will help you create organized, well-documented code that is easier to test, use, re-use and maintain.
 
 <details><summary>Python Packages and Modules</summary>
-<hr>
-### Python Packages and Modules
-Content
-<hr>
-</details>
 
 While it is possible to complete this course using only the GitHub website, we recommend taking some time to setup a development environment on you local machine.  At a minimum this environment should enable you to do the following:  
 1. Clone Git/Github repositories.
 2. Maintain Python environments
 3. Run Python applications
 
+</details>
+
 While it is outside the scope of this course to document the many possibilities for accomplishing this, we do offer some specific recommendations for using Anaconda + VSCode below. Click into the next section to read more about our recommendations for setting up a Python environment using Anaconda and VSCode.  If you already have a setup you like feel free to skip over this section.
 
 <details><summary>Setting up a Local Python Development Environment</summary>
-<hr>
-### Setting up a Local Python Development Environment
 
 Using a virtual environment that encapsulates the Python version and all of the required libraries (plus their versions) needed by your application is a standard best practice.  A virtual environment is from any system-wide python install.   Virtual environments are fairly easy to maintain and help developers both track dependencies and users avoid version collisions.
 
