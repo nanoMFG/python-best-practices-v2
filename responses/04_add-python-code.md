@@ -3,8 +3,6 @@ When starting out with a Python application, it is a good idea to anticipate wha
 
 Following these best practices will help you create organized, well-documented code that is easier to test, use, re-use and maintain.
 
-<details><summary>Python Packages and Modules</summary>
-
 While it is possible to complete this course using only the GitHub website, we recommend taking some time to setup a development environment on you local machine.  At a minimum this environment should enable you to do the following:  
 1. Clone Git/Github repositories.
 2. Maintain Python environments
