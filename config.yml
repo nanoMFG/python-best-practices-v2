@@ -302,6 +302,7 @@ steps:
         else:
           - type: respond
             with: e-failed-checks.md
+            issue: Create __init__.py
             data:
               value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: createReview
@@ -483,8 +484,10 @@ steps:
   #############################################################
   - title: Run pytest.
     description: how to run pytest
-    event: check_suite.completed
-    link: '{{ store.fourth_pull_url }}'
+    event: 
+      - pull_request.synchronize
+      - check_suite.completed
+    link: '{{ store.fourth_issue_url }}'
     actions:
       - type: gate
         left: "%payload.check_suite.app.slug%"
@@ -497,6 +500,7 @@ steps:
         else:
           - type: respond
             with: e-failed-checks.md
+            issue: 
             data:
               value: Does your test function assert False or True?    
       - type: respond
