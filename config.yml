@@ -308,10 +308,8 @@ steps:
         event: APPROVE    
         body: 03_added-README-merge.md
         pullRequest: Create __init__.py
-      - type: respond
-        with: 06-continue-to-merge.md
-        data:
-          quicklink1: '%store.repository_url%/new/%payload.pull_request.head.ref%'
+        
+        
   #############################################################
   # Step 7: Merge PR
   # - User merges second PR
