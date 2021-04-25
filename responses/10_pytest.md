@@ -3,6 +3,7 @@ Look through some of the tests we wrote to see how your write the tests. Inside 
 
 Each test case should be in the form of a function starting with test_ and the test case will fail if any of the assert statements fail. Just like source code, you do need to import the functions or classes you use from the files that you are testing.
 ### :keyboard: Activity: Install and run pytest
+**:bulb: [Fix `tests/test_failing.py`]({{quicklink1}})**
 1. Install pytest by running ```pip install -U pytest```
 2. Check for the version using ```pytest --version```
 3. Now to run pytest just run ```pytest```
