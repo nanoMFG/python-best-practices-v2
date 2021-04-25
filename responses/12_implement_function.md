@@ -3,6 +3,8 @@ Almost done! Let's now implement the MNIST classifier. Since we don't want to go
 
 ### :keyboard: Activity: Implement classify_image
 
+**:bulb: [Go to `src/digit_reader/model/model.py`]({{quicklink1}})**
+
 1. Note that ```probability_model.predict(test_images)``` takes in an numpy array of images as an input. If you don't know about numpy arrays don't worry about it it's basically a Python array that allows for efficient computation. 
 2. To create a numpy array from a list, we can do ```np.array(some_list)```. Since we are given a single image, make a list with one element, and send in the numpy array of the image as a parameter for ```probability_model.predict()```.
 3. As shown in the documentation, ```np.argmax(predictions[0])``` will return the most likely label which the first image in the list belongs to. Your function should return the value obtained by ```np.argmax(predictions[0])``
