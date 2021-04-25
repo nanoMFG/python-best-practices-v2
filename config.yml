@@ -320,7 +320,7 @@ steps:
   #   step
   #############################################################
   - title: Merge the Second Pull Request
-    description: Merge the preliminary files to start the project
+    description: Merge Python module code
     event: pull_request.closed
     link: '{{store.second_pull_url}}'
     actions:
@@ -355,7 +355,7 @@ steps:
   # Step 8: Write a setup script
   #############################################################
   - title: Write a setup script. 
-    description: write a setup script to build application
+    description: Write a setup script to build application
     event:
       - pull_request.opened
       - pull_request.synchronize
@@ -483,7 +483,7 @@ steps:
   # Step 12: Run pytest
   #############################################################
   - title: Run pytest.
-    description: how to run pytest
+    description: Learn to run pytest
     event: 
       - pull_request.synchronize
       - check_suite.completed
@@ -517,7 +517,7 @@ steps:
   # Step 13: Write new tests
   #############################################################
   - title: Write tests
-    description: how to write tests
+    description: Write test for classifer function
     event: pull_request.synchronize
     link: '{{ store.fourth_pull_url }}'
     actions:
