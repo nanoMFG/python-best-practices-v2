@@ -13,11 +13,12 @@ Although in real projects, we wouldn't want to test few particular cases but ins
 Let's go through how we can write a rough test to check whether the model is working as expected!
 
 ### :keyboard: Activity: Write a test for the MINIST classifier
+**:bulb: [Edit `tests/digit_reader/test_mnist.py`]({{quicklink1}})**
 
 1. Read the comments for the ```classify_images``` function in the ```model.py``` file.
-2. Go to ```mnist_test.py``` and create a new test case called ```test_classify_images```.
-3. In the test case, you need to write a line of code to prepare the data you will used to test whether the function is working as expected. Refer to ```test_x_shape``` for help.
-4. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```9```.
+1. Go to ```mnist_test.py``` and create a new test case called ```test_classify_images```.
+2. In the test case, you need to write a line of code to prepare the data you will used to test whether the function is working as expected. Refer to ```test_x_shape``` for help.
+3. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```9```.
 
 Once you write your test, compare your code with the solution and then commit and push your changes. Next, we will actually write out the implment the ```classify_images``` function.
 
