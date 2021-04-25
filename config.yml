@@ -235,7 +235,7 @@ steps:
       - type: createFile
         filename: t-test_module.py
         branch: '%payload.pull_request.head.ref%'
-        new_name: src/digit_reader/test/test_module.py
+        new_name: tests/course/test_module.py
         message: Added new tests for steps 4-6.
         store:
           second_pull_url: '{{payload.pull_request.html_url}}'
@@ -405,10 +405,9 @@ steps:
       - type: createFile
         filename: t-test_import.py
         branch: '%store.third_pull_branch%'
-        new_name: src/digit_reader/test/test_import.py
+        new_name: tests/course/test_import.py
         message: Added new import test for steps 10. 
    
-
 
   #############################################################
   # Step 10: Install external packages using pip
@@ -429,13 +428,8 @@ steps:
         else:
           # help user with proper file location
           - type: respond
-            with: e-wrong-file-location.md
+            with: e-no-requirments.md
             issue: '{{payload.pull_request.number}}'
-            data:
-              needFile: requirements.txt
-              editLink: >-
-                {{store.repository_url}}/new/{{payload.pull_request.head.ref}}?filename=requirements.txt
-              fileName: requirements.txt         
       - type: createReview
         body: 03_added-README-merge.md
         event: APPROVE
@@ -474,7 +468,7 @@ steps:
       - type: removeBranchProtection
       - type: createFile
         filename: t-test_failing.py
-        new_name: src/digit_reader/test/test_failing.py
+        new_name: tests/course/test_failing.py
         message: Added new failing test for steps 11.  
       - type: updateBranchProtection    
 
@@ -508,10 +502,9 @@ steps:
       - type: createFile
         filename: t-test_mnist.py
         branch: '%payload.pull_request.head.ref%'
-        new_name: src/digit_reader/test/test_mnist.py
+        new_name: tests/digit_reader/test_mnist.py
         message: Added new failing test for step 11.   
     
-
 
   #############################################################
   # Step 13: Write new tests
@@ -523,7 +516,7 @@ steps:
     actions:
     - type: getFileContents
       action_id: testContents
-      filename: 'src/digit_reader/test/test_mnist.py'
+      filename: 'tests/digit_reader/test_mnist.py'
     - type: gate 
       left: '/(\(x_train, y_train\), \(x_test, y_test\) = prepare_data\(\)\n.*model = MNISTModel\(\)\n.*assert model\.classify_image\(x_test\[0]\))/g'     
       operator: test
