@@ -36,6 +36,6 @@ We'll start by adding docstrings to each of the methods of your 'model.py' file.
         Writing docstrings by yourself is fun, but can be time consuming. Many editors have support for automatically generating docstrings for a function, usually by either pressing a hotkey or typing '"""'. In VSCode, a widely used IDE, you can download <a href="https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring">this extension</a>, which has support for generating Google style docstrings. Try it out if you are using VSCode for this tutorial!
 </details>
 <hr>
-<h3 align="center">Watch below this comment for my response</h3>
+<h3 align="center">Watch below this comment for my response. Do not merge the pull request before you get a response! </h3>
 
 > _Sometimes I respond too fast for the page to update! If you perform an expected action and don't see a response from me, wait a few seconds and refresh the page for your next steps._
