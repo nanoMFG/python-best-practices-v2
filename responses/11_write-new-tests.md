@@ -18,7 +18,7 @@ Let's go through how we can write a rough test to check whether the model is wor
 1. Read the comments for the ```classify_images``` function in the ```model.py``` file.
 1. Go to ```mnist_test.py``` and create a new test case called ```test_classify_images```.
 2. In the test case, you need to write a line of code to prepare the data you will used to test whether the function is working as expected. Refer to ```test_x_shape``` for help.
-3. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```9```.
+3. Now that you should have test images that you could send in as a parameter to the ```classify_images``` function, we will check whether the first testing image will return label ```7```.
 
 Once you write your test, compare your code with the solution and then commit and push your changes. Next, we will actually write out the implment the ```classify_images``` function.
 
@@ -29,7 +29,7 @@ Once you write your test, compare your code with the solution and then commit an
 def test_classify_image():
     (x_train, y_train), (x_test, y_test) = prepare_data()
     model = MNISTModel()
-    assert model.classify_image(x_test[0]) == 9
+    assert model.classify_image(x_test[0]) == 7
     
 ```        
 
