@@ -402,7 +402,7 @@ steps:
       - type: respond
         with: 09_pip.md
         data:
-          quicklink1: '{{store.repository_url}}/{{store.third_pull_branch}}?filename=setup.py'
+          quicklink1: '{{store.repository_url}}/blob/{{store.third_pull_branch}}?filename=setup.py'
       # TODO: Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
@@ -458,21 +458,24 @@ steps:
         store:
           fourth_issue_num: '{{result.data.number}}'
           fourth_issue_url: '{{result.data.html_url}}'
-      # Respond with next activity
-      - type: respond
-        with: 10_pytest.md
-        issue: '{{store.fourth_issue_num}}'
-      # respond with link
-      - type: respond
-        with: go-to-next-issue.md
-        data:
-          quicklink: '{{store.fourth_issue_url}}'  
       - type: removeBranchProtection
       - type: createFile
         filename: t-test_failing.py
         new_name: tests/course/test_failing.py
         message: Added new failing test for steps 11.  
-      - type: updateBranchProtection    
+      - type: updateBranchProtection        
+      # Respond with next activity
+      - type: respond
+        with: 10_pytest.md
+        issue: '{{store.fourth_issue_num}}'
+        data: 
+          quicklink1: '{{store.repository_url}}/blob/main?filename=tests/course/test_failing.py'
+      # respond with link
+      - type: respond
+        with: go-to-next-issue.md
+        data:
+          quicklink: '{{store.fourth_issue_url}}'  
+
 
 
   #############################################################
@@ -502,13 +505,9 @@ steps:
       - type: respond
         with: 11_write-new-tests.md
         issue: Update test_failing.py
-      - type: removeBranchProtection
-      - type: createFile
-        filename: t-test_mnist.py
-        new_name: tests/digit_reader/test_mnist.py
-        message: Added new failing test for step 11.  
-      - type: updateBranchProtection    
-    
+        data:
+          quicklink1: '{{store.repository_url}}/new/{{payload.check_suite.pull_requests[0].pull_request.head.ref}}?filename=tests/digit_reader/test_mnist.py'
+
 
   #############################################################
   # Step 13: Write new tests
