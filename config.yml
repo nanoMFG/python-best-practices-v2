@@ -401,6 +401,8 @@ steps:
     actions:
       - type: respond
         with: 09_pip.md
+        data:
+          quicklink1: '{{store.repository_url}}/{{store.third_pull_branch}}?filename=setup.py'
       # TODO: Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
@@ -494,16 +496,18 @@ steps:
         else:
           - type: respond
             with: e-failed-checks.md
-            issue: 
+            issue: Update test_failing.py
             data:
               value: Does your test function assert False or True?    
       - type: respond
         with: 11_write-new-tests.md
+        issue: Update test_failing.py
+      - type: removeBranchProtection
       - type: createFile
         filename: t-test_mnist.py
-        branch: '%payload.pull_request.head.ref%'
         new_name: tests/digit_reader/test_mnist.py
-        message: Added new failing test for step 11.   
+        message: Added new failing test for step 11.  
+      - type: updateBranchProtection    
     
 
   #############################################################
@@ -524,6 +528,7 @@ steps:
       else:
         - type: respond
           with: e-failed-checks.md
+          issue: Update test_failing.py
           data:
             value: Compare your answer to the solution
     - type: respond
@@ -535,7 +540,9 @@ steps:
   #############################################################
   - title: Implement classifer function
     description: write implementationf for MNIST classifier
-    event: check_suite.completed
+    event: 
+      - pull_request.synchronize
+      - check_suite.completed
     link: '{{ store.fourth_pull_url }}'
     actions:
       - type: gate
@@ -549,6 +556,7 @@ steps:
         else:
           - type: respond
             with: e-failed-checks.md
+            issue: 
             data:
               value: Compare your classifier implementation to the solution. 
       - type: respond
