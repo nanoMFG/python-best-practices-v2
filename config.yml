@@ -402,7 +402,7 @@ steps:
       - type: respond
         with: 09_pip.md
         data:
-          quicklink1: '{{store.repository_url}}/blob/{{store.third_pull_branch}}?filename=setup.py'
+          quicklink1: '{{store.repository_url}}/edit/{{store.third_pull_branch}}/setup.py'
       # TODO: Add test for whether requirements.txt contains numpy, tensorflow etc
       - type: createFile
         filename: t-test_import.py
@@ -469,7 +469,7 @@ steps:
         with: 10_pytest.md
         issue: '{{store.fourth_issue_num}}'
         data: 
-          quicklink1: '{{store.repository_url}}/blob/main?filename=tests/course/test_failing.py'
+          quicklink1: '{{store.repository_url}}/edit/main/tests/course/test_failing.py'
       # respond with link
       - type: respond
         with: go-to-next-issue.md
