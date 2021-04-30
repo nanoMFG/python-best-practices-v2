@@ -383,6 +383,11 @@ steps:
               fileName: setup.py
         # End filepath verification
       # Probably should validate other file as well...
+      - type: createFile
+        filename: t-test_setup.py
+        branch: '{{payload.pull_request.head.ref}}'
+        new_name: tests/course/test_setup.py
+        message: Added test for setup.py 
       - type: respond
         with: 08_venv-intro.md
         store:
@@ -409,6 +414,7 @@ steps:
         branch: '%store.third_pull_branch%'
         new_name: tests/course/test_import.py
         message: Added new import test for steps 10. 
+
    
 
   #############################################################
