@@ -4,6 +4,7 @@ import pytest
 
 class TestSetup():
     def test_fields(self):
+#   FIELDS TO CHECK FOR
 #       python_requires='>=3.0',
 #     install_requires=[
 #         'django',
