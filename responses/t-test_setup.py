@@ -37,7 +37,7 @@ class TestSetup():
                     if key in line:
                         all_fields[key] = True
             for key in all_fields:
-                if not all_fields[key]
+                if not all_fields[key]:
                     all_satisfied = False
         assert all_satisfied
             
