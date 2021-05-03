@@ -298,29 +298,14 @@ steps:
         left: "%payload.check_suite.conclusion%"
         operator: ===
         right: success
-        else:
-          - type: getTree
-            action_id: isInTree
-            recursive: true
-            sha: '{{store.second_pull_sha}}' 
-          - type: gate
-            left: '%actions.isInTree.data.tree%'
-            operator: includes
-            right: 'path:src/digit_reader/model/model.py'
-            else:
-#           - type: getFileContents
-#             action_id: testModelContents
-#             filename: 'src/digit_reader/model/model.py'
-#           - type: gate 
-#             left: '/("""(.|\n)*){3,}/g'     
-#             operator: test
-#             right: '%actions.testModelContents%'
-#             else:
-              - type: respond
-                with: e-failed-checks.md
-                issue: Create __init__.py
-                data:
-                  value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
+      - type: getTree
+        action_id: isInTree
+        recursive: true
+        sha: '{{store.second_pull_sha}}' 
+      - type: gate
+        left: '%actions.isInTree.data.tree%'
+        operator: includes
+        right: 'path:src/digit_reader/model/model.py'
       - type: getFileContents
         action_id: testModelContents
         filename: 'src/digit_reader/model/model.py'
