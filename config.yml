@@ -270,7 +270,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_sha}}'
+            issue: '{{store.second_pull_num}}'
             data:
               needFile: src/digit_reader/model/model.py
               editLink: >-
@@ -302,7 +302,7 @@ steps:
           - type: getTree
             action_id: isInTree
             recursive: true
-            sha: '{{store.second_pull_num}}' 
+            sha: '{{store.second_pull_sha}}' 
           - type: gate
             left: '%actions.isInTree.data.tree%'
             operator: includes
