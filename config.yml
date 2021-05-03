@@ -552,15 +552,15 @@ steps:
           issue: Update test_failing.py
           data:
             value: Compare your answer to the solution
-    - type: respond
-      with: 12_implement_function.md  
     - type: octokit
-      method: repos.update  
+      method: repos.deleteFile  
       owner: '%payload.repository.owner.login%'
       repo: '%payload.repository.name%'
       path: src/digit_reader/model/model.py
       message: Deleted old version of mnist implementation
       sha: '%payload.pull_request.head.sha%'
+    - type: respond
+      with: 12_implement_function.md  
 
 
   #############################################################
