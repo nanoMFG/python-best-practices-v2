@@ -306,13 +306,13 @@ steps:
         left: '%actions.isInTree.data.tree%'
         operator: includes
         right: 'path:src/digit_reader/model/model.py'
-      - type: getFileContents
-        action_id: testModelContents
-        filename: 'src/digit_reader/model/model.py'
-      - type: gate 
-        left: '/("""(.|\n)*){3,}/g'     
-        operator: test
-        right: '%actions.testModelContents%'                 
+#       - type: getFileContents
+#         action_id: testModelContents
+#         filename: 'src/digit_reader/model/model.py'
+#       - type: gate 
+#         left: '/("""(.|\n)*){3,}/g'     
+#         operator: test
+#         right: '%actions.testModelContents%'                 
       - type: createReview
         event: APPROVE    
         body: 03_added-README-merge.md
