@@ -528,7 +528,7 @@ steps:
         with: 11_write-new-tests.md
         issue: Update test_failing.py
         data:
-          quicklink1: '{{store.repository_url}}/edit/%actions.pytestPr.data.head.ref%?/tests/digit_reader/test_mnist.py'
+          quicklink1: '{{store.repository_url}}/edit/%actions.pytestPr.data.head.ref%/tests/digit_reader/test_mnist.py'
 
 
   #############################################################
@@ -543,7 +543,7 @@ steps:
       action_id: testContents
       filename: 'tests/digit_reader/test_mnist.py'
     - type: gate 
-      left: '/(\(x_train, y_train\), \(x_test, y_test\) = prepare_data\(\)\n.*model = MNISTModel\(\)\n.*assert model\.classify_image\(x_test\[0]\))/g'     
+      left: '/\(x_train, y_train\), \(x_test, y_test\) = prepare_data\(\)(\n|.)*model = MNISTModel\(\)(\n|.)*model.train_model\(x_train, y_train, epochs=2\)(\n|.)*assert model.classify_image\(x_test\[0]\) == 7/g'     
       operator: test
       right: '%actions.testContents%'
       else:
@@ -553,7 +553,14 @@ steps:
           data:
             value: Compare your answer to the solution
     - type: respond
-      with: 12_implement_function.md
+      with: 12_implement_function.md  
+    - type: octokit
+      method: repos.update  
+      owner: '%payload.repository.owner.login%'
+      repo: '%payload.repository.name%'
+      path: src/digit_reader/model/model.py
+      message: Deleted old version of mnist implementation
+      sha: '%payload.pull_request.head.sha%'
 
 
   #############################################################
