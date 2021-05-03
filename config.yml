@@ -286,9 +286,7 @@ steps:
   #############################################################
   - title: Add skeleton for python module code.
     description: Add the module file with basic outline of class and methods that will be needed
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
+    event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
       - type: gate
@@ -300,11 +298,19 @@ steps:
         operator: ===
         right: success
         else:
-          - type: respond
-            with: e-failed-checks.md
-            issue: Create __init__.py
-            data:
-              value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
+          - type: getFileContents
+            action_id: testModelContents
+            filename: 'src/digit_reader/model/model.py'
+          - type: gate 
+            left: '/("""(.|\n)*){3,}/g'     
+            operator: test
+            right: '%actions.testModelContents%'
+            else:
+              - type: respond
+                with: e-failed-checks.md
+                issue: Create __init__.py
+                data:
+                  value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
       - type: getFileContents
         action_id: testModelContents
         filename: 'src/digit_reader/model/model.py'
