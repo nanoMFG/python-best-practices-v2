@@ -305,6 +305,13 @@ steps:
             issue: Create __init__.py
             data:
               value: Did you create the files we asked you to create? Did you write docstrings in the right format? 
+      - type: getFileContents
+        action_id: testModelContents
+        filename: 'src/digit_reader/model/model.py'
+      - type: gate 
+        left: '/("""(.|\n)*){3,}/g'     
+        operator: test
+        right: '%actions.testModelContents%'                 
       - type: createReview
         event: APPROVE    
         body: 03_added-README-merge.md
@@ -507,14 +514,15 @@ steps:
             with: e-failed-checks.md
             issue: Update test_failing.py
             data:
-              value: Does your test function assert False or True?    
+              value: Does your test function assert False or True?   
+      - type: getPullRequest
+        pullRequest: Update test_failing.py
+        action_id: pytestPr        
       - type: respond
         with: 11_write-new-tests.md
-        store:
-          fourth_pull_branch: '{{payload.check_suite.pull_requests[0].head.ref}}'
         issue: Update test_failing.py
         data:
-          quicklink1: '{{store.repository_url}}/new/{{store.fourth_pull_branch}}?filename=tests/digit_reader/test_mnist.py'
+          quicklink1: '{{store.repository_url}}/new/%actions.pytestPr.data.head.ref%?filename=tests/digit_reader/test_mnist.py'
 
 
   #############################################################
