@@ -270,7 +270,7 @@ steps:
           # help user with proper file location
           - type: respond
             with: e-wrong-file-location.md
-            issue: '{{store.second_pull_num}}'
+            issue: '{{store.second_pull_sha}}'
             data:
               needFile: src/digit_reader/model/model.py
               editLink: >-
