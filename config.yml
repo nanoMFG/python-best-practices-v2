@@ -298,14 +298,14 @@ steps:
         left: "%payload.check_suite.conclusion%"
         operator: ===
         right: success
-      - type: getTree
-        action_id: isInTree
-        recursive: true
-        sha: '{{store.second_pull_sha}}' 
-      - type: gate
-        left: '%actions.isInTree.data.tree%'
-        operator: includes
-        right: 'path:src/digit_reader/model/model.py'
+#       - type: getTree
+#         action_id: isInTree
+#         recursive: true
+#         sha: '{{store.second_pull_sha}}' 
+#       - type: gate
+#         left: '%actions.isInTree.data.tree%'
+#         operator: includes
+#         right: 'path:src/digit_reader/model/model.py'
 #       - type: getFileContents
 #         action_id: testModelContents
 #         filename: 'src/digit_reader/model/model.py'
