@@ -518,12 +518,17 @@ steps:
               value: Does your test function assert False or True?   
       - type: getPullRequest
         pullRequest: Update test_failing.py
-        action_id: pytestPr        
+        action_id: pytestPr   
+      - type: createFile
+        filename: t-test_mnist.py
+        branch: '%actions.pytestPr.data.head.ref%'
+        new_name: tests/digit_reader/test_mnist.py
+        message: Added new import test for steps 10.   
       - type: respond
         with: 11_write-new-tests.md
         issue: Update test_failing.py
         data:
-          quicklink1: '{{store.repository_url}}/new/%actions.pytestPr.data.head.ref%?filename=tests/digit_reader/test_mnist.py'
+          quicklink1: '{{store.repository_url}}/edit/%actions.pytestPr.data.head.ref%?/tests/digit_reader/test_mnist.py'
 
 
   #############################################################
