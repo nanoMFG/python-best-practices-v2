@@ -552,26 +552,11 @@ steps:
           issue: Update test_failing.py
           data:
             value: Compare your answer to the solution
-    - type: createFile
-      filename: f-helpers.py
-      branch: implementation-files
-      new_name: src/digit_reader/model/helpers.py
-      message: Added helpers.py.    
-    - type: createFile
-      filename: f-model.py
-      branch: implementation-files
-      new_name: src/digit_reader/model/model.py
-      message: Replaced helpers.py.   
-    - type: mergeBranch
-      head: implementation-files
-      base: '%payload.pull_request.head.ref%'
-#     - type: octokit
-#       method: repos.deleteFile  
-#       owner: '%payload.repository.owner.login%'
-#       repo: '%payload.repository.name%'
-#       path: src/digit_reader/model/model.py
-#       message: Deleted old version of mnist implementation
-#       sha: '%payload.pull_request.head.sha%'
+    - type: octokit
+      method: repos.deleteFile
+      path: src/digit_reader/model/model.py
+      message: Deleted old version of mnist implementation
+      sha: '%payload.pull_request.head.sha%'
     - type: respond
       with: 12_implement_function.md  
 
