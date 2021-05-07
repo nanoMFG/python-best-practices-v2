@@ -4,7 +4,7 @@ Now that you know how to run pytest, let's actually write some tests. You might 
 
 Although we won't ask you to write any rigorous tests for this course as our focus is more on the process than the outcome, we do want you to get a feel for how we expect your MINIST Model to perform by writing tests!
 
-## Step 12: Write your own tests
+## Step 13: Write your own tests
 
 As we explained in Step 5 of the course, the project you are working on is a MNIST Model. The MNIST database (Modified National Institute of Standards and Technology database) is a large database of handwritten digits that is commonly used for training various image processing systems. So after you implement your model and train the model, your model should be able to determine what digit an image represents. If your model can classify images as expected, your model is working but if it isn't it must be failing to do its job.
 
