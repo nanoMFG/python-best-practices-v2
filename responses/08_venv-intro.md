@@ -12,7 +12,7 @@ In order to avoid this, we encourage that you create virtual environments that e
 
 The next few steps will show you how to create virtual environments and install specific versions of a package for that virtual environment.
 
-## Step 8: Activate a Virtual Environment 
+## Step 9: Activate a Virtual Environment 
 
 There are two main ways you can create virtual environments. One is using a Python module called venv and the other is using a package manager called conda. Python virtual environments and Conda environments do have differences but for the purposes of this course, either should work. So if you already have Anaconda, you can use conda.
 
