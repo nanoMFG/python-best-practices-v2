@@ -551,14 +551,14 @@ steps:
           with: e-failed-checks.md
           issue: Update test_failing.py
           data:
-            value: Compare your answer to the solution
-    - type: createFile
-      filename: f-helpers.py
-      branch: '%actions.pytestPr.data.head.ref%'
-      new_name: src/digit_reader/model/helpers.py
-      message: Added helpers.py for step 14.   
+            value: Compare your answer to the solution  
     - type: respond
       with: 12_implement_function.md  
+    - type: createFile
+      filename: f-helpers.py
+      branch: '%payload.pull_request.head.ref%'
+      new_name: src/digit_reader/model/helpers.py
+      message: Added helpers.py for step 14.   
 
 
   #############################################################
@@ -566,9 +566,7 @@ steps:
   #############################################################
   - title: Implement classifer function
     description: write implementationf for MNIST classifier
-    event: 
-      - pull_request.synchronize
-      - check_suite.completed
+    event: check_suite.completed
     link: '{{ store.fourth_pull_url }}'
     actions:
       - type: gate
