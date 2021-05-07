@@ -1,4 +1,4 @@
-## Step 10: First test with pytest
+## Step 12: First test with pytest
 Look through some of the tests we wrote to see how your write the tests. Inside tests, you check for whether a function is behaving as expected by asserting that the actual value obtained from the function is equal to the value you expect from the function.
 
 Each test case should be in the form of a function starting with test_ and the test case will fail if any of the assert statements fail. Just like source code, you do need to import the functions or classes you use from the files that you are testing.
