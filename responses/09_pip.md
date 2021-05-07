@@ -8,7 +8,7 @@ In order to support the automatic installation of packages, you will first need 
 
 Luckily, we have a setup build script that we can use to generate a ```requirements.txt``` file. However, we'll first have to add 2 fields into our setup function to make that possible!
 
-## Step 9: Edit setup.py and install with pip
+## Step 10: Edit setup.py and install with pip
 
 **:bulb: [Edit `setup.py`]({{quicklink1}})**
 
