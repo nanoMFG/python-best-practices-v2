@@ -1,6 +1,3 @@
-## Step 7: Merge Pull Request 
+## Step 11: Merge Third Pull Request 
 
-Starting from this 
-
-<hr>
-<h3 align="center">Watch below for my response</h3>
+Please wait for all the checks to pass to move on. Refer to earlier issues if you fail to pass the checks.
