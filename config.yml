@@ -554,6 +554,8 @@ steps:
             value: Compare your answer to the solution  
     - type: respond
       with: 12_implement_function.md  
+      data:
+        quicklink1: '{{store.repository_url}}/edit/%payload.pull_request.head.ref%/src/digit_reader/model/model.py'
     - type: createFile
       filename: f-helpers.py
       branch: '%payload.pull_request.head.ref%'
