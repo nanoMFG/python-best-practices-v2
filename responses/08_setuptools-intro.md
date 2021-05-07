@@ -4,7 +4,7 @@ Now that you have all the files needed to create a Python package and organized 
 
 The Python distutils package provides support for building and installing additional modules into a Python installation. However, we don't want to use this module directly. Instead we will use setuptools, a collection of enhancements to the Python distutils that allow you to more easily build and distribute Python distributions.
 
-## Step 7: Setup.py
+## Step 8: Setup.py
 
 The build script for setuptools is written in the file setup.py. For this step of the course, we will ask you to create a new setup.py file and write the build script.
 
@@ -46,8 +46,7 @@ setuptools.setup(
     long_description_content_type="text/markdown"
 )
 ```
-5. Earlier, you should have created multiple packages inside the main package. For the setup build script to execute properly you need to list the packages that you want to include. Although this would be done manually without setuptools, with setuptools we can simply use the ```setuptools.find_packages()```
-function.
+5. Later on when you want to import from the modules you create, you will have to access the files in model.py. However, since they are in a `/src` directory, we need to add two lines `package_dir={'': 'src'}` and  `packages=setuptools.find_packages(where='src')` to access files in the package directory.
 
 ```python
 ...
@@ -55,7 +54,8 @@ setuptools.setup(
     name="example_package-username", # Replace with your own username
     ...
     long_description_content_type="text/markdown"
-    packages=setuptools.find_packages(),
+    package_dir={'': 'src'},
+    packages=setuptools.find_packages(where='src'),
     ...
 )
 ```
@@ -77,7 +77,8 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/pypa/sampleproject",
-    packages=setuptools.find_packages()
+    package_dir={'': 'src'},
+    packages=setuptools.find_packages(where='src')
 )
 ```
 </details>
