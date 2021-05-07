@@ -290,6 +290,7 @@ steps:
     event: check_suite.completed
     link: '{{ store.second_pull_url }}'
     actions:
+      # Checks that check_suite running isn't WIP but the github actions check suite
       - type: gate
         left: "%payload.check_suite.app.slug%"
         operator: ===
