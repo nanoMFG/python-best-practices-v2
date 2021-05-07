@@ -32,5 +32,6 @@ Once your ```setup.py``` is complete, we can run a few commands to install every
 2. Run ```pip-compile```
 This should create a ```requirements.txt file```. If it's failing, check if there's any problems with your setup.py
 3. Run ```pip install -r requirements.txt```
+4. Run ```pip install setuptools``` and then ```pip install -e .``` The former command you need in order to get your ```setup.py``` to run and the latter command is needed so that you could actually import your modules.
 
 You should now be ready to run some tests for your project. Merge the pull request and we will let you know if you are good to go!
