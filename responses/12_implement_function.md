@@ -1,4 +1,4 @@
-## Step 13: Implement MINIST classifier 
+## Step 14: Implement MINIST classifier 
 Almost done! Let's now implement the MNIST classifier. Since we don't want to go too much into Tensorflow, just read through the 'Make Predictions' section of the [documentation](https://www.tensorflow.org/tutorials/keras/classification#make_predictions) before starting the activity. We expect you to essentially use the same code with minor adjustments as we want the model to classify a single image and return the label.
 
 ### :keyboard: Activity: Implement classify_image
