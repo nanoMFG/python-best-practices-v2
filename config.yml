@@ -315,7 +315,7 @@ steps:
 #         right: '%actions.testModelContents%'                 
       - type: createReview
         event: APPROVE    
-        body: 03_added-README-merge.md
+        body: 06_ci-merge.md
         pullRequest: Create __init__.py
         
         
@@ -447,7 +447,7 @@ steps:
             with: e-no-requirments.md
             issue: '{{payload.pull_request.number}}'
       - type: createReview
-        body: 03_added-README-merge.md
+        body: 09_ci-merge.md
         event: APPROVE
       # Close third issue
       - type: closeIssue
