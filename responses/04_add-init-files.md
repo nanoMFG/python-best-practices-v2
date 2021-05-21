@@ -4,11 +4,13 @@ The first actual python file we are going to add is an \_\_init\_\_.py. This fil
 
 ### Directory Structure
 
-The \_\_init\_\_.py needs to be placed in the directory that contains the rest of the module code. This will usually be the directory named like the module, i.e. if your module is named 'hello,' you would create the file src/hello/\_\_init\_\_.py.
+The \_\_init\_\_.py needs to be placed in the directory that contains the rest of the module code. This will usually be the directory named like the module, i.e. if your module is named 'hello,' you would create the file src/hello/\_\_init\_\_.py.  
+
+We have introduced here the convention of an additional `src` directory.  This separates the top application directory. A best practice is to install the application before running it.  Not running in source directories also helps keep the source tree clean by avoiding creation of extra files and directories like `__pycache__` in the source tree.
 
 ## Step 4: Create an \_\_init\_\_.py
 
-In our case, we need to create two \_\_init\_\_.py's, one for the 'digit_reader' package, and one for its internal 'model' package.
+To setup the module, we need to create two `__init__.py` files, one for the 'digit_reader' package, and one for its internal 'model' package.
 
 ### :keyboard: Activity: Commit your \_\_init\_\_.py's
 

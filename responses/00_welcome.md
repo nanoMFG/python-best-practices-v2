@@ -9,9 +9,9 @@ The best practices presented here are intended to be a stepping stone away from 
 ### Project Goals
 
 * Create a working Python machine learning application that lives on GitHub.
+* Learn one way to organize application directories to maintain installable, testable code.
 * Develop primary functions within Python [module files](https://docs.python.org/3/tutorial/modules.html) within a simple [package](https://docs.python.org/3/tutorial/modules.html#packages).
 * Use [docstrings](https://www.python.org/dev/peps/pep-0257/) with a [consistent style](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) to document modules, classes and functions.
-* Use code linting and formatting to maintain consistent styling.
 * Add a basic [`setup.py`](https://docs.python.org/3/distutils/setupscript.html) file to enable local `pip install`.
 * Pin requirements and use a virtual environment with [pip tools](https://github.com/jazzband/pip-tools) and Conda.
 * Develop code that passes tests using [pytest](https://docs.pytest.org).
@@ -26,7 +26,7 @@ app.
 <hr>
 What are best practices...
 
-Of course, no practice can be considered "best" for every situation.  Many of the particular choices we make for this lab can be done differently just as well.  But we hope to present a concrete example with particular choices that we think are broadly useful for most small to medium Python applications....
+Of course, no procedure can be considered "best" for every situation.  Many of the particular choices we make for this lab can be done differently just as well or better.  But we hope to present a concrete example that we think is broadly useful for many small to medium sized Python applications....
 <hr>
 </details>
 
@@ -35,7 +35,7 @@ Of course, no practice can be considered "best" for every situation.  Many of th
 
 ## Directory Layout for a Python Project
 
-There are many ways to structure a python application.  Many factors can influence the final structure including: underlying framework (such as web applications), deployment context (some environments require special files or directories) and conventions of various libraries that may be used in the application.
+Many factors can influence the final structure of a Python app including: underlying framework (such as web applications), deployment context (some environments require special files or directories) and conventions of various libraries that may be used in the application.
 
 For our purposes, I'll be presenting a structure that can apply to most small to medium Python applications, that are not subject to special conditions.
 
@@ -44,13 +44,15 @@ For our purposes, I'll be presenting a structure that can apply to most small to
 myreponame
 |---docs/
 |   |---mypackage.md      
-|---myapp/
-|   |---__init__.py
-|   |---myfirstpackage
-|   |   |---__init__.py
-|   |   |---myfirstpackage.py
-|   |   |---helpers.py
-|---tests/
+|---src/
+|   |---myapp/
+|      |---__init__.py
+|      |---app.py  
+|      |---myfirstpackage
+|      |   |---__init__.py
+|      |   |---myfirstpackage.py
+|      |   |---helpers.py
+|---test/
 |   |---myfirstpackage/
 |   |   |---test_myfirstpackage.py
 |   |   |---test_helpers.py
@@ -62,12 +64,12 @@ myreponame
 |---.gitignore
 ```
 
-Here we have proposed and application called "myapp" that contains an internal package called "myfirstpackae".  Around that app we have a number of files and directories that might be familiar.
+Here we have proposed and application called "myapp" that contains an internal package called "myfirstpackage".  Around that app we have a number of files and directories that might be familiar and we'll discuss each in turn as we go.
 <hr>
 </details><br>
 
 ## Getting Started
-I'll start with the basics and explain the purpose of each element as we go.  At the end you will have created a working python application with an internal package and learned several "best practices" that can benefit you and your collaborators for years to come.
+I'll start with the basics and explain the purpose of each element.  At the end you will have created a working python application with an internal package and learned several "best practices" that can benefit you and your collaborators for years to come.
 
 So let's get started!
 

@@ -1,4 +1,4 @@
-## Adding Our First Python PAckage
+## Adding Our First Python Package
 When starting out with a Python application, it is a good idea to anticipate what internal functions and classes will be created and have an idea how they might work together.  With a little planning you can start a project with some simple structure on which you can build out a set of packages and modules--the standard building blocks of a Python application.
 
 Following these best practices will help you create organized, well-documented code that is easier to test, use, re-use and maintain.

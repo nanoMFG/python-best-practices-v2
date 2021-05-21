@@ -14,13 +14,15 @@ Python classes generally look like this:
       def bar(self, args):
         """ Some other method """
 
-For a more in depth explanation, see [this link](https://docs.python.org/3/tutorial/classes.html).
+For a more in depth explanation of Python classes, see [this link](https://docs.python.org/3/tutorial/classes.html).
 
 ## Step 5: Commit python module code
 
 In this step we are going to create a simple python module, with no functionality yet.
 
 ### :keyboard: Activity: Create a skeleton model.py
+
+Next we will setup a simple class for the application and define the methods we anticipate.
 
 1. Create the file 'src/digit_reader/model/model.py'
 2. Create the class 'MNISTModel'
